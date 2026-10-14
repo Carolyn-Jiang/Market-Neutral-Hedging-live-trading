@@ -10,7 +10,7 @@ export function releaseFolderUrl(value){
   }catch{return null}
 }
 export function finalChartUrl(state,now=Date.now()){
-  return state.final===true&&now>=finalResults&&state.chart==='/Market-Neutral-Hedging-live-trading/final-cr.svg'?new URL('final-cr.svg',import.meta.url).href:null;
+  return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults&&state.chart==='/Market-Neutral-Hedging-live-trading/final-cr.svg'?new URL('final-cr.svg',import.meta.url).href:null;
 }
 export const rounds = ['14','15'].flatMap(day => times.map((time,index)=>{
   const next = times[index+1];
@@ -42,8 +42,8 @@ export function validateSnapshot(state){
     if(!release||!rounds.some(r=>r.id===release.round_id)||ids.has(release.round_id)||!releaseFolderUrl(release.folder_url))throw Error('Invalid published release');
     ids.add(release.round_id);
   }
-  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.final,rows:state.rows});
-  if(state.final&&state.event!==14)throw Error('Final results require event 14');
+  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows});
+  if(state.final&&(state.event!==14||state.terminal_settlement_complete!==true))throw Error('Final results require verified terminal settlement at event 14');
   return state;
 }
 
@@ -71,16 +71,16 @@ async function init(){
   }
   try{
    if(!state)throw Error('Verified publication snapshot unavailable');
-   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.final,rows:state.rows});
+   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows});
    $('availability').textContent=state.data_status+' '+state.submission_status;
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
    for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,r.team_name+(r.is_baseline?' · Codex reference':''));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
    if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=3;$('leaderboard').append(tr)}
    $('chart').hidden=true;
-   const previous=document.getElementById('final-image');if(previous)previous.remove();
+   const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);
-   if(chartUrl){const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified final cumulative-return paths';img.style.width='100%';$('chart').after(img);$('chart-status').textContent='Final cumulative returns verified by the local scorer.'}
+   if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified final cumulative-return paths, including the Codex baseline';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent='Final cumulative returns verified by the local scorer, including the Codex baseline.'}else if(previous)previous.remove();
   }catch{$('availability').textContent='Workflow page published. Private submissions remain unavailable until the receipt service is verified.';$('chart-status').textContent='Verified results feed unavailable; no estimated returns are displayed.'}
  }
  refresh();setInterval(refresh,60000);
