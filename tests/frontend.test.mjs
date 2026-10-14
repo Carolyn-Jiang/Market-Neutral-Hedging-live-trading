@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds} from '../app.js';
+
+test('Submit a pair action opens the receipt portal directly',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const section=page.match(/<section id="submit">[\s\S]*?<\/section>/)?.[0];
+  assert.ok(section);
+  assert.match(section,/<a href="https:\/\/finreason-task2-receipts\.carolyn1010011010\.workers\.dev\/">Submit a pair action ↗<\/a>/);
+  assert.ok(!section.includes('Continue on Hugging Face'));
+});
 
 test('the public snapshot is resolved beside this personal-site module',()=>{
   assert.equal(publicSnapshotUrl,new URL('../live-state.json',import.meta.url).href);
