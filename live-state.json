@@ -1,0 +1,74 @@
+{
+  "schema": "finreason.task2.website/1",
+  "event": 1,
+  "updated_at": "2026-10-14T09:37:54.168425-04:00",
+  "data_status": "0 of 12 data batches published; 0 pending; 1 failed.",
+  "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
+  "ranking_status": "0 of 12 rounds verified. Data/baseline pending: RuntimeError",
+  "final": false,
+  "chart": null,
+  "releases": [],
+  "release_tasks": [
+    {
+      "round_id": "2026-10-14_09:30",
+      "status": "failed",
+      "message": "Collection or Dataset upload failed; no confirmed files."
+    },
+    {
+      "round_id": "2026-10-14_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-14_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-14_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-14_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-14_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    },
+    {
+      "round_id": "2026-10-15_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled release."
+    }
+  ],
+  "rows": []
+}
