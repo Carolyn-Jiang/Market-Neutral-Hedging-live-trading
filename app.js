@@ -30,7 +30,7 @@ if(typeof document!=='undefined') init();
 async function init(){
  const $=id=>document.getElementById(id);
  const format=value=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(value));
- const mainFeed='https://raw.githubusercontent.com/The-FinAI/IEEE-bigdata-cup/main/app/task2/live-state.json';
+ const mainFeed='https://the-finai.github.io/IEEE-bigdata-cup/task2/live-state.json';
  const manifest='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/releases.json';
  async function get(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error();return r.json()}
  function cell(tr,value){const td=document.createElement('td');td.textContent=value;tr.append(td);return td}
