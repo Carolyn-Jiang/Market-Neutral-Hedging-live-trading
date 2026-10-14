@@ -1,15 +1,16 @@
-# Task 2 platform moved
+# Task 2 live-test page
 
-The unified website, CR ranking, and final curves are at:
+https://carolyn-jiang.github.io/Market-Neutral-Hedging-live-trading/
+
+Original page layout with three requested changes: Data releases links to the
+Hugging Face Dataset; Submit a pair action links to the Space; published Files
+links to the release folder containing price.parquet and news.parquet.
+
+The IEEE main website links to this page:
 https://the-finai.github.io/IEEE-bigdata-cup/task2/
 
-Actions and receipts only:
-https://huggingface.co/spaces/CarolynJiang/market-neutral-hedging-leaderboard
-
-Released data only:
-https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading
-
-The former standalone frontend, cloud scorer, and polling synchronizer have
-been retired. Git history preserves the previous code. This repository serves
-only a redirect; all active runtime source is in The-FinAI/IEEE-bigdata-cup
-under task2_runtime. Private keys and local ledgers are never uploaded.
+Only the frontend is hosted here. Data publication and CR snapshots come from
+the existing local fourteen-event pipeline in The-FinAI/IEEE-bigdata-cup under
+task2_runtime. No crawler, private payloads, scorer or credentials are hosted
+in this public repository. Submissions remain unavailable until a private
+receipt service is verified; the static Space displays metadata only.
