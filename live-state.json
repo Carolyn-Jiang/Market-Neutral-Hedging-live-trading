@@ -1,11 +1,12 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 1,
-  "updated_at": "2026-10-14T09:42:12.034914-04:00",
-  "data_status": "1 of 12 data batches published; 0 pending; 0 failed.",
+  "event": 2,
+  "updated_at": "2026-10-14T10:35:33.172611-04:00",
+  "data_status": "2 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "0 of 12 rounds verified.",
+  "ranking_status": "0 of 12 rounds verified. First action round enters at Oct 14 10:30 and exits at 11:30 New York.",
   "final": false,
+  "terminal_settlement_complete": false,
   "chart": null,
   "releases": [
     {
@@ -14,6 +15,13 @@
       "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_09-30_NY",
       "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_09-30_NY/price.parquet?download=true",
       "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_09-30_NY/news.parquet?download=true"
+    },
+    {
+      "round_id": "2026-10-14_10:30",
+      "published_at": "2026-10-14T10:35:29.184429-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_10-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_10-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_10-30_NY/news.parquet?download=true"
     }
   ],
   "release_tasks": [
@@ -24,8 +32,8 @@
     },
     {
       "round_id": "2026-10-14_10:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled release."
+      "status": "published",
+      "message": "Both Dataset files committed; coverage and missing-price flags apply."
     },
     {
       "round_id": "2026-10-14_11:30",
