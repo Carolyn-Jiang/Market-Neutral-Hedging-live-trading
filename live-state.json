@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 3,
-  "updated_at": "2026-10-14T11:31:19.947277-04:00",
-  "data_status": "3 of 12 data batches published; 0 pending; 0 failed.",
+  "event": 4,
+  "updated_at": "2026-10-14T12:31:25.822225-04:00",
+  "data_status": "3 of 12 data batches published; 0 pending; 1 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "1 of 12 rounds verified.",
+  "ranking_status": "2 of 12 rounds verified. Data/baseline pending: RuntimeError",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -49,8 +49,8 @@
     },
     {
       "round_id": "2026-10-14_12:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled release."
+      "status": "failed",
+      "message": "Collection or Dataset upload failed; no confirmed files."
     },
     {
       "round_id": "2026-10-14_14:30",
@@ -95,19 +95,19 @@
   ],
   "rows": [
     {
-      "team_name": "Codex baseline",
-      "cumulative_return": -0.00038616139163527574,
-      "is_baseline": true
-    },
-    {
       "team_name": "Alpha",
       "cumulative_return": -0.0012558521506171871,
       "is_baseline": false
     },
     {
       "team_name": "Delta",
-      "cumulative_return": -0.002956998953351442,
+      "cumulative_return": -0.0017880469203985783,
       "is_baseline": false
+    },
+    {
+      "team_name": "Codex baseline",
+      "cumulative_return": -0.001798491363124488,
+      "is_baseline": true
     }
   ]
 }
