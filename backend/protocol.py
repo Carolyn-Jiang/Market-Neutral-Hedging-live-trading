@@ -6,7 +6,7 @@ TIMES=[(9,30),(10,30),(11,30),(12,30),(14,30),(15,30)]
 RELEASES=[datetime(2026,10,day,h,m,tzinfo=NY) for day in (14,15) for h,m in TIMES]
 CUTOFF=datetime(2026,10,16,8,tzinfo=NY)
 TERMINAL=datetime(2026,10,16,9,30,tzinfo=NY)
-FINAL=datetime(2026,10,16,10,tzinfo=NY)
+FINAL=datetime(2026,10,16,10,30,tzinfo=NY)
 def round_id(i):return RELEASES[i].strftime('%Y-%m-%d_%H:%M')
 def deadline(i):return RELEASES[i+1]-timedelta(minutes=5) if i<11 else CUTOFF
 def news_start(i):return (RELEASES[i]-timedelta(days=1)).replace(hour=15,minute=30) if i%6==0 else RELEASES[i-1]

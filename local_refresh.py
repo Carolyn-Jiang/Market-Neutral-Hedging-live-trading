@@ -12,7 +12,7 @@ from huggingface_hub.errors import EntryNotFoundError
 STORE='CarolynJiang/market-neutral-hedging-private-state'
 SPACE='CarolynJiang/market-neutral-hedging-leaderboard'
 GITHUB='Carolyn-Jiang/Market-Neutral-Hedging-live-trading'
-FINAL=datetime.fromisoformat('2026-10-16T10:00:00-04:00')
+FINAL=datetime.fromisoformat('2026-10-16T10:30:00-04:00')
 
 def build_public(state,instant=None):
     instant=instant or datetime.now(timezone.utc)

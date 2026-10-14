@@ -11,6 +11,6 @@ class PublicRefreshTests(unittest.TestCase):
         self.assertFalse(b['final'])
     def test_final_requires_time_and_all_rounds(self):
         s={'settled':list(range(12)),'teams':{'id':{'name':'A','equity':1.01,'history':[{'round':12,'cumulative_return':.01,'stock1':'private'}]}}}
-        self.assertFalse(build_public(s,datetime.fromisoformat('2026-10-16T09:59:00-04:00'))['final'])
-        b=build_public(s,datetime.fromisoformat('2026-10-16T10:00:00-04:00'))
+        self.assertFalse(build_public(s,datetime.fromisoformat('2026-10-16T10:29:59-04:00'))['final'])
+        b=build_public(s,datetime.fromisoformat('2026-10-16T10:30:00-04:00'))
         self.assertTrue(b['final']);self.assertNotIn('stock1',b['rows'][0]['history'][-1])

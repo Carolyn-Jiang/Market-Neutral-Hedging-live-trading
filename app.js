@@ -1,7 +1,7 @@
 export const tickers = ['NVDA','GOOG','META','MSFT','JPM','AMZN','AAPL','AMD','WMT','TSLA'];
 export const times = ['09:30','10:30','11:30','12:30','14:30','15:30'];
 export const finalCutoff = Date.parse('2026-10-16T08:00:00-04:00');
-export const finalResults = Date.parse('2026-10-16T10:00:00-04:00');
+export const finalResults = Date.parse('2026-10-16T10:30:00-04:00');
 export const rounds = ['14','15'].flatMap(day => times.map((time,index)=>{
   const next = times[index+1];
   const end = `2026-10-${day}T${time}:00-04:00`;

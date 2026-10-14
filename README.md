@@ -6,7 +6,7 @@ https://carolyn-jiang.github.io/Market-Neutral-Hedging-live-trading/
 The public frontend displays the 12 New York release rounds on 14–15 October
 2026, Parquet downloads, the four-field submission form, and aggregate returns.
 The final action cutoff is 16 October 08:00 New York time; terminal valuation
-is at 09:30; final rankings and curves appear at 10:00 after settlement.
+is at 09:30; final rankings and curves appear at 10:30 after settlement.
 
 ## Deployment status
 
@@ -51,7 +51,7 @@ not a fabricated F prediction. Missing valuation data keeps settlement pending.
 
 `GET /status`: server-authoritative open round and deadline.
 `GET /releases`: only published price/news file URLs.
-`GET /leaderboard`: names and cumulative returns; final histories after 10:00.
+`GET /leaderboard`: names and cumulative returns; final histories after 10:30.
 `POST /submissions`: four fields plus round ID, returns an acceptance receipt.
 `X-Team-Token` preserves team ownership without another participant form field.
 `GET /admin/state`, `POST /admin/event`: organizer-only, require ADMIN_KEY.
