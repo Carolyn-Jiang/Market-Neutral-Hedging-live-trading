@@ -45,7 +45,7 @@ async function init(){
    $('rounds').append(tr);
   }
   try{
-   const state=await get(mainFeed);
+   const state=await get(mainFeed+'?snapshot='+Date.now());
    const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.final,rows:state.rows});
    $('availability').textContent=state.submission_status;
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
