@@ -1,5 +1,5 @@
 {
   "api_base_url": null,
   "release_manifest_url": "./releases.json",
-  "leaderboard_url": "./leaderboard.json"
+  "leaderboard_url": "https://huggingface.co/spaces/CarolynJiang/market-neutral-hedging-leaderboard/resolve/main/leaderboard.json"
 }
