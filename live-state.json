@@ -1,18 +1,26 @@
 {
   "schema": "finreason.task2.website/1",
   "event": 1,
-  "updated_at": "2026-10-14T09:39:52.499159-04:00",
-  "data_status": "0 of 12 data batches published; 0 pending; 1 failed.",
+  "updated_at": "2026-10-14T09:42:12.034914-04:00",
+  "data_status": "1 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "0 of 12 rounds verified. Data/baseline pending: RuntimeError",
+  "ranking_status": "0 of 12 rounds verified.",
   "final": false,
   "chart": null,
-  "releases": [],
+  "releases": [
+    {
+      "round_id": "2026-10-14_09:30",
+      "published_at": "2026-10-14T09:42:08.669860-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_09-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_09-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_09-30_NY/news.parquet?download=true"
+    }
+  ],
   "release_tasks": [
     {
       "round_id": "2026-10-14_09:30",
-      "status": "failed",
-      "message": "Collection or Dataset upload failed; no confirmed files."
+      "status": "published",
+      "message": "Both Dataset files committed; coverage and missing-price flags apply."
     },
     {
       "round_id": "2026-10-14_10:30",
