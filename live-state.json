@@ -1,7 +1,7 @@
 {
   "schema": "finreason.task2.website/1",
   "event": 1,
-  "updated_at": "2026-10-14T09:37:54.168425-04:00",
+  "updated_at": "2026-10-14T09:39:52.499159-04:00",
   "data_status": "0 of 12 data batches published; 0 pending; 1 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
   "ranking_status": "0 of 12 rounds verified. Data/baseline pending: RuntimeError",
