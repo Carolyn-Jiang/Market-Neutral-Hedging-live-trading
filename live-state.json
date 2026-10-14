@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 4,
-  "updated_at": "2026-10-14T12:34:18.112814-04:00",
-  "data_status": "4 of 12 data batches published; 0 pending; 0 failed.",
+  "event": 5,
+  "updated_at": "2026-10-14T14:33:52.011765-04:00",
+  "data_status": "5 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "2 of 12 rounds verified.",
+  "ranking_status": "3 of 12 rounds verified.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -36,6 +36,13 @@
       "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_12-30_NY",
       "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_12-30_NY/price.parquet?download=true",
       "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_12-30_NY/news.parquet?download=true"
+    },
+    {
+      "round_id": "2026-10-14_14:30",
+      "published_at": "2026-10-14T14:33:48.676775-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_14-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_14-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-14_14-30_NY/news.parquet?download=true"
     }
   ],
   "release_tasks": [
@@ -61,8 +68,8 @@
     },
     {
       "round_id": "2026-10-14_14:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled release."
+      "status": "published",
+      "message": "Both Dataset files committed; coverage and missing-price flags apply."
     },
     {
       "round_id": "2026-10-14_15:30",
@@ -102,6 +109,11 @@
   ],
   "rows": [
     {
+      "team_name": "Codex baseline",
+      "cumulative_return": 0.0018497140714359706,
+      "is_baseline": true
+    },
+    {
       "team_name": "Alpha",
       "cumulative_return": -0.0012558521506171871,
       "is_baseline": false
@@ -110,11 +122,6 @@
       "team_name": "Delta",
       "cumulative_return": -0.0017880469203985783,
       "is_baseline": false
-    },
-    {
-      "team_name": "Codex baseline",
-      "cumulative_return": -0.001798491363124488,
-      "is_baseline": true
     }
   ]
 }
