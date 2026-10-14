@@ -1,8 +1,0 @@
-{
-  "test": "historical replay, not a live published round",
-  "ticker": "NVDA",
-  "window": "2026-10-13 09:30–10:30 America/New_York",
-  "summary": "Bank stocks rose following strong earnings from JPMorgan and Goldman Sachs, while chip stocks declined due to market concerns. Reports indicated weak iPhone 18 demand, raising doubts about Apple’s stock.",
-  "tokens": 38,
-  "tokenizer": "cl100k_base"
-}
