@@ -37,7 +37,7 @@ def board(state):
         if final:row['history']=[{'round':0,'cumulative_return':0}]+history
         rows.append(row)
     baseline=state.get('baseline',{})
-    if baseline.get('history'):
+    if baseline.get('history') and len(baseline['history'])==len(state['settled']):
         row={'team_name':'Codex baseline','cumulative_return':baseline.get('equity',1)-1,'is_baseline':True}
         if final:row['history']=[{'round':0,'cumulative_return':0}]+baseline['history']
         rows.append(row)
