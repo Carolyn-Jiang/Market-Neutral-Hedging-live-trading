@@ -92,8 +92,8 @@ async def submit(request:Request,x_team_token:str|None=Header(default=None)):
         if team:
             digest=hashlib.sha256((x_team_token or '').encode()).hexdigest()
             if name!=team['name'] or not hmac.compare_digest(digest,team['token_hash']):raise HTTPException(403,'Team name already claimed; use the original browser/team token')
-            # Bound revising writes to prevent public names from exhausting storage.
-            if team.get('last_submit_at') and now().timestamp()-team['last_submit_at']<10:raise HTTPException(429,'Wait 10 seconds before revising')
+            if identity in state['submissions'].get(round_id(i),{}):
+                raise HTTPException(409,'This team has already submitted once for this round; revisions are not allowed')
         else:
             if len(state['teams'])>=500:raise HTTPException(429,'Team capacity reached')
             token=secrets.token_urlsafe(32)

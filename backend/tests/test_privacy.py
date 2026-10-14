@@ -28,8 +28,10 @@ class PrivacyTests(unittest.TestCase):
         with self.assertRaises(HTTPException) as e:asyncio.run(server.submit(Request(p),None))
         self.assertEqual(e.exception.status_code,403)
         self.instant=RELEASES[0].replace(minute=31)
-        revision=asyncio.run(server.submit(Request({**p,'action':'F'}),receipt['team_token']))
-        self.assertTrue(revision['accepted'])
+        with self.assertRaises(HTTPException) as duplicate:
+            asyncio.run(server.submit(Request({**p,'action':'F'}),receipt['team_token']))
+        self.assertEqual(duplicate.exception.status_code,409)
+        self.assertEqual(len(self.state['audit']),1)
         public=json.dumps(server.board(self.state))
         for secret in ['stock1','stock2','receipt_id','token_hash',receipt['team_token']]:self.assertNotIn(secret,public)
     def test_cutoff_enforced(self):

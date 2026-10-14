@@ -23,8 +23,12 @@ The public leaderboard contract allows display name, cumulative return, and
 baseline designation. Return history is shown only after final settlement.
 The four participant fields are Team Name, Stock 1, Stock 2, and Action;
 the round ID is supplied automatically. The first accepted submission claims
-the team name and returns a private browser token. Revisions require that token,
-so a different browser cannot impersonate an already-claimed team.
+the team name and returns a private browser token. Later rounds require that token,
+so a different browser cannot impersonate an already-claimed team. Each team has
+at most one accepted submission per round; successful submissions cannot be revised
+or replaced. Rejected/invalid requests do not consume the allowance. Team Name is
+free text; both stock fields and Action are single-selection dropdowns, and duplicate
+stocks are rejected by both the frontend and server.
 
 ## Local generation and scoring
 

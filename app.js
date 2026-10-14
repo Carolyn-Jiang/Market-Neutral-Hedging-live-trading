@@ -39,6 +39,15 @@ async function init(){
   $('availability').textContent=base?'Private submission service configured. Round availability is verified by the server.':'Workflow page is published. Live data collection, private submissions, and scoring are not yet activated.';
   for(const id of ['stock1','stock2'])for(const t of tickers){const option=document.createElement('option');option.value=t;option.textContent=t;$(id).append(option);}
   $('stock2').value='GOOG';
+  function excludeDuplicateStocks(){
+    for(const [id,other]of [['stock1','stock2'],['stock2','stock1']]){
+      for(const option of $(id).options)option.disabled=option.value===$(other).value;
+    }
+  }
+  $('stock1').addEventListener('change',excludeDuplicateStocks);
+  $('stock2').addEventListener('change',excludeDuplicateStocks);
+  excludeDuplicateStocks();
+  const receiptKey=(team,round)=>'finreason.accepted.'+team.trim().toLowerCase()+'.'+round;
   let active=null;
   async function renderRounds(){
     const manifest=await get(config.release_manifest_url||'./releases.json').catch(()=>({published_rounds:[]}));
@@ -60,9 +69,10 @@ async function init(){
       try{
         const status=await get(`${base.replace(/\/$/,'')}/status`);
         active=rounds.find(r=>r.id===status.active_round_id);
-        const enabled=Boolean(active&&status.accepting_submissions&&Date.now()<finalCutoff);
+        const alreadyAccepted=active&&localStorage.getItem(receiptKey($('team').value,active.id));
+        const enabled=Boolean(active&&status.accepting_submissions&&Date.now()<finalCutoff&&!alreadyAccepted);
         $('submit-button').disabled=!enabled;
-        $('submit-button').textContent=enabled?'Submit action':'Round closed';
+        $('submit-button').textContent=alreadyAccepted?'Submitted · round locked':enabled?'Submit once':'Round closed';
         $('active-round').textContent=active?`Round ${active.id} · Deadline ${format(active.deadline)}`:'No open decision round.';
       }catch{active=null;$('submit-button').disabled=true;$('active-round').textContent='Private submission service unavailable.';}
     }
@@ -71,16 +81,19 @@ async function init(){
     event.preventDefault();
     const payload={team_name:$('team').value.trim(),stock1:$('stock1').value,stock2:$('stock2').value,action:$('action').value};
     if(!base||!active||!validateAction(payload)){ $('form-message').textContent='Use a Team Name, two distinct eligible stocks, and a valid action for an open round.';return; }
+    if(localStorage.getItem(receiptKey(payload.team_name,active.id))){$('form-message').textContent='This team has already submitted for this round. No revisions are allowed.';return;}
     $('submit-button').disabled=true;
     try{
       const token=localStorage.getItem('finreason.team-token.'+payload.team_name.toLowerCase());
       const response=await fetch(`${base.replace(/\/$/,'')}/submissions`,{method:'POST',headers:{'Content-Type':'application/json',...(token?{'X-Team-Token':token}:{})},body:JSON.stringify({...payload,round_id:active.id}),signal:AbortSignal.timeout(15000)});
       const receipt=await response.json();if(!response.ok||receipt.accepted!==true||!receipt.receipt_id)throw Error(receipt.message||'Submission not accepted');
       if(receipt.team_token)localStorage.setItem('finreason.team-token.'+payload.team_name.toLowerCase(),receipt.team_token);
+      localStorage.setItem(receiptKey(payload.team_name,active.id),receipt.receipt_id);
       $('form-message').textContent=`Accepted · Receipt ${receipt.receipt_id}`;
     }catch(error){$('form-message').textContent=error.message;}
     finally{await renderRounds();}
   });
+  $('team').addEventListener('change',renderRounds);
   async function renderBoard(){
     try{
       const board=validateBoard(await get(config.leaderboard_url||'./leaderboard.json'));
