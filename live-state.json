@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 7,
-  "updated_at": "2026-10-15T09:34:11.206976-04:00",
-  "data_status": "7 of 12 data batches published; 0 pending; 0 failed.",
+  "event": 8,
+  "updated_at": "2026-10-15T10:31:01.409756-04:00",
+  "data_status": "8 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "5 of 12 rounds verified.",
+  "ranking_status": "6 of 12 rounds verified.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -57,6 +57,13 @@
       "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-15_09-30_NY",
       "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_09-30_NY/price.parquet?download=true",
       "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_09-30_NY/news.parquet?download=true"
+    },
+    {
+      "round_id": "2026-10-15_10:30",
+      "published_at": "2026-10-15T10:30:58.442204-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-15_10-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_10-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_10-30_NY/news.parquet?download=true"
     }
   ],
   "release_tasks": [
@@ -97,8 +104,8 @@
     },
     {
       "round_id": "2026-10-15_10:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled release."
+      "status": "published",
+      "message": "Both Dataset files committed; coverage and missing-price flags apply."
     },
     {
       "round_id": "2026-10-15_11:30",
@@ -124,8 +131,18 @@
   "rows": [
     {
       "team_name": "Codex baseline",
-      "cumulative_return": 0.04967101877116442,
+      "cumulative_return": 0.04299165531521787,
       "is_baseline": true
+    },
+    {
+      "team_name": "ah",
+      "cumulative_return": 0.004772641789953624,
+      "is_baseline": false
+    },
+    {
+      "team_name": "abbo",
+      "cumulative_return": 8.364906865887534e-05,
+      "is_baseline": false
     },
     {
       "team_name": "Alpha",
@@ -134,7 +151,12 @@
     },
     {
       "team_name": "Delta",
-      "cumulative_return": -0.0017880469203985783,
+      "cumulative_return": -0.008348568201214324,
+      "is_baseline": false
+    },
+    {
+      "team_name": "test",
+      "cumulative_return": -0.013680496783689544,
       "is_baseline": false
     }
   ]
