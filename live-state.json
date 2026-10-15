@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
   "event": 7,
-  "updated_at": "2026-10-15T09:31:07.951779-04:00",
+  "updated_at": "2026-10-15T09:34:11.206976-04:00",
   "data_status": "7 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "4 of 12 rounds verified. Incomplete inputs or receipt service unavailable; ranking is pending, not a zero-return result. Data/baseline pending: RuntimeError; Entry valuation pending: RuntimeError; CR pending: RuntimeError",
+  "ranking_status": "5 of 12 rounds verified.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -124,7 +124,7 @@
   "rows": [
     {
       "team_name": "Codex baseline",
-      "cumulative_return": 0.0027063499248614065,
+      "cumulative_return": 0.04967101877116442,
       "is_baseline": true
     },
     {
