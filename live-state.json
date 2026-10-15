@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 11,
-  "updated_at": "2026-10-15T14:31:14.978286-04:00",
-  "data_status": "11 of 12 data batches published; 0 pending; 0 failed.",
+  "event": 12,
+  "updated_at": "2026-10-15T15:31:05.654353-04:00",
+  "data_status": "12 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "9 of 12 rounds verified.",
+  "ranking_status": "10 of 12 rounds verified.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -85,6 +85,13 @@
       "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-15_14-30_NY",
       "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_14-30_NY/price.parquet?download=true",
       "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_14-30_NY/news.parquet?download=true"
+    },
+    {
+      "round_id": "2026-10-15_15:30",
+      "published_at": "2026-10-15T15:31:01.829150-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-15_15-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_15-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-15_15-30_NY/news.parquet?download=true"
     }
   ],
   "release_tasks": [
@@ -145,14 +152,14 @@
     },
     {
       "round_id": "2026-10-15_15:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled release."
+      "status": "published",
+      "message": "Both Dataset files committed; coverage and missing-price flags apply."
     }
   ],
   "rows": [
     {
       "team_name": "Codex baseline",
-      "cumulative_return": 0.03109708188305893,
+      "cumulative_return": 0.018555277807777548,
       "is_baseline": true
     },
     {
@@ -173,6 +180,11 @@
     {
       "team_name": "abbo",
       "cumulative_return": 8.364906865887534e-05,
+      "is_baseline": false
+    },
+    {
+      "team_name": "test_4",
+      "cumulative_return": 0.0,
       "is_baseline": false
     },
     {
