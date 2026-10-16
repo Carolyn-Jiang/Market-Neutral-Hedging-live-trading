@@ -9,6 +9,8 @@ export const baselineDisplayLabels = Object.freeze({
   'Moira baseline':'Moira(gpt-4.1-mini) · Baseline',
 });
 export function displayTeamName(row){return row.is_baseline?baselineDisplayLabels[row.team_name]:row.team_name}
+export function formatSharpe(value){return Number.isFinite(value)?value.toFixed(2):'N/A'}
+export function formatMaxDrawdown(value){return Number.isFinite(value)?(value*100).toFixed(2)+'%':'N/A'}
 export function finalDisclosureReady(state,now=Date.now()){return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){
@@ -35,10 +37,12 @@ export function validateBoard(board){
   if(!board || board.schema!=='finreason.task2.public-returns/1' || Object.keys(board).some(k=>!top.includes(k)) || typeof board.final!=='boolean' || !Array.isArray(board.rows)) throw Error('Invalid public returns feed');
   const names=new Set();
   for(const row of board.rows){
-    const keys=['team_name','cumulative_return','is_baseline','history','steps'];
+    const keys=['team_name','cumulative_return','is_baseline','history','steps','sharpe_ratio','max_drawdown'];
     if(Object.keys(row).some(k=>!keys.includes(k)) || typeof row.team_name!=='string' || !row.team_name.trim() || names.has(row.team_name) || !Number.isFinite(row.cumulative_return) || typeof row.is_baseline!=='boolean') throw Error('Invalid public row');
     names.add(row.team_name);
     if(row.is_baseline!==baselineNames.has(row.team_name)) throw Error('Unknown or mislabeled baseline');
+    if('sharpe_ratio' in row&&row.sharpe_ratio!==null&&!Number.isFinite(row.sharpe_ratio))throw Error('Invalid Sharpe ratio');
+    if('max_drawdown' in row&&(!Number.isFinite(row.max_drawdown)||row.max_drawdown<0))throw Error('Invalid maximum drawdown');
     if(row.history && (!Array.isArray(row.history)||row.history.length>13||row.history.some(p=>Object.keys(p).some(k=>!['round','cumulative_return'].includes(k))||!Number.isInteger(p.round)||p.round<0||p.round>12||!Number.isFinite(p.cumulative_return)))) throw Error('Invalid return history');
     if('steps' in row){
       if(!board.final||!Array.isArray(row.steps)||row.steps.length!==12)throw Error('Step history is final-only and requires twelve steps');
@@ -95,10 +99,10 @@ async function init(){
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
    for(const[i,r]of sorted.entries()){
     if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;
-    const tr=document.createElement('tr');cell(tr,String(rank));const nameCell=cell(tr,displayTeamName(r));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr);
+    const tr=document.createElement('tr');cell(tr,String(rank));const nameCell=cell(tr,displayTeamName(r));for(const value of [(r.cumulative_return*100).toFixed(2)+'%',formatSharpe(r.sharpe_ratio),formatMaxDrawdown(r.max_drawdown)])cell(tr,value).className='metric-number';$('leaderboard').append(tr);
     if(finalDisclosureReady(state)&&Array.isArray(r.steps)){
      const detail=document.createElement('tr');detail.id='team-steps-'+i;detail.className='step-details';detail.hidden=!expandedTeams.has(r.team_name);
-     const content=cell(detail,'');content.colSpan=3;const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');table.className='steps-table';
+     const content=cell(detail,'');content.colSpan=5;const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');table.className='steps-table';
      const caption=document.createElement('caption');caption.textContent='Step-by-step pair actions · '+displayTeamName(r);table.append(caption);
      const head=document.createElement('thead'),headers=document.createElement('tr');for(const title of ['Step','Stock pair','Action']){const th=document.createElement('th');th.scope='col';th.textContent=title;headers.append(th)}head.append(headers);table.append(head);
      const body=document.createElement('tbody');for(const step of r.steps){const item=document.createElement('tr');cell(item,String(step.step));cell(item,step.stock1===null?'—':step.stock1+' / '+step.stock2);cell(item,step.action);body.append(item)}table.append(body);wrap.append(table);content.append(wrap);
@@ -107,7 +111,7 @@ async function init(){
      nameCell.replaceChildren(toggle);$('leaderboard').append(detail);
     }
    }
-   if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=3;$('leaderboard').append(tr)}
+   if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=5;$('leaderboard').append(tr)}
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);

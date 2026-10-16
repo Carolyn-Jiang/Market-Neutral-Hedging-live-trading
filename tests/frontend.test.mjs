@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName,finalDisclosureReady} from '../app.js';
+import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName,finalDisclosureReady,formatSharpe,formatMaxDrawdown} from '../app.js';
 
 test('Submit a pair action opens the receipt portal directly',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -183,7 +183,7 @@ test('all nine final rows expand accessible step pair action tables without time
   for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
   const names=['Participant A','Participant B','Participant C','Participant D','Participant E','Participant F','Codex baseline','FinMem baseline','Moira baseline'];
   const steps=Array.from({length:12},(_,i)=>({step:i+1,stock1:i===11?null:'NVDA',stock2:i===11?null:'GOOG',action:i===11?'F':'LS'}));
-  const state={schema:'finreason.task2.website/1',event:14,final:true,terminal_settlement_complete:true,data_status:'12 of 12 published.',submission_status:'Closed.',releases:[],rows:names.map((team_name,i)=>({team_name,cumulative_return:(9-i)/100,is_baseline:team_name.endsWith(' baseline'),steps})),chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'};
+  const state={schema:'finreason.task2.website/1',event:14,final:true,terminal_settlement_complete:true,data_status:'12 of 12 published.',submission_status:'Closed.',releases:[],rows:names.map((team_name,i)=>({team_name,cumulative_return:(9-i)/100,is_baseline:team_name.endsWith(' baseline'),sharpe_ratio:i===0?null:.125,max_drawdown:.01234,steps})),chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'};
   const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval,now:Date.now};
   globalThis.document={getElementById:id=>nodes.get(id)||null,createElement:element};globalThis.setInterval=()=>0;Date.now=()=>finalResults;
   globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('/releases.json')?{published_rounds:[]}:state});
@@ -192,11 +192,29 @@ test('all nine final rows expand accessible step pair action tables without time
     const rendered=nodes.get('leaderboard').children;assert.equal(rendered.length,18);
     for(let i=0;i<9;i++){
       const button=rendered[i*2].children[1].children[0],detail=rendered[i*2+1];
-      assert.equal(button.textContent,displayTeamName(state.rows[i]));assert.equal(button.attrs['aria-controls'],detail.id);assert.equal(button.attrs['aria-expanded'],'false');assert.equal(detail.hidden,true);assert.equal(detail.children[0].colSpan,3);
+      assert.equal(button.textContent,displayTeamName(state.rows[i]));assert.equal(button.attrs['aria-controls'],detail.id);assert.equal(button.attrs['aria-expanded'],'false');assert.equal(detail.hidden,true);assert.equal(detail.children[0].colSpan,5);
+      assert.equal(rendered[i*2].children.length,5);assert.equal(rendered[i*2].children[3].textContent,i===0?'N/A':'0.13');assert.equal(rendered[i*2].children[4].textContent,'1.23%');
       button.click();assert.equal(detail.hidden,false);assert.equal(button.attrs['aria-expanded'],'true');
       const table=detail.children[0].children[0].children[0],headers=table.children[1].children[0].children;
       assert.deepEqual(headers.map(x=>x.textContent),['Step','Stock pair','Action']);assert.equal(table.children[2].children.length,12);assert.equal(table.children[2].children[11].children[1].textContent,'—');
       button.click();assert.equal(detail.hidden,true);
     }
   }finally{Date.now=previous.now;for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
+});
+
+test('optional risk metrics accept legacy rows and reject invalid public values',()=>{
+  const row={team_name:'Participant A',cumulative_return:0,is_baseline:false};
+  const board={schema:'finreason.task2.public-returns/1',final:false,rows:[row]};
+  assert.equal(validateBoard(board),board);
+  for(const sharpe_ratio of [null,0,-.5,2.123])assert.doesNotThrow(()=>validateBoard({...board,rows:[{...row,sharpe_ratio,max_drawdown:0}]}));
+  for(const sharpe_ratio of [NaN,Infinity,'1',undefined])assert.throws(()=>validateBoard({...board,rows:[{...row,sharpe_ratio}]}));
+  for(const max_drawdown of [-.01,NaN,Infinity,null,'0',undefined])assert.throws(()=>validateBoard({...board,rows:[{...row,max_drawdown}]}));
+  assert.equal(formatSharpe(null),'N/A');assert.equal(formatSharpe(undefined),'N/A');assert.equal(formatSharpe(-.1234),'-0.12');
+  assert.equal(formatMaxDrawdown(undefined),'N/A');assert.equal(formatMaxDrawdown(0),'0.00%');assert.equal(formatMaxDrawdown(.01234),'1.23%');
+});
+
+test('risk columns document their nonannualized twelve-step settlement-only definition',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(page,/>Sharpe ratio<\/th>/);assert.match(page,/>Max drawdown<\/th>/);
+  assert.match(page,/12 step returns/);assert.match(page,/sample standard deviation \(ddof=1\)/);assert.match(page,/risk-free return 0; not annualized/);assert.match(page,/settlement endpoints only, not intrastep/);
 });
