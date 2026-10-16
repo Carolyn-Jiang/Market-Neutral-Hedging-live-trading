@@ -1,7 +1,7 @@
 {
   "schema": "finreason.task2.website/1",
   "event": 14,
-  "updated_at": "2026-10-16T10:32:16.213031-04:00",
+  "updated_at": "2026-10-16T10:41:29.362110-04:00",
   "data_status": "12 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
   "ranking_status": "Final settlement verified.",
@@ -234,7 +234,9 @@
           "stock2": "JPM",
           "action": "F"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.4004677247262917,
+      "max_drawdown": 0.005184919286778333
     },
     {
       "team_name": "Codex baseline",
@@ -313,7 +315,9 @@
           "stock2": "NVDA",
           "action": "LS"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.1398236572908193,
+      "max_drawdown": 0.029643326725180663
     },
     {
       "team_name": "ah",
@@ -392,7 +396,9 @@
           "stock2": "AAPL",
           "action": "LS"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.42805827113019845,
+      "max_drawdown": 0.0
     },
     {
       "team_name": "test_2",
@@ -471,7 +477,9 @@
           "stock2": null,
           "action": "F"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.28867513459481287,
+      "max_drawdown": 0.0
     },
     {
       "team_name": "test_3",
@@ -550,7 +558,9 @@
           "stock2": null,
           "action": "F"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.28867513459481287,
+      "max_drawdown": 0.0
     },
     {
       "team_name": "FinMem baseline",
@@ -629,7 +639,9 @@
           "stock2": "WMT",
           "action": "SL"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.08786703385014175,
+      "max_drawdown": 0.019299067051261165
     },
     {
       "team_name": "abbo",
@@ -708,7 +720,9 @@
           "stock2": "META",
           "action": "LS"
         }
-      ]
+      ],
+      "sharpe_ratio": 0.2931088758660997,
+      "max_drawdown": 0.0
     },
     {
       "team_name": "test_4",
@@ -787,7 +801,9 @@
           "stock2": null,
           "action": "F"
         }
-      ]
+      ],
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
     },
     {
       "team_name": "test",
@@ -866,7 +882,9 @@
           "stock2": null,
           "action": "F"
         }
-      ]
+      ],
+      "sharpe_ratio": -0.28867513459481287,
+      "max_drawdown": 0.013680496783689544
     }
   ]
 }
