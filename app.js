@@ -9,6 +9,7 @@ export const baselineDisplayLabels = Object.freeze({
   'Moira baseline':'Moira(gpt-4.1-mini) · Baseline',
 });
 export function displayTeamName(row){return row.is_baseline?baselineDisplayLabels[row.team_name]:row.team_name}
+export function finalDisclosureReady(state,now=Date.now()){return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){
   try{
@@ -34,11 +35,19 @@ export function validateBoard(board){
   if(!board || board.schema!=='finreason.task2.public-returns/1' || Object.keys(board).some(k=>!top.includes(k)) || typeof board.final!=='boolean' || !Array.isArray(board.rows)) throw Error('Invalid public returns feed');
   const names=new Set();
   for(const row of board.rows){
-    const keys=['team_name','cumulative_return','is_baseline','history'];
+    const keys=['team_name','cumulative_return','is_baseline','history','steps'];
     if(Object.keys(row).some(k=>!keys.includes(k)) || typeof row.team_name!=='string' || !row.team_name.trim() || names.has(row.team_name) || !Number.isFinite(row.cumulative_return) || typeof row.is_baseline!=='boolean') throw Error('Invalid public row');
     names.add(row.team_name);
     if(row.is_baseline!==baselineNames.has(row.team_name)) throw Error('Unknown or mislabeled baseline');
     if(row.history && (!Array.isArray(row.history)||row.history.length>13||row.history.some(p=>Object.keys(p).some(k=>!['round','cumulative_return'].includes(k))||!Number.isInteger(p.round)||p.round<0||p.round>12||!Number.isFinite(p.cumulative_return)))) throw Error('Invalid return history');
+    if('steps' in row){
+      if(!board.final||!Array.isArray(row.steps)||row.steps.length!==12)throw Error('Step history is final-only and requires twelve steps');
+      for(const[i,step]of row.steps.entries()){
+        if(!step||Object.keys(step).sort().join(',')!=='action,step,stock1,stock2'||step.step!==i+1||!['LS','SL','F'].includes(step.action))throw Error('Invalid public step');
+        const missing=step.stock1===null&&step.stock2===null&&step.action==='F';
+        if(!missing&&(!tickers.includes(step.stock1)||!tickers.includes(step.stock2)||step.stock1===step.stock2))throw Error('Invalid public pair');
+      }
+    }
   }
   if(board.rows.filter(r=>r.is_baseline).length>3) throw Error('Too many baseline rows');
   return board;
@@ -60,6 +69,7 @@ async function init(){
  const $=id=>document.getElementById(id);
  const format=value=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(value));
  const mainFeed=publicSnapshotUrl;
+ const expandedTeams=new Set();
  const manifest='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/releases.json';
  async function get(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error();return r.json()}
  function cell(tr,value){const td=document.createElement('td');td.textContent=value;tr.append(td);return td}
@@ -83,7 +93,20 @@ async function init(){
    $('availability').textContent=state.data_status+' '+state.submission_status;
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
-   for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(r));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
+   for(const[i,r]of sorted.entries()){
+    if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;
+    const tr=document.createElement('tr');cell(tr,String(rank));const nameCell=cell(tr,displayTeamName(r));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr);
+    if(finalDisclosureReady(state)&&Array.isArray(r.steps)){
+     const detail=document.createElement('tr');detail.id='team-steps-'+i;detail.className='step-details';detail.hidden=!expandedTeams.has(r.team_name);
+     const content=cell(detail,'');content.colSpan=3;const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');table.className='steps-table';
+     const caption=document.createElement('caption');caption.textContent='Step-by-step pair actions · '+displayTeamName(r);table.append(caption);
+     const head=document.createElement('thead'),headers=document.createElement('tr');for(const title of ['Step','Stock pair','Action']){const th=document.createElement('th');th.scope='col';th.textContent=title;headers.append(th)}head.append(headers);table.append(head);
+     const body=document.createElement('tbody');for(const step of r.steps){const item=document.createElement('tr');cell(item,String(step.step));cell(item,step.stock1===null?'—':step.stock1+' / '+step.stock2);cell(item,step.action);body.append(item)}table.append(body);wrap.append(table);content.append(wrap);
+     const toggle=document.createElement('button');toggle.type='button';toggle.className='team-toggle';toggle.textContent=displayTeamName(r);toggle.setAttribute('aria-expanded',String(!detail.hidden));toggle.setAttribute('aria-controls',detail.id);
+     toggle.addEventListener('click',()=>{detail.hidden=!detail.hidden;toggle.setAttribute('aria-expanded',String(!detail.hidden));if(detail.hidden)expandedTeams.delete(r.team_name);else expandedTeams.add(r.team_name)});
+     nameCell.replaceChildren(toggle);$('leaderboard').append(detail);
+    }
+   }
    if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=3;$('leaderboard').append(tr)}
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');

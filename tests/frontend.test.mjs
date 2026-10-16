@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName} from '../app.js';
+import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName,finalDisclosureReady} from '../app.js';
 
 test('Submit a pair action opens the receipt portal directly',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -161,4 +161,42 @@ test('the displayed final schedule matches next-release entry and following-even
   assert.match(page,/At 10:30, settle Round 12/);
   const performance=page.match(/<section id="performance">[\s\S]*?<\/section>/)?.[0];
   assert.ok(performance&&!performance.includes('<a href='));
+});
+
+test('step details are strict final-only twelve-step records with no submission times',()=>{
+  const steps=Array.from({length:12},(_,i)=>({step:i+1,stock1:'NVDA',stock2:'GOOG',action:'LS'}));
+  steps[11]={step:12,stock1:null,stock2:null,action:'F'};
+  const row={team_name:'Participant A',cumulative_return:0,is_baseline:false,steps};
+  const board={schema:'finreason.task2.public-returns/1',final:true,rows:[row]};
+  assert.equal(validateBoard(board),board);
+  assert.throws(()=>validateBoard({...board,final:false}));
+  for(const bad of [steps.slice(1),steps.map((s,i)=>i? s:{...s,step:2}),steps.map((s,i)=>i?s:{...s,stock2:'NVDA'}),steps.map((s,i)=>i?s:{...s,stock1:null}),steps.map((s,i)=>i?s:{...s,accepted_at:'private'})])assert.throws(()=>validateBoard({...board,rows:[{...row,steps:bad}]}));
+  assert.equal(finalDisclosureReady({final:true,event:14,terminal_settlement_complete:true},finalResults-1),false);
+  assert.equal(finalDisclosureReady({final:true,event:14,terminal_settlement_complete:true},finalResults),true);
+});
+
+test('all nine final rows expand accessible step pair action tables without times',async()=>{
+  const nodes=new Map();
+  function element(tagName='div'){
+    return {tagName,children:[],style:{},attrs:{},events:{},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=[...items]},after(child){nodes.set(child.id,child)},remove(){nodes.delete(this.id)},setAttribute(key,value){this.attrs[key]=value},addEventListener(event,fn){this.events[event]=fn},click(){this.events.click?.()}};
+  }
+  for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
+  const names=['Participant A','Participant B','Participant C','Participant D','Participant E','Participant F','Codex baseline','FinMem baseline','Moira baseline'];
+  const steps=Array.from({length:12},(_,i)=>({step:i+1,stock1:i===11?null:'NVDA',stock2:i===11?null:'GOOG',action:i===11?'F':'LS'}));
+  const state={schema:'finreason.task2.website/1',event:14,final:true,terminal_settlement_complete:true,data_status:'12 of 12 published.',submission_status:'Closed.',releases:[],rows:names.map((team_name,i)=>({team_name,cumulative_return:(9-i)/100,is_baseline:team_name.endsWith(' baseline'),steps})),chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'};
+  const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval,now:Date.now};
+  globalThis.document={getElementById:id=>nodes.get(id)||null,createElement:element};globalThis.setInterval=()=>0;Date.now=()=>finalResults;
+  globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('/releases.json')?{published_rounds:[]}:state});
+  try{
+    await import('../app.js?final-step-render-test');await new Promise(resolve=>setImmediate(resolve));
+    const rendered=nodes.get('leaderboard').children;assert.equal(rendered.length,18);
+    for(let i=0;i<9;i++){
+      const button=rendered[i*2].children[1].children[0],detail=rendered[i*2+1];
+      assert.equal(button.textContent,displayTeamName(state.rows[i]));assert.equal(button.attrs['aria-controls'],detail.id);assert.equal(button.attrs['aria-expanded'],'false');assert.equal(detail.hidden,true);assert.equal(detail.children[0].colSpan,3);
+      button.click();assert.equal(detail.hidden,false);assert.equal(button.attrs['aria-expanded'],'true');
+      const table=detail.children[0].children[0].children[0],headers=table.children[1].children[0].children;
+      assert.deepEqual(headers.map(x=>x.textContent),['Step','Stock pair','Action']);assert.equal(table.children[2].children.length,12);assert.equal(table.children[2].children[11].children[1].textContent,'—');
+      button.click();assert.equal(detail.hidden,true);
+    }
+  }finally{Date.now=previous.now;for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
 });
