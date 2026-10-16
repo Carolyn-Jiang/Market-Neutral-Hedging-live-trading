@@ -10,7 +10,7 @@ export const baselineDisplayLabels = Object.freeze({
 });
 export function displayTeamName(row){return row.is_baseline?baselineDisplayLabels[row.team_name]:row.team_name}
 export function formatSharpe(value){return Number.isFinite(value)?value.toFixed(2):'N/A'}
-export function formatMaxDrawdown(value){return Number.isFinite(value)?(value*100).toFixed(2)+'%':'N/A'}
+export function formatMaxDrawdown(value){return value===0?'0%':Number.isFinite(value)&&value>0?(value*100).toFixed(2)+'%':'Updating…'}
 export function finalDisclosureReady(state,now=Date.now()){return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){

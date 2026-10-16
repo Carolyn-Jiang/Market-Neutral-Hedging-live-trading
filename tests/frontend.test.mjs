@@ -210,7 +210,7 @@ test('optional risk metrics accept legacy rows and reject invalid public values'
   for(const sharpe_ratio of [NaN,Infinity,'1',undefined])assert.throws(()=>validateBoard({...board,rows:[{...row,sharpe_ratio}]}));
   for(const max_drawdown of [-.01,NaN,Infinity,null,'0',undefined])assert.throws(()=>validateBoard({...board,rows:[{...row,max_drawdown}]}));
   assert.equal(formatSharpe(null),'N/A');assert.equal(formatSharpe(undefined),'N/A');assert.equal(formatSharpe(-.1234),'-0.12');
-  assert.equal(formatMaxDrawdown(undefined),'N/A');assert.equal(formatMaxDrawdown(0),'0.00%');assert.equal(formatMaxDrawdown(.01234),'1.23%');
+  assert.equal(formatMaxDrawdown(undefined),'Updating…');assert.equal(formatMaxDrawdown(null),'Updating…');assert.equal(formatMaxDrawdown(0),'0%');assert.equal(formatMaxDrawdown(.01234),'1.23%');
 });
 
 test('risk columns document their nonannualized twelve-step settlement-only definition',()=>{
