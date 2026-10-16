@@ -44,6 +44,13 @@ test('public cumulative-return rows exclude submitted stocks and actions',()=>{
   assert.throws(()=>validateBoard({...board,rows:[{...board.rows[0],stock1:'NVDA'}]}));
 });
 
+test('three named baselines are supported with uniform public labels',()=>{
+  const board={schema:'finreason.task2.public-returns/1',final:true,rows:['Codex baseline','FinMem baseline','Moira baseline'].map(team_name=>({team_name,cumulative_return:0,is_baseline:true}))};
+  assert.equal(validateBoard(board),board);
+  assert.throws(()=>validateBoard({...board,rows:[{team_name:'Unknown model',cumulative_return:0,is_baseline:true}]}));
+  assert.throws(()=>validateBoard({...board,rows:[{team_name:'FinMem baseline',cumulative_return:0,is_baseline:false}]}));
+});
+
 test('verified personal snapshot supplies a release folder when HF manifest is unavailable',async()=>{
   function element(tagName='div'){
     return {tagName,children:[],style:{},append(...children){this.children.push(...children)},replaceChildren(...children){this.children=[...children]},after(){},remove(){}};
@@ -71,7 +78,7 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
     assert.equal(filesCell.children[0].textContent,'Open release folder ↗');
     assert.equal(nodes.get('availability').textContent,'1 of 12 data batches published. Round 1 is open.');
     assert.equal(nodes.get('leaderboard').children[0].children[0].textContent,'1');
-    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Codex reference');
+    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Baseline');
     assert.equal(nodes.get('leaderboard').children[0].children[2].textContent,'2.00%');
     assert.equal(nodes.get('leaderboard').children[1].children[0].textContent,'2');
     assert.equal(nodes.get('leaderboard').children[1].children[1].textContent,'Team A');
@@ -115,9 +122,9 @@ test('final return paths include the baseline and mount only once across page re
     const image=nodes.get('final-image');
     assert.ok(image);
     assert.equal(image.src,new URL('../final-cr.svg',import.meta.url).href);
-    assert.match(image.alt,/Codex baseline/);
+    assert.match(image.alt,/Codex, FinMem and Moira baselines/);
     assert.equal(nodes.get('rank-heading').textContent,'Final rank');
-    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Codex reference');
+    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Baseline');
     assert.equal(mounts,1);
     await refresh();
     assert.equal(nodes.get('final-image'),image);

@@ -2,6 +2,7 @@ export const tickers = ['NVDA','GOOG','META','MSFT','JPM','AMZN','AAPL','AMD','W
 export const times = ['09:30','10:30','11:30','12:30','14:30','15:30'];
 export const finalCutoff = Date.parse('2026-10-16T08:00:00-04:00');
 export const finalResults = Date.parse('2026-10-16T10:30:00-04:00');
+export const baselineNames = new Set(['Codex baseline','FinMem baseline','Moira baseline']);
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){
   try{
@@ -30,9 +31,10 @@ export function validateBoard(board){
     const keys=['team_name','cumulative_return','is_baseline','history'];
     if(Object.keys(row).some(k=>!keys.includes(k)) || typeof row.team_name!=='string' || !row.team_name.trim() || names.has(row.team_name) || !Number.isFinite(row.cumulative_return) || typeof row.is_baseline!=='boolean') throw Error('Invalid public row');
     names.add(row.team_name);
+    if(row.is_baseline!==baselineNames.has(row.team_name)) throw Error('Unknown or mislabeled baseline');
     if(row.history && (!Array.isArray(row.history)||row.history.length>13||row.history.some(p=>Object.keys(p).some(k=>!['round','cumulative_return'].includes(k))||!Number.isInteger(p.round)||p.round<0||p.round>12||!Number.isFinite(p.cumulative_return)))) throw Error('Invalid return history');
   }
-  if(board.rows.filter(r=>r.is_baseline).length>1) throw Error('Multiple baseline rows');
+  if(board.rows.filter(r=>r.is_baseline).length>3) throw Error('Too many baseline rows');
   return board;
 }
 export function validateSnapshot(state){
@@ -75,12 +77,12 @@ async function init(){
    $('availability').textContent=state.data_status+' '+state.submission_status;
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
-   for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,r.team_name+(r.is_baseline?' · Codex reference':''));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
+   for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,r.team_name+(r.is_baseline?' · Baseline':''));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
    if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=3;$('leaderboard').append(tr)}
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);
-   if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified final cumulative-return paths, including the Codex baseline';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent='Final cumulative returns verified by the local scorer, including the Codex baseline.'}else if(previous)previous.remove();
+   if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified final cumulative-return paths, including Codex, FinMem and Moira baselines';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent='Final cumulative returns verified by the local scorer, including Codex, FinMem and Moira baselines.'}else if(previous)previous.remove();
   }catch{$('availability').textContent='Workflow page published. Private submissions remain unavailable until the receipt service is verified.';$('chart-status').textContent='Verified results feed unavailable; no estimated returns are displayed.'}
  }
  refresh();setInterval(refresh,60000);
