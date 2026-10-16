@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
   "event": 13,
-  "updated_at": "2026-10-16T09:31:03.210920-04:00",
+  "updated_at": "2026-10-16T10:24:29.975669-04:00",
   "data_status": "12 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "11 of 12 rounds verified.",
+  "ranking_status": "11 of 12 rounds verified. Includes Codex, FinMem and Moira baselines. Final ranking and return paths follow the 16 October 10:30 New York settlement.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -163,6 +163,16 @@
       "is_baseline": true
     },
     {
+      "team_name": "Moira baseline",
+      "cumulative_return": 0.027146917787936653,
+      "is_baseline": true
+    },
+    {
+      "team_name": "FinMem baseline",
+      "cumulative_return": 0.00757431883100157,
+      "is_baseline": true
+    },
+    {
       "team_name": "test_2",
       "cumulative_return": 0.0070036671748197055,
       "is_baseline": false
@@ -185,16 +195,6 @@
     {
       "team_name": "test_4",
       "cumulative_return": 0.0,
-      "is_baseline": false
-    },
-    {
-      "team_name": "Alpha",
-      "cumulative_return": -0.0012558521506171871,
-      "is_baseline": false
-    },
-    {
-      "team_name": "Delta",
-      "cumulative_return": -0.013579313101350077,
       "is_baseline": false
     },
     {
