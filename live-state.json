@@ -1,10 +1,10 @@
 {
   "schema": "finreason.task2.website/1",
-  "event": 12,
-  "updated_at": "2026-10-15T15:31:05.654353-04:00",
+  "event": 13,
+  "updated_at": "2026-10-16T09:31:03.210920-04:00",
   "data_status": "12 of 12 data batches published; 0 pending; 0 failed.",
   "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "10 of 12 rounds verified.",
+  "ranking_status": "11 of 12 rounds verified.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": null,
@@ -159,7 +159,7 @@
   "rows": [
     {
       "team_name": "Codex baseline",
-      "cumulative_return": 0.018555277807777548,
+      "cumulative_return": 0.033135519850505224,
       "is_baseline": true
     },
     {
