@@ -3,6 +3,12 @@ export const times = ['09:30','10:30','11:30','12:30','14:30','15:30'];
 export const finalCutoff = Date.parse('2026-10-16T08:00:00-04:00');
 export const finalResults = Date.parse('2026-10-16T10:30:00-04:00');
 export const baselineNames = new Set(['Codex baseline','FinMem baseline','Moira baseline']);
+export const baselineDisplayLabels = Object.freeze({
+  'Codex baseline':'Codex(gpt-5.3-codex) · Baseline',
+  'FinMem baseline':'FinMem(gpt-4.1-mini) · Baseline',
+  'Moira baseline':'Moira(gpt-4.1-mini) · Baseline',
+});
+export function displayTeamName(row){return row.is_baseline?baselineDisplayLabels[row.team_name]:row.team_name}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){
   try{
@@ -77,7 +83,7 @@ async function init(){
    $('availability').textContent=state.data_status+' '+state.submission_status;
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
-   for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,r.team_name+(r.is_baseline?' · Baseline':''));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
+   for(const[i,r]of sorted.entries()){if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(r));cell(tr,(r.cumulative_return*100).toFixed(2)+'%');$('leaderboard').append(tr)}
    if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=3;$('leaderboard').append(tr)}
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');

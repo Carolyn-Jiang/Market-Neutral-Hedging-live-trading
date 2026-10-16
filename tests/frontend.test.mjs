@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds} from '../app.js';
+import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName} from '../app.js';
 
 test('Submit a pair action opens the receipt portal directly',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -51,6 +51,22 @@ test('three named baselines are supported with uniform public labels',()=>{
   assert.throws(()=>validateBoard({...board,rows:[{team_name:'FinMem baseline',cumulative_return:0,is_baseline:false}]}));
 });
 
+test('baseline display names contain exact backbones once and participants remain unchanged',()=>{
+  const expected={
+    'Codex baseline':'Codex(gpt-5.3-codex) · Baseline',
+    'FinMem baseline':'FinMem(gpt-4.1-mini) · Baseline',
+    'Moira baseline':'Moira(gpt-4.1-mini) · Baseline',
+  };
+  for(const[team_name,label]of Object.entries(expected)){
+    const row={team_name,cumulative_return:0,is_baseline:true};
+    assert.equal(displayTeamName(row),label);
+    assert.equal(row.team_name,team_name);
+    assert.ok(!label.includes('`'));
+    assert.equal(label.match(/Baseline/g)?.length,1);
+  }
+  assert.equal(displayTeamName({team_name:'Participant A',is_baseline:false}),'Participant A');
+});
+
 test('verified personal snapshot supplies a release folder when HF manifest is unavailable',async()=>{
   function element(tagName='div'){
     return {tagName,children:[],style:{},append(...children){this.children.push(...children)},replaceChildren(...children){this.children=[...children]},after(){},remove(){}};
@@ -78,7 +94,7 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
     assert.equal(filesCell.children[0].textContent,'Open release folder ↗');
     assert.equal(nodes.get('availability').textContent,'1 of 12 data batches published. Round 1 is open.');
     assert.equal(nodes.get('leaderboard').children[0].children[0].textContent,'1');
-    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Baseline');
+    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex(gpt-5.3-codex) · Baseline');
     assert.equal(nodes.get('leaderboard').children[0].children[2].textContent,'2.00%');
     assert.equal(nodes.get('leaderboard').children[1].children[0].textContent,'2');
     assert.equal(nodes.get('leaderboard').children[1].children[1].textContent,'Team A');
@@ -124,7 +140,7 @@ test('final return paths include the baseline and mount only once across page re
     assert.equal(image.src,new URL('../final-cr.svg',import.meta.url).href);
     assert.match(image.alt,/Codex, FinMem and Moira baselines/);
     assert.equal(nodes.get('rank-heading').textContent,'Final rank');
-    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex baseline · Baseline');
+    assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex(gpt-5.3-codex) · Baseline');
     assert.equal(mounts,1);
     await refresh();
     assert.equal(nodes.get('final-image'),image);
