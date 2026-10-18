@@ -11,7 +11,6 @@ export const baselineDisplayLabels = Object.freeze({
 export function displayTeamName(row){return row.is_baseline?baselineDisplayLabels[row.team_name]:row.team_name}
 export function formatSharpe(value){return Number.isFinite(value)?value.toFixed(2):'N/A'}
 export function formatMaxDrawdown(value){return value===0?'0%':Number.isFinite(value)&&value>0?(value*100).toFixed(2)+'%':'Updating…'}
-export function finalDisclosureReady(state,now=Date.now()){return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
 export function releaseFolderUrl(value){
   try{
@@ -73,7 +72,6 @@ async function init(){
  const $=id=>document.getElementById(id);
  const format=value=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(value));
  const mainFeed=publicSnapshotUrl;
- const expandedTeams=new Set();
  const manifest='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/releases.json';
  async function get(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error();return r.json()}
  function cell(tr,value){const td=document.createElement('td');td.textContent=value;tr.append(td);return td}
@@ -99,17 +97,7 @@ async function init(){
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
    for(const[i,r]of sorted.entries()){
     if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;
-    const tr=document.createElement('tr');cell(tr,String(rank));const nameCell=cell(tr,displayTeamName(r));for(const value of [(r.cumulative_return*100).toFixed(2)+'%',formatSharpe(r.sharpe_ratio),formatMaxDrawdown(r.max_drawdown)])cell(tr,value).className='metric-number';$('leaderboard').append(tr);
-    if(finalDisclosureReady(state)&&Array.isArray(r.steps)){
-     const detail=document.createElement('tr');detail.id='team-steps-'+i;detail.className='step-details';detail.hidden=!expandedTeams.has(r.team_name);
-     const content=cell(detail,'');content.colSpan=5;const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');table.className='steps-table';
-     const caption=document.createElement('caption');caption.textContent='Step-by-step pair actions · '+displayTeamName(r);table.append(caption);
-     const head=document.createElement('thead'),headers=document.createElement('tr');for(const title of ['Step','Stock pair','Action']){const th=document.createElement('th');th.scope='col';th.textContent=title;headers.append(th)}head.append(headers);table.append(head);
-     const body=document.createElement('tbody');for(const step of r.steps){const item=document.createElement('tr');cell(item,String(step.step));cell(item,step.stock1===null?'—':step.stock1+' / '+step.stock2);cell(item,step.action);body.append(item)}table.append(body);wrap.append(table);content.append(wrap);
-     const toggle=document.createElement('button');toggle.type='button';toggle.className='team-toggle';toggle.textContent=displayTeamName(r);toggle.setAttribute('aria-expanded',String(!detail.hidden));toggle.setAttribute('aria-controls',detail.id);
-     toggle.addEventListener('click',()=>{detail.hidden=!detail.hidden;toggle.setAttribute('aria-expanded',String(!detail.hidden));if(detail.hidden)expandedTeams.delete(r.team_name);else expandedTeams.add(r.team_name)});
-     nameCell.replaceChildren(toggle);$('leaderboard').append(detail);
-    }
+    const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(r));for(const value of [(r.cumulative_return*100).toFixed(2)+'%',formatSharpe(r.sharpe_ratio),formatMaxDrawdown(r.max_drawdown)])cell(tr,value).className='metric-number';$('leaderboard').append(tr);
    }
    if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=5;$('leaderboard').append(tr)}
    $('chart').hidden=true;
