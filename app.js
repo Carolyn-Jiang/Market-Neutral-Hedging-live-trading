@@ -117,7 +117,7 @@ async function init(){
   for(const release of state?.releases||[])published.set(release.round_id,release);
   $('rounds').replaceChildren();
   for(const[i,r]of rounds.entries()){
-   if(i===12){const separator=document.createElement('tr');separator.className='phase-separator';cell(separator,'Continuation · 19–23 October 2026 · Rounds 13–41').colSpan=5;$('rounds').append(separator)}
+   if(i===0||i===12){const separator=document.createElement('tr');separator.className='phase-separator';cell(separator,i===0?'Phrase I 14-15 October 2026 Round 1-12':'Phrase II · 19–23 October 2026 · Rounds 13–41').colSpan=5;$('rounds').append(separator)}
    const tr=document.createElement('tr');cell(tr,String(i+1));cell(tr,format(r.release));cell(tr,format(r.window_start)+' → '+format(r.release));cell(tr,format(r.deadline));
    const td=cell(tr,data||state?'Not published':'Publication status unavailable');const p=published.get(r.id);
    const folder=releaseFolderUrl(p?.folder_url);

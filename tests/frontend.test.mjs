@@ -88,11 +88,20 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
     await new Promise(resolve=>setImmediate(resolve));
     assert.equal(calls.length,2);
     assert.ok(calls[1].startsWith(publicSnapshotUrl+'?snapshot='));
-    assert.equal(nodes.get('rounds').children.length,42);
-    assert.equal(nodes.get('rounds').children[12].className,'phase-separator');
-    assert.equal(nodes.get('rounds').children[12].children[0].colSpan,5);
-    assert.equal(nodes.get('rounds').children[13].children[0].textContent,'13');
-    const filesCell=nodes.get('rounds').children[0].children[4];
+    const releaseRows=nodes.get('rounds').children;
+    assert.equal(releaseRows.length,43);
+    assert.equal(releaseRows[0].className,'phase-separator');
+    assert.equal(releaseRows[0].children[0].textContent,'Phrase I 14-15 October 2026 Round 1-12');
+    assert.equal(releaseRows[0].children[0].colSpan,5);
+    assert.equal(releaseRows[1].children[0].textContent,'1');
+    assert.equal(releaseRows[12].children[0].textContent,'12');
+    assert.equal(releaseRows[13].className,'phase-separator');
+    assert.equal(releaseRows[13].children[0].textContent,'Phrase II · 19–23 October 2026 · Rounds 13–41');
+    assert.equal(releaseRows[13].children[0].colSpan,5);
+    assert.equal(releaseRows[14].children[0].textContent,'13');
+    assert.equal(releaseRows[42].children[0].textContent,'41');
+    assert.deepEqual(releaseRows.filter(row=>row.className!=='phase-separator').map(row=>Number(row.children[0].textContent)),Array.from({length:41},(_,i)=>i+1));
+    const filesCell=releaseRows[1].children[4];
     assert.equal(filesCell.children[0].href,folder);
     assert.equal(filesCell.children[0].textContent,'Open release folder ↗');
     assert.equal(nodes.has('availability'),false);
@@ -170,8 +179,8 @@ test('the continuation copy matches next-node entry, following-node exit, and Fr
 
 test('both native baselines start fresh at the first new observation and FinMem then locks its pair',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(page,/FinMem and Moira each select a fresh initial stock pair from the first published continuation observation on 19 October at 09:30/);
-  assert.match(page,/FinMem locks its pair for all 29 continuation rounds/);
+  assert.match(page,/FinMem and Moira each select a fresh initial stock pair from the first published Phrase II observation on 19 October at 09:30/);
+  assert.match(page,/FinMem locks its pair for all 29 Phrase II rounds/);
   assert.match(page,/Moira immediately selects a different eligible pair if its relationship monitor reports BREAK/);
   assert.ok(!page.includes('Moire'));
 });
@@ -283,7 +292,7 @@ test('continuation refresh shows new folders, late teams, risk metrics and each 
   globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('/releases.json')?{published_rounds:[]}:state});
   try{
     await import('../app.js?continuation-render-test');await new Promise(resolve=>setImmediate(resolve));
-    assert.equal(nodes.get('rounds').children.length,42);assert.equal(nodes.get('rounds').children[13].children[4].children[0].href,folder);
+    assert.equal(nodes.get('rounds').children.length,43);assert.equal(nodes.get('rounds').children[14].children[4].children[0].href,folder);
     const rows=nodes.get('leaderboard').children;assert.equal(rows.length,2);assert.equal(rows[0].children[1].textContent,'Moira(gpt-4.1-mini) · Baseline');assert.equal(rows[1].children[1].textContent,'Late team');assert.equal(rows[1].children[4].textContent,'0%');
     assert.equal(nodes.get('rank-heading').textContent,'CR rank');assert.equal(nodes.has('availability'),false);
     const image=nodes.get('final-image');assert.ok(image);assert.match(nodes.get('chart-status').textContent,/13 of 41 settled rounds/);assert.equal(mounts,1);
@@ -303,17 +312,17 @@ test('the removed yellow availability banner has no markup, style or application
   assert.ok(!css.includes('.notice'));
 });
 
-test('a gray Finished Phase 1 deadline card precedes unchanged dark Phase 2 milestones',()=>{
+test('a gray Finished Phrase I deadline card precedes unchanged dark Phrase II milestones',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
   const phase1=page.match(/<section id="phase1-deadlines"[^>]*>[\s\S]*?<\/section>/)?.[0];
   const phase2=page.match(/<section id="phase2-deadlines"[^>]*>[\s\S]*?<\/section>/)?.[0];
   assert.ok(phase1&&phase2);assert.ok(page.indexOf(phase1)<page.indexOf(phase2));
-  assert.match(phase1,/class="stats stats-finished"/);assert.match(phase1,/aria-label="Phase 1 deadlines"/);
-  assert.match(phase1,/<h2>Phase 1<\/h2>/);assert.match(phase1,/>Finished<\/span>/);
+  assert.match(phase1,/class="stats stats-finished"/);assert.match(phase1,/aria-label="Phrase I deadlines"/);
+  assert.match(phase1,/<h2>Phrase I<\/h2>/);assert.match(phase1,/>Finished<\/span>/);
   assert.deepEqual([...phase1.matchAll(/<strong>(.*?)<\/strong>/g)].map(match=>match[1]),['14 Oct · 10:25','16 Oct · 08:00','16 Oct · 10:30']);
   assert.equal((phase1.match(/New York time/g)||[]).length,3);
-  assert.match(phase2,/class="stats"/);assert.match(phase2,/aria-label="Phase 2 deadlines"/);assert.match(phase2,/<h2>Phase 2<\/h2>/);
+  assert.match(phase2,/class="stats"/);assert.match(phase2,/aria-label="Phrase II deadlines"/);assert.match(phase2,/<h2>Phrase II<\/h2>/);
   assert.deepEqual([...phase2.matchAll(/<strong>(.*?)<\/strong>/g)].map(match=>match[1]),['19 Oct · 10:25','23 Oct · 15:25','23 Oct · 16:00']);
   assert.ok(!phase2.includes('stats-finished'));assert.ok(!phase2.includes('Finished'));
   const background=css.match(/\.stats-finished\{[^}]*background:#([0-9a-f]{6})/i)?.[1];assert.ok(background);
@@ -335,9 +344,25 @@ test('network failure renders a safe unavailable state without the removed banne
   try{
     await import('../app.js?no-banner-network-error');await new Promise(resolve=>setImmediate(resolve));
     assert.equal(nodes.has('availability'),false);
-    assert.equal(nodes.get('rounds').children.length,42);
-    assert.equal(nodes.get('rounds').children[0].children[4].textContent,'Publication status unavailable');
+    assert.equal(nodes.get('rounds').children.length,43);
+    assert.equal(nodes.get('rounds').children[1].children[4].textContent,'Publication status unavailable');
     assert.equal(nodes.get('chart-status').textContent,'Verified results feed unavailable; no estimated returns are displayed.');
     await assert.doesNotReject(refresh());
   }finally{for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
+});
+
+test('public descriptions consistently use the exact Phrase I and Phrase II names',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const text=page.replace(/<[^>]*>/g,' ');
+  const hero=page.match(/<section class="hero">[\s\S]*?<\/section>/)?.[0];
+  assert.ok(hero);assert.match(hero,/Phrase I\b/);assert.match(hero,/Phrase II\b/);
+  assert.ok(!/\bPhase\s*(?:1|2|I|II)\b/i.test(text));
+  assert.ok(!/\bcontinuation\b/i.test(text));
+  assert.ok(!/\boriginal 12\b/i.test(text));
+  assert.match(page,/<h2>Leaderboard<\/h2>/);
+  const performance=page.match(/<section id="performance">[\s\S]*?<\/section>/)?.[0];
+  assert.ok(performance);assert.match(performance,/Phrase I\b/);assert.match(performance,/Phrase II\b/);
+  assert.equal(rounds.length,41);assert.equal(legacyRounds.length,12);
+  assert.equal((page.match(/<table(?:\s|>)/g)||[]).length,2);
+  assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
 });
