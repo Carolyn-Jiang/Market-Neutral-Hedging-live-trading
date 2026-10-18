@@ -161,10 +161,18 @@ test('the continuation copy matches next-node entry, following-node exit, and Fr
   assert.match(page,/<strong>23 Oct · 16:00<\/strong>/);
   assert.match(page,/an action based on the 09:30 release enters at 10:30 and exits at 11:30/);
   assert.match(page,/23 October at 14:30, with its action due at 15:25/);
-  assert.match(page,/At 15:30, enter that action and settle the preceding one/);
-  assert.match(page,/At 16:00, settle the last action and flatten all positions/);
+  assert.match(page,/On 23 October, 15:30 is an entry\/exit valuation boundary, not a scheduled website update/);
+  assert.match(page,/The 16:00 local job retrieves the exact 15:30 and 16:00 prices, settles both remaining intervals in sequence, and closes all positions/);
   const performance=page.match(/<section id="performance">[\s\S]*?<\/section>/)?.[0];
   assert.ok(performance&&!performance.includes('<a href='));
+});
+
+test('both native baselines start fresh at the first new observation and FinMem then locks its pair',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(page,/FinMem and Moira each select a fresh initial stock pair from the first published continuation observation on 19 October at 09:30/);
+  assert.match(page,/FinMem locks its pair for all 29 continuation rounds/);
+  assert.match(page,/Moira immediately selects a different eligible pair if its relationship monitor reports BREAK/);
+  assert.ok(!page.includes('Moire'));
 });
 
 test('legacy cached step records are validated but never used for public display',()=>{
