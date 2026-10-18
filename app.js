@@ -2,6 +2,9 @@ export const tickers = ['NVDA','GOOG','META','MSFT','JPM','AMZN','AAPL','AMD','W
 export const times = ['09:30','10:30','11:30','12:30','14:30','15:30'];
 export const finalCutoff = Date.parse('2026-10-16T08:00:00-04:00');
 export const finalResults = Date.parse('2026-10-16T10:30:00-04:00');
+export const continuationFinalCutoff = Date.parse('2026-10-23T15:25:00-04:00');
+export const continuationFinalResults = Date.parse('2026-10-23T16:00:00-04:00');
+export const totalRounds = 41;
 export const baselineNames = new Set(['Codex baseline','FinMem baseline','Moira baseline']);
 export const baselineDisplayLabels = Object.freeze({
   'Codex baseline':'Codex(gpt-5.3-codex) · Baseline',
@@ -19,24 +22,48 @@ export function releaseFolderUrl(value){
   }catch{return null}
 }
 export function finalChartUrl(state,now=Date.now()){
+  if(state?.phase==='preparing'&&isContinuation(state)&&state.completed_rounds===12&&state.chart==='/Market-Neutral-Hedging-live-trading/final-cr.svg'&&now>=finalResults)return new URL('final-cr.svg',import.meta.url).href;
+  if(isContinuation(state)&&Number.isInteger(state.completed_rounds)&&state.completed_rounds>=12&&state.completed_rounds<=totalRounds&&state.chart==='/Market-Neutral-Hedging-live-trading/return-paths.svg'){
+    const version=state.curve_version||state.updated_at;
+    if(typeof version!=='string'||!Number.isFinite(Date.parse(version)))return null;
+    const url=new URL('return-paths.svg',import.meta.url);url.searchParams.set('v',version);return url.href;
+  }
   return state.final===true&&state.event===14&&state.terminal_settlement_complete===true&&now>=finalResults&&state.chart==='/Market-Neutral-Hedging-live-trading/final-cr.svg'?new URL('final-cr.svg',import.meta.url).href:null;
 }
-export const rounds = ['14','15'].flatMap(day => times.map((time,index)=>{
+export const legacyRounds = ['14','15'].flatMap(day => times.map((time,index)=>{
   const next = times[index+1];
   const end = `2026-10-${day}T${time}:00-04:00`;
   const start = index===0 ? `2026-10-${String(Number(day)-1)}T15:30:00-04:00` : `2026-10-${day}T${times[index-1]}:00-04:00`;
   const deadline = next ? new Date(Date.parse(`2026-10-${day}T${next}:00-04:00`)-300000).toISOString() : (day==='14'?'2026-10-15T09:25:00-04:00':'2026-10-16T08:00:00-04:00');
   return {id:`2026-10-${day}_${time}`,release:end,window_start:start,deadline};
 }));
+const continuationTimes=['19','20','21','22','23'].flatMap(day=>(day==='23'?times.slice(0,-1):times).map(time=>`2026-10-${day}T${time}:00-04:00`));
+const legacyValuations=[...legacyRounds.map(r=>r.release),'2026-10-16T09:30:00-04:00','2026-10-16T10:30:00-04:00'];
+const continuationValuations=[...continuationTimes,'2026-10-23T15:30:00-04:00','2026-10-23T16:00:00-04:00'];
+export const rounds=[
+  ...legacyRounds.map((r,i)=>({...r,entry_at:legacyValuations[i+1],exit_at:legacyValuations[i+2]})),
+  ...continuationTimes.map((release,i)=>({id:release.slice(0,10)+'_'+release.slice(11,16),release,window_start:i===0?'2026-10-16T16:00:00-04:00':continuationTimes[i-1],deadline:new Date(Date.parse(continuationValuations[i+1])-300000).toISOString(),entry_at:continuationValuations[i+1],exit_at:continuationValuations[i+2]})),
+];
+export const releaseSchedule=rounds.map((r,i)=>({round:i+1,round_id:r.id,timestamp:r.release,window_start:r.window_start,window_end:r.release,action_due:r.deadline,entry_at:r.entry_at,exit_at:r.exit_at}));
+export function isContinuation(state){return ['continuation','preparing'].includes(state?.phase)&&state.total_rounds===totalRounds}
+export function validateReleaseSchedule(schedule){
+  if(!Array.isArray(schedule)||schedule.length!==totalRounds)throw Error('Invalid release schedule');
+  const timeKeys=['timestamp','window_start','window_end','action_due','entry_at','exit_at'];
+  for(const[itemIndex,item]of schedule.entries()){
+    const expected=releaseSchedule[itemIndex];
+    if(!item||Object.keys(item).sort().join(',')!==Object.keys(expected).sort().join(',')||item.round!==expected.round||item.round_id!==expected.round_id||timeKeys.some(key=>Date.parse(item[key])!==Date.parse(expected[key])))throw Error('Release schedule differs from the published New York protocol');
+  }
+  return schedule;
+}
 export function validateAction(payload){
   return typeof payload.team_name==='string' && payload.team_name.trim().length>0 && payload.team_name.trim().length<=80 && tickers.includes(payload.stock1) && tickers.includes(payload.stock2) && payload.stock1!==payload.stock2 && ['LS','SL','F'].includes(payload.action);
 }
-export function validateBoard(board){
+export function validateBoard(board,{aggregateOnly=false}={}){
   const top=['schema','final','updated_at','terminal_settlement_complete','rows'];
   if(!board || board.schema!=='finreason.task2.public-returns/1' || Object.keys(board).some(k=>!top.includes(k)) || typeof board.final!=='boolean' || !Array.isArray(board.rows)) throw Error('Invalid public returns feed');
   const names=new Set();
   for(const row of board.rows){
-    const keys=['team_name','cumulative_return','is_baseline','history','steps','sharpe_ratio','max_drawdown'];
+    const keys=['team_name','cumulative_return','is_baseline','sharpe_ratio','max_drawdown',...(aggregateOnly?[]:['history','steps'])];
     if(Object.keys(row).some(k=>!keys.includes(k)) || typeof row.team_name!=='string' || !row.team_name.trim() || names.has(row.team_name) || !Number.isFinite(row.cumulative_return) || typeof row.is_baseline!=='boolean') throw Error('Invalid public row');
     names.add(row.team_name);
     if(row.is_baseline!==baselineNames.has(row.team_name)) throw Error('Unknown or mislabeled baseline');
@@ -56,14 +83,21 @@ export function validateBoard(board){
   return board;
 }
 export function validateSnapshot(state){
-  if(!state||state.schema!=='finreason.task2.website/1'||!Number.isInteger(state.event)||state.event<0||state.event>14||typeof state.data_status!=='string'||typeof state.submission_status!=='string'||!Array.isArray(state.releases))throw Error('Invalid publication snapshot');
+  if(!state||state.schema!=='finreason.task2.website/1'||!Number.isInteger(state.event)||state.event<0||state.event>45||typeof state.data_status!=='string'||typeof state.submission_status!=='string'||!Array.isArray(state.releases))throw Error('Invalid publication snapshot');
+  const continuation=isContinuation(state);
+  if(state.event>14&&!continuation)throw Error('Continuation event requires its protocol');
+  if(continuation){
+    if(!Number.isInteger(state.completed_rounds)||state.completed_rounds<12||state.completed_rounds>totalRounds)throw Error('Invalid completed round count');
+    if(state.release_schedule!==undefined)validateReleaseSchedule(state.release_schedule);
+  }else if('phase' in state||'total_rounds' in state||'completed_rounds' in state||'release_schedule' in state)throw Error('Invalid continuation protocol');
+  if('training_status' in state&&typeof state.training_status!=='string')throw Error('Invalid baseline preparation status');
   const ids=new Set();
   for(const release of state.releases){
     if(!release||!rounds.some(r=>r.id===release.round_id)||ids.has(release.round_id)||!releaseFolderUrl(release.folder_url))throw Error('Invalid published release');
     ids.add(release.round_id);
   }
-  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows});
-  if(state.final&&(state.event!==14||state.terminal_settlement_complete!==true))throw Error('Final results require verified terminal settlement at event 14');
+  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:continuation});
+  if(state.final&&(state.event!==(continuation?45:14)||state.terminal_settlement_complete!==true||(continuation&&state.completed_rounds!==totalRounds)))throw Error('Final results require verified terminal settlement');
   return state;
 }
 
@@ -83,6 +117,7 @@ async function init(){
   for(const release of state?.releases||[])published.set(release.round_id,release);
   $('rounds').replaceChildren();
   for(const[i,r]of rounds.entries()){
+   if(i===12){const separator=document.createElement('tr');separator.className='phase-separator';cell(separator,'Continuation · 19–23 October 2026 · Rounds 13–41').colSpan=5;$('rounds').append(separator)}
    const tr=document.createElement('tr');cell(tr,String(i+1));cell(tr,format(r.release));cell(tr,format(r.window_start)+' → '+format(r.release));cell(tr,format(r.deadline));
    const td=cell(tr,data||state?'Not published':'Publication status unavailable');const p=published.get(r.id);
    const folder=releaseFolderUrl(p?.folder_url);
@@ -91,8 +126,8 @@ async function init(){
   }
   try{
    if(!state)throw Error('Verified publication snapshot unavailable');
-   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows});
-   $('availability').textContent=state.data_status+' '+state.submission_status;
+   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:isContinuation(state)});
+   $('availability').textContent=[state.data_status,state.submission_status,state.training_status].filter(Boolean).join(' ');
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
    for(const[i,r]of sorted.entries()){
@@ -103,7 +138,7 @@ async function init(){
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);
-   if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified final cumulative-return paths, including Codex, FinMem and Moira baselines';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent='Final cumulative returns verified by the local scorer, including Codex, FinMem and Moira baselines.'}else if(previous)previous.remove();
+   if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified cumulative-return paths, including Codex, FinMem and Moira baselines';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent=isContinuation(state)?'Locally verified cumulative return paths after '+state.completed_rounds+' of '+totalRounds+' settled rounds, including Codex, FinMem and Moira baselines.':'Final cumulative returns verified by the local scorer, including Codex, FinMem and Moira baselines.'}else if(previous)previous.remove();
   }catch{$('availability').textContent='Workflow page published. Private submissions remain unavailable until the receipt service is verified.';$('chart-status').textContent='Verified results feed unavailable; no estimated returns are displayed.'}
  }
  refresh();setInterval(refresh,60000);

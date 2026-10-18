@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,rounds,displayTeamName,formatSharpe,formatMaxDrawdown} from '../app.js';
+import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,validateReleaseSchedule,rounds,legacyRounds,releaseSchedule,continuationFinalCutoff,continuationFinalResults,displayTeamName,formatSharpe,formatMaxDrawdown} from '../app.js';
 
 test('Submit a pair action opens the receipt portal directly',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -13,7 +13,7 @@ test('Submit a pair action opens the receipt portal directly',()=>{
 
 test('the public snapshot is resolved beside this personal-site module',()=>{
   assert.equal(publicSnapshotUrl,new URL('../live-state.json',import.meta.url).href);
-  assert.equal(rounds.length,12);
+  assert.equal(rounds.length,41);
 });
 
 test('published Files links point only to the specified HF release folders',()=>{
@@ -88,7 +88,10 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
     await new Promise(resolve=>setImmediate(resolve));
     assert.equal(calls.length,2);
     assert.ok(calls[1].startsWith(publicSnapshotUrl+'?snapshot='));
-    assert.equal(nodes.get('rounds').children.length,12);
+    assert.equal(nodes.get('rounds').children.length,42);
+    assert.equal(nodes.get('rounds').children[12].className,'phase-separator');
+    assert.equal(nodes.get('rounds').children[12].children[0].colSpan,5);
+    assert.equal(nodes.get('rounds').children[13].children[0].textContent,'13');
     const filesCell=nodes.get('rounds').children[0].children[4];
     assert.equal(filesCell.children[0].href,folder);
     assert.equal(filesCell.children[0].textContent,'Open release folder ↗');
@@ -153,12 +156,13 @@ test('final return paths include the baseline and mount only once across page re
   }
 });
 
-test('the displayed final schedule matches next-release entry and following-event exit',()=>{
+test('the continuation copy matches next-node entry, following-node exit, and Friday close',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(page,/<strong>16 Oct · 10:30<\/strong>/);
+  assert.match(page,/<strong>23 Oct · 16:00<\/strong>/);
   assert.match(page,/an action based on the 09:30 release enters at 10:30 and exits at 11:30/);
-  assert.match(page,/At 16 October 09:30, settle Round 11 and enter Round 12/);
-  assert.match(page,/At 10:30, settle Round 12/);
+  assert.match(page,/23 October at 14:30, with its action due at 15:25/);
+  assert.match(page,/At 15:30, enter that action and settle the preceding one/);
+  assert.match(page,/At 16:00, settle the last action and flatten all positions/);
   const performance=page.match(/<section id="performance">[\s\S]*?<\/section>/)?.[0];
   assert.ok(performance&&!performance.includes('<a href='));
 });
@@ -217,8 +221,65 @@ test('optional risk metrics accept legacy rows and reject invalid public values'
   assert.equal(formatMaxDrawdown(undefined),'Updating…');assert.equal(formatMaxDrawdown(null),'Updating…');assert.equal(formatMaxDrawdown(0),'0%');assert.equal(formatMaxDrawdown(.01234),'1.23%');
 });
 
-test('risk columns document their nonannualized twelve-step settlement-only definition',()=>{
+test('risk columns document all completed steps and settlement-only observations',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(page,/>Sharpe ratio<\/th>/);assert.match(page,/>Max drawdown<\/th>/);
-  assert.match(page,/12 step returns/);assert.match(page,/sample standard deviation \(ddof=1\)/);assert.match(page,/risk-free return 0; not annualized/);assert.match(page,/settlement endpoints only, not intrastep/);
+  assert.match(page,/all completed step returns/);assert.match(page,/sample standard deviation \(ddof=1\)/);assert.match(page,/risk-free return 0; not annualized/);assert.match(page,/settlement endpoints only, not intrastep/);assert.match(page,/41 rounds in total; unsettled rounds are excluded/);
+});
+
+test('the 41-round schedule preserves the original twelve and pins all continuation boundaries',()=>{
+  assert.equal(legacyRounds.length,12);assert.equal(rounds.length,41);
+  assert.deepEqual(rounds.slice(0,12).map(({id,release,window_start,deadline})=>({id,release,window_start,deadline})),legacyRounds);
+  assert.equal(rounds[11].deadline,'2026-10-16T08:00:00-04:00');
+  assert.equal(rounds[11].entry_at,'2026-10-16T09:30:00-04:00');assert.equal(rounds[11].exit_at,'2026-10-16T10:30:00-04:00');
+  assert.equal(rounds[12].window_start,'2026-10-16T16:00:00-04:00');assert.equal(rounds[12].release,'2026-10-19T09:30:00-04:00');
+  assert.equal(rounds[12].entry_at,'2026-10-19T10:30:00-04:00');assert.equal(rounds[12].exit_at,'2026-10-19T11:30:00-04:00');
+  assert.equal(rounds[18].window_start,'2026-10-19T15:30:00-04:00');assert.equal(rounds[18].release,'2026-10-20T09:30:00-04:00');
+  assert.deepEqual(['19','20','21','22','23'].map(day=>rounds.filter(r=>r.release.startsWith('2026-10-'+day)).length),[6,6,6,6,5]);
+  assert.equal(rounds[40].release,'2026-10-23T14:30:00-04:00');assert.equal(Date.parse(rounds[40].deadline),continuationFinalCutoff);
+  assert.equal(rounds[40].entry_at,'2026-10-23T15:30:00-04:00');assert.equal(Date.parse(rounds[40].exit_at),continuationFinalResults);
+  assert.equal(validateReleaseSchedule(releaseSchedule),releaseSchedule);
+  for(const change of [{round:14},{round_id:'invalid'},{window_start:'2026-10-16T15:30:00-04:00'},{action_due:'2026-10-19T10:30:00-04:00'},{exit_at:'2026-10-19T10:30:00-04:00'},{extra:'private'}]){
+    assert.throws(()=>validateReleaseSchedule(releaseSchedule.map((r,i)=>i===12?{...r,...change}:r)));
+  }
+});
+
+test('continuation snapshots use dynamic counts and strictly aggregate-only variable team rows',()=>{
+  const row={team_name:'New late team',cumulative_return:0,is_baseline:false,sharpe_ratio:null,max_drawdown:0};
+  const state={schema:'finreason.task2.website/1',event:15,phase:'continuation',total_rounds:41,completed_rounds:12,final:false,data_status:'12 of 41 published.',submission_status:'Closed.',release_schedule:releaseSchedule,releases:[],rows:[row]};
+  assert.equal(validateSnapshot(state),state);
+  assert.doesNotThrow(()=>validateSnapshot({...state,event:14,phase:'preparing',training_status:'Baseline preparation pending.'}));
+  assert.doesNotThrow(()=>validateSnapshot({...state,rows:[row,...Array.from({length:20},(_,i)=>({...row,team_name:'Late team '+i}))]}));
+  for(const changes of [{event:46},{phase:'unverified'},{total_rounds:40},{completed_rounds:11},{completed_rounds:42},{training_status:{private:true}},{final:true,event:44,completed_rounds:41,terminal_settlement_complete:true},{final:true,event:45,completed_rounds:40,terminal_settlement_complete:true}])assert.throws(()=>validateSnapshot({...state,...changes}));
+  assert.doesNotThrow(()=>validateSnapshot({...state,final:true,event:45,completed_rounds:41,terminal_settlement_complete:true}));
+  for(const extra of [{steps:[]},{history:[]},{stock1:'NVDA'},{action:'LS'},{accepted_at:'private'}])assert.throws(()=>validateSnapshot({...state,rows:[{...row,...extra}]}));
+});
+
+test('verified live curves update during continuation without a final-only gate and bust stale images',()=>{
+  const state={event:17,phase:'continuation',total_rounds:41,completed_rounds:13,final:false,updated_at:'2026-10-19T11:31:00-04:00',chart:'/Market-Neutral-Hedging-live-trading/return-paths.svg'};
+  const url=new URL(finalChartUrl(state));assert.equal(url.pathname,new URL('../return-paths.svg',import.meta.url).pathname);assert.equal(url.searchParams.get('v'),state.updated_at);
+  assert.notEqual(finalChartUrl(state),finalChartUrl({...state,updated_at:'2026-10-19T12:31:00-04:00',completed_rounds:14}));
+  for(const changes of [{chart:'/other/return-paths.svg'},{completed_rounds:11},{completed_rounds:42},{updated_at:'invalid'},{phase:'unverified'}])assert.equal(finalChartUrl({...state,...changes}),null);
+  assert.equal(finalChartUrl({...state,event:14,phase:'preparing',completed_rounds:12,chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'},finalResults),new URL('../final-cr.svg',import.meta.url).href);
+});
+
+test('continuation refresh shows new folders, late teams, risk metrics and each newly verified curve',async()=>{
+  let refresh,mounts=0;const nodes=new Map();
+  function element(tagName='div'){return {tagName,children:[],style:{},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=[...items]},after(child){mounts++;nodes.set(child.id,child)},remove(){nodes.delete(this.id)}}}
+  for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
+  const folder='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-19_09-30_NY';
+  let state={schema:'finreason.task2.website/1',phase:'continuation',total_rounds:41,completed_rounds:13,event:17,final:false,updated_at:'2026-10-19T11:31:00-04:00',data_status:'15 of 41 published.',submission_status:'Round 15 is open.',training_status:'Baseline preparation ready.',release_schedule:releaseSchedule,releases:[{round_id:rounds[12].id,folder_url:folder}],rows:[{team_name:'Late team',cumulative_return:0,is_baseline:false,sharpe_ratio:null,max_drawdown:0},{team_name:'Moira baseline',cumulative_return:.03,is_baseline:true,sharpe_ratio:.4,max_drawdown:.005}],chart:'/Market-Neutral-Hedging-live-trading/return-paths.svg'};
+  const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval};
+  globalThis.document={getElementById:id=>nodes.get(id)||null,createElement:element};globalThis.setInterval=fn=>{refresh=fn;return 0};
+  globalThis.fetch=async url=>({ok:true,json:async()=>String(url).includes('/releases.json')?{published_rounds:[]}:state});
+  try{
+    await import('../app.js?continuation-render-test');await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(nodes.get('rounds').children.length,42);assert.equal(nodes.get('rounds').children[13].children[4].children[0].href,folder);
+    const rows=nodes.get('leaderboard').children;assert.equal(rows.length,2);assert.equal(rows[0].children[1].textContent,'Moira(gpt-4.1-mini) · Baseline');assert.equal(rows[1].children[1].textContent,'Late team');assert.equal(rows[1].children[4].textContent,'0%');
+    assert.equal(nodes.get('rank-heading').textContent,'CR rank');assert.match(nodes.get('availability').textContent,/Baseline preparation ready/);
+    const image=nodes.get('final-image');assert.ok(image);assert.match(nodes.get('chart-status').textContent,/13 of 41 settled rounds/);assert.equal(mounts,1);
+    await refresh();assert.equal(nodes.get('final-image'),image);assert.equal(mounts,1);
+    state={...state,event:18,completed_rounds:14,updated_at:'2026-10-19T12:31:00-04:00'};await refresh();
+    assert.notEqual(nodes.get('final-image'),image);assert.equal(mounts,2);assert.equal(new URL(nodes.get('final-image').src).searchParams.get('v'),state.updated_at);assert.match(nodes.get('chart-status').textContent,/14 of 41 settled rounds/);
+  }finally{for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
 });
