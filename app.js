@@ -127,7 +127,6 @@ async function init(){
   try{
    if(!state)throw Error('Verified publication snapshot unavailable');
    const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:isContinuation(state)});
-   $('availability').textContent=[state.data_status,state.submission_status,state.training_status].filter(Boolean).join(' ');
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
    const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
    for(const[i,r]of sorted.entries()){
@@ -139,7 +138,7 @@ async function init(){
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);
    if(chartUrl){if(!previous||previous.src!==chartUrl){if(previous)previous.remove();const img=document.createElement('img');img.id='final-image';img.src=chartUrl;img.alt='Verified cumulative-return paths, including Codex, FinMem and Moira baselines';img.style.width='100%';$('chart').after(img)}$('chart-status').textContent=isContinuation(state)?'Locally verified cumulative return paths after '+state.completed_rounds+' of '+totalRounds+' settled rounds, including Codex, FinMem and Moira baselines.':'Final cumulative returns verified by the local scorer, including Codex, FinMem and Moira baselines.'}else if(previous)previous.remove();
-  }catch{$('availability').textContent='Workflow page published. Private submissions remain unavailable until the receipt service is verified.';$('chart-status').textContent='Verified results feed unavailable; no estimated returns are displayed.'}
+  }catch{$('chart-status').textContent='Verified results feed unavailable; no estimated returns are displayed.'}
  }
  refresh();setInterval(refresh,60000);
 }

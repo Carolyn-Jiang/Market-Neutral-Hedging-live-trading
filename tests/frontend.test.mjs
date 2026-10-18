@@ -71,7 +71,7 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
   function element(tagName='div'){
     return {tagName,children:[],style:{},append(...children){this.children.push(...children)},replaceChildren(...children){this.children=[...children]},after(){},remove(){}};
   }
-  const nodes=new Map(['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'].map(id=>[id,element()]));
+  const nodes=new Map(['clock','rounds','rank-heading','leaderboard','chart','chart-status'].map(id=>[id,element()]));
   const folder='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-14_09-30_NY';
   const calls=[];
   const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval};
@@ -95,7 +95,7 @@ test('verified personal snapshot supplies a release folder when HF manifest is u
     const filesCell=nodes.get('rounds').children[0].children[4];
     assert.equal(filesCell.children[0].href,folder);
     assert.equal(filesCell.children[0].textContent,'Open release folder ↗');
-    assert.equal(nodes.get('availability').textContent,'1 of 12 data batches published. Round 1 is open.');
+    assert.equal(nodes.has('availability'),false);
     assert.equal(nodes.get('leaderboard').children[0].children[0].textContent,'1');
     assert.equal(nodes.get('leaderboard').children[0].children[1].textContent,'Codex(gpt-5.3-codex) · Baseline');
     assert.equal(nodes.get('leaderboard').children[0].children[2].textContent,'2.00%');
@@ -128,7 +128,7 @@ test('final return paths include the baseline and mount only once across page re
   function element(tagName='div'){
     return {tagName,children:[],style:{},append(...children){this.children.push(...children)},replaceChildren(...children){this.children=[...children]},after(child){mounts++;nodes.set(child.id,child)},remove(){nodes.delete(this.id)}};
   }
-  for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
+  for(const id of ['clock','rounds','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
   const state={schema:'finreason.task2.website/1',event:14,final:true,terminal_settlement_complete:true,updated_at:'2026-10-16T10:30:00-04:00',data_status:'12 of 12 data batches published.',submission_status:'All rounds closed.',releases:[],rows:[{team_name:'Team A',cumulative_return:0.01,is_baseline:false},{team_name:'Codex baseline',cumulative_return:0.02,is_baseline:true}],chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'};
   const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval,now:Date.now};
   globalThis.document={getElementById:id=>nodes.get(id)||null,createElement:tag=>element(tag)};
@@ -190,7 +190,7 @@ test('all nine rows display aggregate performance only even with a stale step-be
   function element(tagName='div'){
     return {tagName,children:[],style:{},attrs:{},events:{},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=[...items]},after(child){nodes.set(child.id,child)},remove(){nodes.delete(this.id)},setAttribute(key,value){this.attrs[key]=value},addEventListener(event,fn){this.events[event]=fn},click(){this.events.click?.()}};
   }
-  for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
+  for(const id of ['clock','rounds','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
   const names=['Participant A','Participant B','Participant C','Participant D','Participant E','Participant F','Codex baseline','FinMem baseline','Moira baseline'];
   const steps=Array.from({length:12},(_,i)=>({step:i+1,stock1:i===11?null:'NVDA',stock2:i===11?null:'GOOG',action:i===11?'F':'LS'}));
   const state={schema:'finreason.task2.website/1',event:14,final:true,terminal_settlement_complete:true,data_status:'12 of 12 published.',submission_status:'Closed.',releases:[],rows:names.map((team_name,i)=>({team_name,cumulative_return:(9-i)/100,is_baseline:team_name.endsWith(' baseline'),sharpe_ratio:i===0?null:.125,max_drawdown:.01234,steps})),chart:'/Market-Neutral-Hedging-live-trading/final-cr.svg'};
@@ -274,7 +274,7 @@ test('verified live curves update during continuation without a final-only gate 
 test('continuation refresh shows new folders, late teams, risk metrics and each newly verified curve',async()=>{
   let refresh,mounts=0;const nodes=new Map();
   function element(tagName='div'){return {tagName,children:[],style:{},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=[...items]},after(child){mounts++;nodes.set(child.id,child)},remove(){nodes.delete(this.id)}}}
-  for(const id of ['clock','rounds','availability','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
+  for(const id of ['clock','rounds','rank-heading','leaderboard','chart','chart-status'])nodes.set(id,element());
   const folder='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-19_09-30_NY';
   let state={schema:'finreason.task2.website/1',phase:'continuation',total_rounds:41,completed_rounds:13,event:17,final:false,updated_at:'2026-10-19T11:31:00-04:00',data_status:'15 of 41 published.',submission_status:'Round 15 is open.',training_status:'Baseline preparation ready.',release_schedule:releaseSchedule,releases:[{round_id:rounds[12].id,folder_url:folder}],rows:[{team_name:'Late team',cumulative_return:0,is_baseline:false,sharpe_ratio:null,max_drawdown:0},{team_name:'Moira baseline',cumulative_return:.03,is_baseline:true,sharpe_ratio:.4,max_drawdown:.005}],chart:'/Market-Neutral-Hedging-live-trading/return-paths.svg'};
   const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval};
@@ -284,10 +284,59 @@ test('continuation refresh shows new folders, late teams, risk metrics and each 
     await import('../app.js?continuation-render-test');await new Promise(resolve=>setImmediate(resolve));
     assert.equal(nodes.get('rounds').children.length,42);assert.equal(nodes.get('rounds').children[13].children[4].children[0].href,folder);
     const rows=nodes.get('leaderboard').children;assert.equal(rows.length,2);assert.equal(rows[0].children[1].textContent,'Moira(gpt-4.1-mini) · Baseline');assert.equal(rows[1].children[1].textContent,'Late team');assert.equal(rows[1].children[4].textContent,'0%');
-    assert.equal(nodes.get('rank-heading').textContent,'CR rank');assert.match(nodes.get('availability').textContent,/Baseline preparation ready/);
+    assert.equal(nodes.get('rank-heading').textContent,'CR rank');assert.equal(nodes.has('availability'),false);
     const image=nodes.get('final-image');assert.ok(image);assert.match(nodes.get('chart-status').textContent,/13 of 41 settled rounds/);assert.equal(mounts,1);
     await refresh();assert.equal(nodes.get('final-image'),image);assert.equal(mounts,1);
     state={...state,event:18,completed_rounds:14,updated_at:'2026-10-19T12:31:00-04:00'};await refresh();
     assert.notEqual(nodes.get('final-image'),image);assert.equal(mounts,2);assert.equal(new URL(nodes.get('final-image').src).searchParams.get('v'),state.updated_at);assert.match(nodes.get('chart-status').textContent,/14 of 41 settled rounds/);
+  }finally{for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
+});
+
+test('the removed yellow availability banner has no markup, style or application writes',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const source=readFileSync(new URL('../app.js',import.meta.url),'utf8');
+  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.ok(!page.includes('id="availability"'));
+  assert.ok(!page.includes('class="notice"'));
+  assert.ok(!source.includes('availability'));
+  assert.ok(!css.includes('.notice'));
+});
+
+test('a gray Finished Phase 1 deadline card precedes unchanged dark Phase 2 milestones',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  const phase1=page.match(/<section id="phase1-deadlines"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  const phase2=page.match(/<section id="phase2-deadlines"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(phase1&&phase2);assert.ok(page.indexOf(phase1)<page.indexOf(phase2));
+  assert.match(phase1,/class="stats stats-finished"/);assert.match(phase1,/aria-label="Phase 1 deadlines"/);
+  assert.match(phase1,/<h2>Phase 1<\/h2>/);assert.match(phase1,/>Finished<\/span>/);
+  assert.deepEqual([...phase1.matchAll(/<strong>(.*?)<\/strong>/g)].map(match=>match[1]),['14 Oct · 10:25','16 Oct · 08:00','16 Oct · 10:30']);
+  assert.equal((phase1.match(/New York time/g)||[]).length,3);
+  assert.match(phase2,/class="stats"/);assert.match(phase2,/aria-label="Phase 2 deadlines"/);assert.match(phase2,/<h2>Phase 2<\/h2>/);
+  assert.deepEqual([...phase2.matchAll(/<strong>(.*?)<\/strong>/g)].map(match=>match[1]),['19 Oct · 10:25','23 Oct · 15:25','23 Oct · 16:00']);
+  assert.ok(!phase2.includes('stats-finished'));assert.ok(!phase2.includes('Finished'));
+  const background=css.match(/\.stats-finished\{[^}]*background:#([0-9a-f]{6})/i)?.[1];assert.ok(background);
+  const channels=background.match(/../g).map(part=>parseInt(part,16));assert.ok(Math.max(...channels)-Math.min(...channels)<=16);assert.ok(Math.min(...channels)>=150);
+  assert.match(css,/\.stats\{[^}]*background:var\(--ink\)/);
+  assert.equal((page.match(/<table(?:\s|>)/g)||[]).length,2);
+  assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
+  assert.ok(!/id="phase[12]-(?:chart|performance|metrics|returns)"/.test(page));
+});
+
+test('network failure renders a safe unavailable state without the removed banner node',async()=>{
+  function element(tagName='div'){return {tagName,children:[],style:{},append(...items){this.children.push(...items)},replaceChildren(...items){this.children=[...items]},after(){},remove(){}}}
+  const nodes=new Map(['clock','rounds','rank-heading','leaderboard','chart','chart-status'].map(id=>[id,element()]));
+  const previous={document:globalThis.document,fetch:globalThis.fetch,setInterval:globalThis.setInterval};
+  let refresh;
+  globalThis.document={getElementById:id=>nodes.get(id)||null,createElement:element};
+  globalThis.setInterval=fn=>{refresh=fn;return 0};
+  globalThis.fetch=async()=>{throw Error('Synthetic network unavailable')};
+  try{
+    await import('../app.js?no-banner-network-error');await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(nodes.has('availability'),false);
+    assert.equal(nodes.get('rounds').children.length,42);
+    assert.equal(nodes.get('rounds').children[0].children[4].textContent,'Publication status unavailable');
+    assert.equal(nodes.get('chart-status').textContent,'Verified results feed unavailable; no estimated returns are displayed.');
+    await assert.doesNotReject(refresh());
   }finally{for(const key of ['document','fetch','setInterval']){if(previous[key]===undefined)delete globalThis[key];else globalThis[key]=previous[key]}}
 });
