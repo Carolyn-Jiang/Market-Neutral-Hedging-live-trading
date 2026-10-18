@@ -3,6 +3,16 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {publicSnapshotUrl,releaseFolderUrl,finalChartUrl,finalResults,validateBoard,validateSnapshot,validateReleaseSchedule,rounds,legacyRounds,releaseSchedule,continuationFinalCutoff,continuationFinalResults,displayTeamName,formatSharpe,formatMaxDrawdown} from '../app.js';
 
+test('hero title uses two fixed lines with black first line and green second line',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(page,/<title>Market-Neutral Hedging · Live Trading<\/title>/);
+  assert.match(page,/<h1><span class="hero-title-main">Market-Neutral Hedging<\/span> <span>Live Trading<\/span><\/h1>/);
+  assert.match(css,/\.hero h1 span\{display:block;white-space:nowrap\}/);
+  assert.match(css,/\.hero h1 \.hero-title-main\{color:#000\}/);
+  assert.match(css,/h1 span\{color:var\(--accent\)\}/);
+});
+
 test('Submit a pair action opens the receipt portal directly',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const section=page.match(/<section id="submit">[\s\S]*?<\/section>/)?.[0];
@@ -353,8 +363,6 @@ test('network failure renders a safe unavailable state without the removed banne
 
 test('public descriptions consistently use the exact Phrase I and Phrase II names',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(page,/<title>Market-neutral Live Trading<\/title>/);
-  assert.match(page,/<h1>Market-neutral Live Trading<\/h1>/);
   assert.ok(!page.includes('Market-neutral decisions.')&&!page.includes('Measured round by round.'));
   const text=page.replace(/<[^>]*>/g,' ');
   const hero=page.match(/<section class="hero">[\s\S]*?<\/section>/)?.[0];
