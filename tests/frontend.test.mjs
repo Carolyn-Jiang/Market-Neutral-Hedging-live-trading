@@ -353,6 +353,9 @@ test('network failure renders a safe unavailable state without the removed banne
 
 test('public descriptions consistently use the exact Phrase I and Phrase II names',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(page,/<title>Market-neutral Live Trading<\/title>/);
+  assert.match(page,/<h1>Market-neutral Live Trading<\/h1>/);
+  assert.ok(!page.includes('Market-neutral decisions.')&&!page.includes('Measured round by round.'));
   const text=page.replace(/<[^>]*>/g,' ');
   const hero=page.match(/<section class="hero">[\s\S]*?<\/section>/)?.[0];
   assert.ok(hero);assert.match(hero,/Phrase I\b/);assert.match(hero,/Phrase II\b/);
