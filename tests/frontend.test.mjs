@@ -369,3 +369,25 @@ test('public descriptions consistently use the exact Phrase I and Phrase II name
   assert.equal((page.match(/<table(?:\s|>)/g)||[]).length,2);
   assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
 });
+
+test('bottom baseline references show only the two requested repository URLs without changing results',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  const rules=page.match(/<section id="rules">[\s\S]*?<\/section>/)?.[0];
+  assert.ok(references&&rules);
+  assert.match(references,/aria-labelledby="baseline-references-heading"/);
+  assert.match(references,/<h2 id="baseline-references-heading">/);
+  assert.match(references,/<h2(?:\s[^>]*)?>Baseline references<\/h2>/);
+  assert.ok(page.indexOf(references)>page.indexOf(rules)+rules.length-1);
+  assert.ok(page.indexOf(references)+references.length<page.indexOf('<footer>'));
+  assert.match(references,/\bMoira\b/i);assert.match(references,/\bFinMem\b/);
+  const links=[...references.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
+  const expected=['https://github.com/Carolyn-Jiang/MOIRA','https://github.com/pipiku915/FinMem-LLM-StockTrading'];
+  assert.equal(links.length,2);assert.deepEqual(links.map(match=>match[1]).sort(),[...expected].sort());
+  for(const link of links)assert.equal(link[2].replace(/<[^>]*>/g,'').trim(),link[1]);
+  assert.match(page,/<a href="https:\/\/github\.com\/Carolyn-Jiang\/Market-Neutral-Hedging-live-trading">Source repository ↗<\/a>/);
+  assert.ok(!/accepted_at|stock1|stock2|team_token|OPENAI_API_KEY|HF_TOKEN|sealed_at/.test(references));
+  assert.equal((page.match(/<table(?:\s|>)/g)||[]).length,2);
+  assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
+  assert.equal((page.match(/id="leaderboard"/g)||[]).length,1);
+});
