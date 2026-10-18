@@ -165,6 +165,7 @@ test('the continuation copy matches next-node entry, following-node exit, and Fr
   assert.match(page,/The 16:00 local job retrieves the exact 15:30 and 16:00 prices, settles both remaining intervals in sequence, and closes all positions/);
   const performance=page.match(/<section id="performance">[\s\S]*?<\/section>/)?.[0];
   assert.ok(performance&&!performance.includes('<a href='));
+  assert.match(performance,/<h2>Leaderboard<\/h2>/);
 });
 
 test('both native baselines start fresh at the first new observation and FinMem then locks its pair',()=>{
