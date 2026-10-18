@@ -1,13 +1,429 @@
 {
   "schema": "finreason.task2.website/1",
+  "phase": "preparing",
   "event": 14,
-  "updated_at": "2026-10-18T11:26:10.649385-04:00",
-  "data_status": "12 of 12 data batches published; 0 pending; 0 failed.",
-  "submission_status": "Submit each round once through the receipt portal. Only successfully published rounds open; scheduled deadlines apply.",
-  "ranking_status": "Original results retained. The continuation starts on 19 October at 09:30 New York time. Stock pairs and actions are no longer published.",
-  "final": true,
-  "terminal_settlement_complete": true,
-  "chart": "/Market-Neutral-Hedging-live-trading/final-cr.svg",
+  "updated_at": "2026-10-18T11:35:57.002052-04:00",
+  "total_rounds": 41,
+  "completed_rounds": 12,
+  "data_status": "12 of 41 data batches published; future batches remain scheduled.",
+  "submission_status": "Existing and new teams may submit once per open round. Use the same Team Name and browser. Missed rounds are Flat. Only successfully published data opens a round.",
+  "ranking_status": "12 of 41 rounds verified; prior cumulative returns are carried forward.",
+  "final": false,
+  "terminal_settlement_complete": false,
+  "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
+  "curve_version": "2026-10-18T11:35:57.002052-04:00",
+  "release_schedule": [
+    {
+      "round": 1,
+      "round_id": "2026-10-14_09:30",
+      "timestamp": "2026-10-14T09:30:00-04:00",
+      "window_start": "2026-10-13T15:30:00-04:00",
+      "window_end": "2026-10-14T09:30:00-04:00",
+      "action_due": "2026-10-14T10:25:00-04:00",
+      "entry_at": "2026-10-14T10:30:00-04:00",
+      "exit_at": "2026-10-14T11:30:00-04:00"
+    },
+    {
+      "round": 2,
+      "round_id": "2026-10-14_10:30",
+      "timestamp": "2026-10-14T10:30:00-04:00",
+      "window_start": "2026-10-14T09:30:00-04:00",
+      "window_end": "2026-10-14T10:30:00-04:00",
+      "action_due": "2026-10-14T11:25:00-04:00",
+      "entry_at": "2026-10-14T11:30:00-04:00",
+      "exit_at": "2026-10-14T12:30:00-04:00"
+    },
+    {
+      "round": 3,
+      "round_id": "2026-10-14_11:30",
+      "timestamp": "2026-10-14T11:30:00-04:00",
+      "window_start": "2026-10-14T10:30:00-04:00",
+      "window_end": "2026-10-14T11:30:00-04:00",
+      "action_due": "2026-10-14T12:25:00-04:00",
+      "entry_at": "2026-10-14T12:30:00-04:00",
+      "exit_at": "2026-10-14T14:30:00-04:00"
+    },
+    {
+      "round": 4,
+      "round_id": "2026-10-14_12:30",
+      "timestamp": "2026-10-14T12:30:00-04:00",
+      "window_start": "2026-10-14T11:30:00-04:00",
+      "window_end": "2026-10-14T12:30:00-04:00",
+      "action_due": "2026-10-14T14:25:00-04:00",
+      "entry_at": "2026-10-14T14:30:00-04:00",
+      "exit_at": "2026-10-14T15:30:00-04:00"
+    },
+    {
+      "round": 5,
+      "round_id": "2026-10-14_14:30",
+      "timestamp": "2026-10-14T14:30:00-04:00",
+      "window_start": "2026-10-14T12:30:00-04:00",
+      "window_end": "2026-10-14T14:30:00-04:00",
+      "action_due": "2026-10-14T15:25:00-04:00",
+      "entry_at": "2026-10-14T15:30:00-04:00",
+      "exit_at": "2026-10-15T09:30:00-04:00"
+    },
+    {
+      "round": 6,
+      "round_id": "2026-10-14_15:30",
+      "timestamp": "2026-10-14T15:30:00-04:00",
+      "window_start": "2026-10-14T14:30:00-04:00",
+      "window_end": "2026-10-14T15:30:00-04:00",
+      "action_due": "2026-10-15T09:25:00-04:00",
+      "entry_at": "2026-10-15T09:30:00-04:00",
+      "exit_at": "2026-10-15T10:30:00-04:00"
+    },
+    {
+      "round": 7,
+      "round_id": "2026-10-15_09:30",
+      "timestamp": "2026-10-15T09:30:00-04:00",
+      "window_start": "2026-10-14T15:30:00-04:00",
+      "window_end": "2026-10-15T09:30:00-04:00",
+      "action_due": "2026-10-15T10:25:00-04:00",
+      "entry_at": "2026-10-15T10:30:00-04:00",
+      "exit_at": "2026-10-15T11:30:00-04:00"
+    },
+    {
+      "round": 8,
+      "round_id": "2026-10-15_10:30",
+      "timestamp": "2026-10-15T10:30:00-04:00",
+      "window_start": "2026-10-15T09:30:00-04:00",
+      "window_end": "2026-10-15T10:30:00-04:00",
+      "action_due": "2026-10-15T11:25:00-04:00",
+      "entry_at": "2026-10-15T11:30:00-04:00",
+      "exit_at": "2026-10-15T12:30:00-04:00"
+    },
+    {
+      "round": 9,
+      "round_id": "2026-10-15_11:30",
+      "timestamp": "2026-10-15T11:30:00-04:00",
+      "window_start": "2026-10-15T10:30:00-04:00",
+      "window_end": "2026-10-15T11:30:00-04:00",
+      "action_due": "2026-10-15T12:25:00-04:00",
+      "entry_at": "2026-10-15T12:30:00-04:00",
+      "exit_at": "2026-10-15T14:30:00-04:00"
+    },
+    {
+      "round": 10,
+      "round_id": "2026-10-15_12:30",
+      "timestamp": "2026-10-15T12:30:00-04:00",
+      "window_start": "2026-10-15T11:30:00-04:00",
+      "window_end": "2026-10-15T12:30:00-04:00",
+      "action_due": "2026-10-15T14:25:00-04:00",
+      "entry_at": "2026-10-15T14:30:00-04:00",
+      "exit_at": "2026-10-15T15:30:00-04:00"
+    },
+    {
+      "round": 11,
+      "round_id": "2026-10-15_14:30",
+      "timestamp": "2026-10-15T14:30:00-04:00",
+      "window_start": "2026-10-15T12:30:00-04:00",
+      "window_end": "2026-10-15T14:30:00-04:00",
+      "action_due": "2026-10-15T15:25:00-04:00",
+      "entry_at": "2026-10-15T15:30:00-04:00",
+      "exit_at": "2026-10-16T09:30:00-04:00"
+    },
+    {
+      "round": 12,
+      "round_id": "2026-10-15_15:30",
+      "timestamp": "2026-10-15T15:30:00-04:00",
+      "window_start": "2026-10-15T14:30:00-04:00",
+      "window_end": "2026-10-15T15:30:00-04:00",
+      "action_due": "2026-10-16T08:00:00-04:00",
+      "entry_at": "2026-10-16T09:30:00-04:00",
+      "exit_at": "2026-10-16T10:30:00-04:00"
+    },
+    {
+      "round": 13,
+      "round_id": "2026-10-19_09:30",
+      "timestamp": "2026-10-19T09:30:00-04:00",
+      "window_start": "2026-10-16T16:00:00-04:00",
+      "window_end": "2026-10-19T09:30:00-04:00",
+      "action_due": "2026-10-19T10:25:00-04:00",
+      "entry_at": "2026-10-19T10:30:00-04:00",
+      "exit_at": "2026-10-19T11:30:00-04:00"
+    },
+    {
+      "round": 14,
+      "round_id": "2026-10-19_10:30",
+      "timestamp": "2026-10-19T10:30:00-04:00",
+      "window_start": "2026-10-19T09:30:00-04:00",
+      "window_end": "2026-10-19T10:30:00-04:00",
+      "action_due": "2026-10-19T11:25:00-04:00",
+      "entry_at": "2026-10-19T11:30:00-04:00",
+      "exit_at": "2026-10-19T12:30:00-04:00"
+    },
+    {
+      "round": 15,
+      "round_id": "2026-10-19_11:30",
+      "timestamp": "2026-10-19T11:30:00-04:00",
+      "window_start": "2026-10-19T10:30:00-04:00",
+      "window_end": "2026-10-19T11:30:00-04:00",
+      "action_due": "2026-10-19T12:25:00-04:00",
+      "entry_at": "2026-10-19T12:30:00-04:00",
+      "exit_at": "2026-10-19T14:30:00-04:00"
+    },
+    {
+      "round": 16,
+      "round_id": "2026-10-19_12:30",
+      "timestamp": "2026-10-19T12:30:00-04:00",
+      "window_start": "2026-10-19T11:30:00-04:00",
+      "window_end": "2026-10-19T12:30:00-04:00",
+      "action_due": "2026-10-19T14:25:00-04:00",
+      "entry_at": "2026-10-19T14:30:00-04:00",
+      "exit_at": "2026-10-19T15:30:00-04:00"
+    },
+    {
+      "round": 17,
+      "round_id": "2026-10-19_14:30",
+      "timestamp": "2026-10-19T14:30:00-04:00",
+      "window_start": "2026-10-19T12:30:00-04:00",
+      "window_end": "2026-10-19T14:30:00-04:00",
+      "action_due": "2026-10-19T15:25:00-04:00",
+      "entry_at": "2026-10-19T15:30:00-04:00",
+      "exit_at": "2026-10-20T09:30:00-04:00"
+    },
+    {
+      "round": 18,
+      "round_id": "2026-10-19_15:30",
+      "timestamp": "2026-10-19T15:30:00-04:00",
+      "window_start": "2026-10-19T14:30:00-04:00",
+      "window_end": "2026-10-19T15:30:00-04:00",
+      "action_due": "2026-10-20T09:25:00-04:00",
+      "entry_at": "2026-10-20T09:30:00-04:00",
+      "exit_at": "2026-10-20T10:30:00-04:00"
+    },
+    {
+      "round": 19,
+      "round_id": "2026-10-20_09:30",
+      "timestamp": "2026-10-20T09:30:00-04:00",
+      "window_start": "2026-10-19T15:30:00-04:00",
+      "window_end": "2026-10-20T09:30:00-04:00",
+      "action_due": "2026-10-20T10:25:00-04:00",
+      "entry_at": "2026-10-20T10:30:00-04:00",
+      "exit_at": "2026-10-20T11:30:00-04:00"
+    },
+    {
+      "round": 20,
+      "round_id": "2026-10-20_10:30",
+      "timestamp": "2026-10-20T10:30:00-04:00",
+      "window_start": "2026-10-20T09:30:00-04:00",
+      "window_end": "2026-10-20T10:30:00-04:00",
+      "action_due": "2026-10-20T11:25:00-04:00",
+      "entry_at": "2026-10-20T11:30:00-04:00",
+      "exit_at": "2026-10-20T12:30:00-04:00"
+    },
+    {
+      "round": 21,
+      "round_id": "2026-10-20_11:30",
+      "timestamp": "2026-10-20T11:30:00-04:00",
+      "window_start": "2026-10-20T10:30:00-04:00",
+      "window_end": "2026-10-20T11:30:00-04:00",
+      "action_due": "2026-10-20T12:25:00-04:00",
+      "entry_at": "2026-10-20T12:30:00-04:00",
+      "exit_at": "2026-10-20T14:30:00-04:00"
+    },
+    {
+      "round": 22,
+      "round_id": "2026-10-20_12:30",
+      "timestamp": "2026-10-20T12:30:00-04:00",
+      "window_start": "2026-10-20T11:30:00-04:00",
+      "window_end": "2026-10-20T12:30:00-04:00",
+      "action_due": "2026-10-20T14:25:00-04:00",
+      "entry_at": "2026-10-20T14:30:00-04:00",
+      "exit_at": "2026-10-20T15:30:00-04:00"
+    },
+    {
+      "round": 23,
+      "round_id": "2026-10-20_14:30",
+      "timestamp": "2026-10-20T14:30:00-04:00",
+      "window_start": "2026-10-20T12:30:00-04:00",
+      "window_end": "2026-10-20T14:30:00-04:00",
+      "action_due": "2026-10-20T15:25:00-04:00",
+      "entry_at": "2026-10-20T15:30:00-04:00",
+      "exit_at": "2026-10-21T09:30:00-04:00"
+    },
+    {
+      "round": 24,
+      "round_id": "2026-10-20_15:30",
+      "timestamp": "2026-10-20T15:30:00-04:00",
+      "window_start": "2026-10-20T14:30:00-04:00",
+      "window_end": "2026-10-20T15:30:00-04:00",
+      "action_due": "2026-10-21T09:25:00-04:00",
+      "entry_at": "2026-10-21T09:30:00-04:00",
+      "exit_at": "2026-10-21T10:30:00-04:00"
+    },
+    {
+      "round": 25,
+      "round_id": "2026-10-21_09:30",
+      "timestamp": "2026-10-21T09:30:00-04:00",
+      "window_start": "2026-10-20T15:30:00-04:00",
+      "window_end": "2026-10-21T09:30:00-04:00",
+      "action_due": "2026-10-21T10:25:00-04:00",
+      "entry_at": "2026-10-21T10:30:00-04:00",
+      "exit_at": "2026-10-21T11:30:00-04:00"
+    },
+    {
+      "round": 26,
+      "round_id": "2026-10-21_10:30",
+      "timestamp": "2026-10-21T10:30:00-04:00",
+      "window_start": "2026-10-21T09:30:00-04:00",
+      "window_end": "2026-10-21T10:30:00-04:00",
+      "action_due": "2026-10-21T11:25:00-04:00",
+      "entry_at": "2026-10-21T11:30:00-04:00",
+      "exit_at": "2026-10-21T12:30:00-04:00"
+    },
+    {
+      "round": 27,
+      "round_id": "2026-10-21_11:30",
+      "timestamp": "2026-10-21T11:30:00-04:00",
+      "window_start": "2026-10-21T10:30:00-04:00",
+      "window_end": "2026-10-21T11:30:00-04:00",
+      "action_due": "2026-10-21T12:25:00-04:00",
+      "entry_at": "2026-10-21T12:30:00-04:00",
+      "exit_at": "2026-10-21T14:30:00-04:00"
+    },
+    {
+      "round": 28,
+      "round_id": "2026-10-21_12:30",
+      "timestamp": "2026-10-21T12:30:00-04:00",
+      "window_start": "2026-10-21T11:30:00-04:00",
+      "window_end": "2026-10-21T12:30:00-04:00",
+      "action_due": "2026-10-21T14:25:00-04:00",
+      "entry_at": "2026-10-21T14:30:00-04:00",
+      "exit_at": "2026-10-21T15:30:00-04:00"
+    },
+    {
+      "round": 29,
+      "round_id": "2026-10-21_14:30",
+      "timestamp": "2026-10-21T14:30:00-04:00",
+      "window_start": "2026-10-21T12:30:00-04:00",
+      "window_end": "2026-10-21T14:30:00-04:00",
+      "action_due": "2026-10-21T15:25:00-04:00",
+      "entry_at": "2026-10-21T15:30:00-04:00",
+      "exit_at": "2026-10-22T09:30:00-04:00"
+    },
+    {
+      "round": 30,
+      "round_id": "2026-10-21_15:30",
+      "timestamp": "2026-10-21T15:30:00-04:00",
+      "window_start": "2026-10-21T14:30:00-04:00",
+      "window_end": "2026-10-21T15:30:00-04:00",
+      "action_due": "2026-10-22T09:25:00-04:00",
+      "entry_at": "2026-10-22T09:30:00-04:00",
+      "exit_at": "2026-10-22T10:30:00-04:00"
+    },
+    {
+      "round": 31,
+      "round_id": "2026-10-22_09:30",
+      "timestamp": "2026-10-22T09:30:00-04:00",
+      "window_start": "2026-10-21T15:30:00-04:00",
+      "window_end": "2026-10-22T09:30:00-04:00",
+      "action_due": "2026-10-22T10:25:00-04:00",
+      "entry_at": "2026-10-22T10:30:00-04:00",
+      "exit_at": "2026-10-22T11:30:00-04:00"
+    },
+    {
+      "round": 32,
+      "round_id": "2026-10-22_10:30",
+      "timestamp": "2026-10-22T10:30:00-04:00",
+      "window_start": "2026-10-22T09:30:00-04:00",
+      "window_end": "2026-10-22T10:30:00-04:00",
+      "action_due": "2026-10-22T11:25:00-04:00",
+      "entry_at": "2026-10-22T11:30:00-04:00",
+      "exit_at": "2026-10-22T12:30:00-04:00"
+    },
+    {
+      "round": 33,
+      "round_id": "2026-10-22_11:30",
+      "timestamp": "2026-10-22T11:30:00-04:00",
+      "window_start": "2026-10-22T10:30:00-04:00",
+      "window_end": "2026-10-22T11:30:00-04:00",
+      "action_due": "2026-10-22T12:25:00-04:00",
+      "entry_at": "2026-10-22T12:30:00-04:00",
+      "exit_at": "2026-10-22T14:30:00-04:00"
+    },
+    {
+      "round": 34,
+      "round_id": "2026-10-22_12:30",
+      "timestamp": "2026-10-22T12:30:00-04:00",
+      "window_start": "2026-10-22T11:30:00-04:00",
+      "window_end": "2026-10-22T12:30:00-04:00",
+      "action_due": "2026-10-22T14:25:00-04:00",
+      "entry_at": "2026-10-22T14:30:00-04:00",
+      "exit_at": "2026-10-22T15:30:00-04:00"
+    },
+    {
+      "round": 35,
+      "round_id": "2026-10-22_14:30",
+      "timestamp": "2026-10-22T14:30:00-04:00",
+      "window_start": "2026-10-22T12:30:00-04:00",
+      "window_end": "2026-10-22T14:30:00-04:00",
+      "action_due": "2026-10-22T15:25:00-04:00",
+      "entry_at": "2026-10-22T15:30:00-04:00",
+      "exit_at": "2026-10-23T09:30:00-04:00"
+    },
+    {
+      "round": 36,
+      "round_id": "2026-10-22_15:30",
+      "timestamp": "2026-10-22T15:30:00-04:00",
+      "window_start": "2026-10-22T14:30:00-04:00",
+      "window_end": "2026-10-22T15:30:00-04:00",
+      "action_due": "2026-10-23T09:25:00-04:00",
+      "entry_at": "2026-10-23T09:30:00-04:00",
+      "exit_at": "2026-10-23T10:30:00-04:00"
+    },
+    {
+      "round": 37,
+      "round_id": "2026-10-23_09:30",
+      "timestamp": "2026-10-23T09:30:00-04:00",
+      "window_start": "2026-10-22T15:30:00-04:00",
+      "window_end": "2026-10-23T09:30:00-04:00",
+      "action_due": "2026-10-23T10:25:00-04:00",
+      "entry_at": "2026-10-23T10:30:00-04:00",
+      "exit_at": "2026-10-23T11:30:00-04:00"
+    },
+    {
+      "round": 38,
+      "round_id": "2026-10-23_10:30",
+      "timestamp": "2026-10-23T10:30:00-04:00",
+      "window_start": "2026-10-23T09:30:00-04:00",
+      "window_end": "2026-10-23T10:30:00-04:00",
+      "action_due": "2026-10-23T11:25:00-04:00",
+      "entry_at": "2026-10-23T11:30:00-04:00",
+      "exit_at": "2026-10-23T12:30:00-04:00"
+    },
+    {
+      "round": 39,
+      "round_id": "2026-10-23_11:30",
+      "timestamp": "2026-10-23T11:30:00-04:00",
+      "window_start": "2026-10-23T10:30:00-04:00",
+      "window_end": "2026-10-23T11:30:00-04:00",
+      "action_due": "2026-10-23T12:25:00-04:00",
+      "entry_at": "2026-10-23T12:30:00-04:00",
+      "exit_at": "2026-10-23T14:30:00-04:00"
+    },
+    {
+      "round": 40,
+      "round_id": "2026-10-23_12:30",
+      "timestamp": "2026-10-23T12:30:00-04:00",
+      "window_start": "2026-10-23T11:30:00-04:00",
+      "window_end": "2026-10-23T12:30:00-04:00",
+      "action_due": "2026-10-23T14:25:00-04:00",
+      "entry_at": "2026-10-23T14:30:00-04:00",
+      "exit_at": "2026-10-23T15:30:00-04:00"
+    },
+    {
+      "round": 41,
+      "round_id": "2026-10-23_14:30",
+      "timestamp": "2026-10-23T14:30:00-04:00",
+      "window_start": "2026-10-23T12:30:00-04:00",
+      "window_end": "2026-10-23T14:30:00-04:00",
+      "action_due": "2026-10-23T15:25:00-04:00",
+      "entry_at": "2026-10-23T15:30:00-04:00",
+      "exit_at": "2026-10-23T16:00:00-04:00"
+    }
+  ],
   "releases": [
     {
       "round_id": "2026-10-14_09:30",
@@ -98,62 +514,207 @@
     {
       "round_id": "2026-10-14_09:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-14_10:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-14_11:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-14_12:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-14_14:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-14_15:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_09:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_10:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_11:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_12:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_14:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-15_15:30",
       "status": "published",
-      "message": "Both Dataset files committed; coverage and missing-price flags apply."
+      "message": "Both files published; source coverage remains partial."
+    },
+    {
+      "round_id": "2026-10-19_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-19_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-19_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-19_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-19_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-19_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-20_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-21_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-22_15:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-23_09:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-23_10:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-23_11:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-23_12:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
+    },
+    {
+      "round_id": "2026-10-23_14:30",
+      "status": "scheduled",
+      "message": "Awaiting scheduled local collection."
     }
   ],
   "rows": [
