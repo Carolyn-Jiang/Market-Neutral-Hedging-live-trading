@@ -1,18 +1,18 @@
 {
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
-  "event": 15,
-  "updated_at": "2026-10-19T09:34:17.483802-04:00",
+  "event": 16,
+  "updated_at": "2026-10-19T10:33:40.533721-04:00",
   "total_rounds": 41,
   "completed_rounds": 12,
-  "data_status": "13 of 41 data batches published; future batches remain scheduled.",
+  "data_status": "14 of 41 data batches published; future batches remain scheduled.",
   "submission_status": "Existing and new teams may submit once per open round. Use the same Team Name and browser. Missed rounds are Flat. Only successfully published data opens a round.",
   "training_status": "Historical FinMem warmup and Moira training are complete using cached October 13–15 market data; training returns are excluded from competition results.",
   "ranking_status": "12 of 41 rounds verified; prior cumulative returns are carried forward.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-19T09:34:17.483802-04:00",
+  "curve_version": "2026-10-19T10:33:40.533721-04:00",
   "release_schedule": [
     {
       "round": 1,
@@ -520,6 +520,17 @@
         "price": "70163d4adb22081fa60b5947477a8d733411a739dc929d4186000720c4b7f5df",
         "news": "f6e141943e5e1a762cc19e5a56c5dc246c7fbaaa26e9a3e50aa14380feb8b0d7"
       }
+    },
+    {
+      "round_id": "2026-10-19_10:30",
+      "published_at": "2026-10-19T10:33:22.609035-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-19_10-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-19_10-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-19_10-30_NY/news.parquet?download=true",
+      "file_sha256": {
+        "price": "2408692af52baedee6c63e240496acf149bdc7bd8b8bc4a40cb5df3e7a73a7d1",
+        "news": "beb2fccb5ef673a334dd7b973d7e1ba16aba87bc63adb1a28af3af48ff549b94"
+      }
     }
   ],
   "release_tasks": [
@@ -590,8 +601,8 @@
     },
     {
       "round_id": "2026-10-19_10:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled local collection."
+      "status": "published",
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-19_11:30",
