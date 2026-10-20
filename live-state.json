@@ -1,18 +1,18 @@
 {
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
-  "event": 21,
-  "updated_at": "2026-10-20T09:33:11.672781-04:00",
+  "event": 22,
+  "updated_at": "2026-10-20T10:30:57.903331-04:00",
   "total_rounds": 41,
-  "completed_rounds": 17,
-  "data_status": "19 of 41 data batches published; future batches remain scheduled.",
+  "completed_rounds": 18,
+  "data_status": "20 of 41 data batches published; future batches remain scheduled.",
   "submission_status": "Existing and new teams may submit once per open round. Use the same Team Name and browser. Missed rounds are Flat. Only successfully published data opens a round.",
   "training_status": "Historical FinMem warmup and Moira training are complete using cached October 13–15 market data; training returns are excluded from competition results.",
-  "ranking_status": "17 of 41 rounds verified; prior cumulative returns are carried forward.",
+  "ranking_status": "18 of 41 rounds verified; prior cumulative returns are carried forward.",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-20T09:33:11.672781-04:00",
+  "curve_version": "2026-10-20T10:30:57.903331-04:00",
   "release_schedule": [
     {
       "round": 1,
@@ -586,6 +586,17 @@
         "price": "fc6c14b795c872d19a627b660bfc06b2390cecd7bc4c61147d9464f4f8351a42",
         "news": "d0fea3ba1337c790dab96658f8a1188fc67aca773f050cb8d7741117d80e4542"
       }
+    },
+    {
+      "round_id": "2026-10-20_10:30",
+      "published_at": "2026-10-20T10:30:27.618437-04:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-10-20_10-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-20_10-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-10-20_10-30_NY/news.parquet?download=true",
+      "file_sha256": {
+        "price": "474c51a7030e241af9616ca3bf8f6ee1d3a85afe7b07b9dcb22b01cf2bfbb181",
+        "news": "d1059611294822e028367ef9c24fa118a29776606195f31749ef6717256d902e"
+      }
     }
   ],
   "release_tasks": [
@@ -686,8 +697,8 @@
     },
     {
       "round_id": "2026-10-20_10:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled local collection."
+      "status": "published",
+      "message": "Both files published; source coverage remains partial."
     },
     {
       "round_id": "2026-10-20_11:30",
@@ -798,58 +809,58 @@
   "rows": [
     {
       "team_name": "Moira baseline",
-      "cumulative_return": 0.03333179333850067,
+      "cumulative_return": 0.041190732127195595,
       "is_baseline": true,
-      "sharpe_ratio": 0.3779074143966507,
+      "sharpe_ratio": 0.4372254249621019,
       "max_drawdown": 0.005184919286778333
     },
     {
-      "team_name": "Codex baseline",
-      "cumulative_return": 0.025310182353297073,
-      "is_baseline": true,
-      "sharpe_ratio": 0.11746398082906127,
-      "max_drawdown": 0.029643326725180663
-    },
-    {
       "team_name": "FinMem baseline",
-      "cumulative_return": 0.020595826685165575,
+      "cumulative_return": 0.035707706666624484,
       "is_baseline": true,
-      "sharpe_ratio": 0.23089838339368315,
+      "sharpe_ratio": 0.3269476387531328,
       "max_drawdown": 0.019299067051261165
     },
     {
       "team_name": "abbo",
-      "cumulative_return": 0.02059536073077628,
+      "cumulative_return": 0.028053956208476283,
       "is_baseline": false,
-      "sharpe_ratio": 0.27194429210523013,
+      "sharpe_ratio": 0.3404568203851488,
       "max_drawdown": 0.004243483234754208
+    },
+    {
+      "team_name": "Codex baseline",
+      "cumulative_return": 0.01418703993146364,
+      "is_baseline": true,
+      "sharpe_ratio": 0.06563810045277929,
+      "max_drawdown": 0.033804857145852574
     },
     {
       "team_name": "ah",
       "cumulative_return": 0.009776463269146829,
       "is_baseline": false,
-      "sharpe_ratio": 0.35415519667023293,
+      "sharpe_ratio": 0.343504754440793,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "ji",
+      "cumulative_return": 0.007201483270333764,
+      "is_baseline": false,
+      "sharpe_ratio": 0.23570226039551584,
       "max_drawdown": 0.0
     },
     {
       "team_name": "test_2",
       "cumulative_return": 0.0070036671748197055,
       "is_baseline": false,
-      "sharpe_ratio": 0.24253562503633297,
+      "sharpe_ratio": 0.23570226039551584,
       "max_drawdown": 0.0
     },
     {
       "team_name": "test_3",
       "cumulative_return": 0.0070036671748197055,
       "is_baseline": false,
-      "sharpe_ratio": 0.24253562503633297,
-      "max_drawdown": 0.0
-    },
-    {
-      "team_name": "ji",
-      "cumulative_return": 0.0,
-      "is_baseline": false,
-      "sharpe_ratio": null,
+      "sharpe_ratio": 0.23570226039551584,
       "max_drawdown": 0.0
     },
     {
@@ -863,14 +874,14 @@
       "team_name": "Phrase II test submission",
       "cumulative_return": -0.0018014467037037463,
       "is_baseline": false,
-      "sharpe_ratio": -0.24253562503633297,
+      "sharpe_ratio": -0.23570226039551584,
       "max_drawdown": 0.0018014467037037463
     },
     {
       "team_name": "test",
       "cumulative_return": -0.013680496783689544,
       "is_baseline": false,
-      "sharpe_ratio": -0.24253562503633297,
+      "sharpe_ratio": -0.2357022603955158,
       "max_drawdown": 0.013680496783689544
     }
   ]
