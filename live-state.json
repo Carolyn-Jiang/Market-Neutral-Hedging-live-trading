@@ -1,18 +1,18 @@
 {
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
-  "event": 20,
-  "updated_at": "2026-10-19T15:30:45.259339-04:00",
+  "event": 21,
+  "updated_at": "2026-10-20T09:31:04.046570-04:00",
   "total_rounds": 41,
   "completed_rounds": 16,
   "data_status": "18 of 41 data batches published; future batches remain scheduled.",
   "submission_status": "Existing and new teams may submit once per open round. Use the same Team Name and browser. Missed rounds are Flat. Only successfully published data opens a round.",
   "training_status": "Historical FinMem warmup and Moira training are complete using cached October 13–15 market data; training returns are excluded from competition results.",
-  "ranking_status": "16 of 41 rounds verified; prior cumulative returns are carried forward.",
+  "ranking_status": "16 of 41 rounds verified; prior cumulative returns are carried forward. Data/receipt opening pending: ValueError; Entry valuation pending: ValueError; Synchronized settlement pending: ValueError",
   "final": false,
   "terminal_settlement_complete": false,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-19T15:30:45.259339-04:00",
+  "curve_version": "2026-10-20T09:31:04.046570-04:00",
   "release_schedule": [
     {
       "round": 1,
@@ -670,8 +670,8 @@
     },
     {
       "round_id": "2026-10-20_09:30",
-      "status": "scheduled",
-      "message": "Awaiting scheduled local collection."
+      "status": "failed",
+      "message": "Publication not confirmed; this is not an empty news result."
     },
     {
       "round_id": "2026-10-20_10:30",
@@ -836,6 +836,13 @@
     },
     {
       "team_name": "Phrase II test submission",
+      "cumulative_return": 0.0,
+      "is_baseline": false,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "ji",
       "cumulative_return": 0.0,
       "is_baseline": false,
       "sharpe_ratio": null,
