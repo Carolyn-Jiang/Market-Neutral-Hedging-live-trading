@@ -2,7 +2,7 @@
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
   "event": 26,
-  "updated_at": "2026-10-20T15:30:42.970905-04:00",
+  "updated_at": "2026-10-20T16:16:01.650057-04:00",
   "total_rounds": 41,
   "completed_rounds": 22,
   "data_status": "24 of 41 data batches published; future batches remain scheduled.",
@@ -12,7 +12,7 @@
   "final": false,
   "terminal_settlement_complete": false,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-20T15:30:42.970905-04:00",
+  "curve_version": "2026-10-20T16:16:01.650057-04:00",
   "release_schedule": [
     {
       "round": 1,
@@ -913,13 +913,6 @@
       "is_baseline": false,
       "sharpe_ratio": null,
       "max_drawdown": 0.0
-    },
-    {
-      "team_name": "Phrase II test submission",
-      "cumulative_return": -0.0018014467037037463,
-      "is_baseline": false,
-      "sharpe_ratio": -0.21320071635561041,
-      "max_drawdown": 0.0018014467037037463
     },
     {
       "team_name": "test",

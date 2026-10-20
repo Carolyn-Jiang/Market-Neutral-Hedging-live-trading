@@ -378,7 +378,7 @@ test('public descriptions consistently use the exact Phrase I and Phrase II name
   assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
 });
 
-test('bottom baseline references show only the two requested repository URLs without changing results',()=>{
+test('bottom baseline references preserve the requested repositories and add the supplied paper links',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
   const rules=page.match(/<section id="rules">[\s\S]*?<\/section>/)?.[0];
@@ -390,12 +390,50 @@ test('bottom baseline references show only the two requested repository URLs wit
   assert.ok(page.indexOf(references)+references.length<page.indexOf('<footer>'));
   assert.match(references,/\bMoira\b/i);assert.match(references,/\bFinMem\b/);
   const links=[...references.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
-  const expected=['https://github.com/Carolyn-Jiang/MOIRA','https://github.com/pipiku915/FinMem-LLM-StockTrading'];
-  assert.equal(links.length,2);assert.deepEqual(links.map(match=>match[1]).sort(),[...expected].sort());
+  const expected=['https://github.com/Carolyn-Jiang/MOIRA','https://github.com/pipiku915/FinMem-LLM-StockTrading','https://arxiv.org/abs/2605.01954','https://doi.org/10.1109/TBDATA.2025.3593370'];
+  assert.equal(links.length,4);assert.deepEqual(links.map(match=>match[1]).sort(),[...expected].sort());
   for(const link of links)assert.equal(link[2].replace(/<[^>]*>/g,'').trim(),link[1]);
   assert.match(page,/<a href="https:\/\/github\.com\/Carolyn-Jiang\/Market-Neutral-Hedging-live-trading">Source repository ↗<\/a>/);
   assert.ok(!/accepted_at|stock1|stock2|team_token|OPENAI_API_KEY|HF_TOKEN|sealed_at/.test(references));
   assert.equal((page.match(/<table(?:\s|>)/g)||[]).length,2);
   assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
   assert.equal((page.match(/id="leaderboard"/g)||[]).length,1);
+});
+
+test('baseline citations display every supplied author and publication field with native BibTeX disclosures',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(references);
+  const entries=[...references.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
+  assert.equal(entries.length,2);
+  const authors=entries.map(entry=>entry.match(/<p class="reference-authors">(.*?)<\/p>/)?.[1]);
+  for(const author of ['Polydoros Giannouris','Yuechen Jiang','Lingfei Qian','Yuyan Wang','Xueqing Peng','Jimin Huang','Guojun Xiong','Sophia Ananiadou'])assert.ok(authors[0].includes(author));
+  for(const author of ['Yu, Yangyang','Li, Haohang','Chen, Zhi','Jiang, Yuechen','Li, Yang','Suchow, Jordan W.','Zhang, Denghui','Khashanah, Khaldoun'])assert.ok(authors[1].includes(author));
+  assert.match(entries[0],/<cite>MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading<\/cite>/);
+  assert.match(entries[0],/2026 · arXiv:2605\.01954 \[cs\.AI\]/);
+  assert.match(entries[1],/<cite>FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design<\/cite>/);
+  assert.match(entries[1],/2025 · IEEE Transactions on Big Data, 11\(6\), 3443–3459\. DOI: 10\.1109\/TBDATA\.2025\.3593370/);
+  assert.equal((references.match(/<details class="reference-bibtex">/g)||[]).length,2);
+  assert.match(entries[0],/<summary>Show MOIRA BibTeX<\/summary>/);
+  assert.match(entries[1],/<summary>Show FinMem BibTeX<\/summary>/);
+  const bibtex=entries.map(entry=>entry.match(/<pre><code>([\s\S]*?)<\/code><\/pre>/)?.[1]);
+  assert.equal(bibtex[0],`@misc{giannouris2026moira,
+ title={MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading},
+ author={Polydoros Giannouris and Yuechen Jiang and Lingfei Qian and Yuyan Wang and Xueqing Peng and Jimin Huang and Guojun Xiong and Sophia Ananiadou},
+ year={2026}, eprint={2605.01954}, archivePrefix={arXiv}, primaryClass={cs.AI}, url={https://arxiv.org/abs/2605.01954},
+}`);
+  assert.equal(bibtex[1],`@ARTICLE{FinMem,
+ author={Yu, Yangyang and Li, Haohang and Chen, Zhi and Jiang, Yuechen and Li, Yang and Suchow, Jordan W. and Zhang, Denghui and Khashanah, Khaldoun},
+ journal={IEEE Transactions on Big Data}, title={FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design},
+ year={2025}, volume={11}, number={6}, pages={3443-3459},
+ keywords={Decision making;Investment;Memory modules;Large language models;Data mining;Training;Real-time systems;Tuning;Reflection;Prediction algorithms;Financial AI;large language models;trading algorithms;deep learning;financial technology},
+ doi={10.1109/TBDATA.2025.3593370}}`);
+});
+
+test('reference cards and raw BibTeX wrap long content and provide a visible keyboard focus',()=>{
+  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(css,/\.reference-entry\{[^}]*min-width:0;[^}]*overflow-wrap:anywhere/);
+  assert.match(css,/\.baseline-references-list a\{[^}]*overflow-wrap:anywhere/);
+  assert.match(css,/\.reference-bibtex pre\{[^}]*max-width:100%;[^}]*white-space:pre-wrap;[^}]*overflow-wrap:anywhere/);
+  assert.match(css,/\.reference-bibtex summary:focus-visible\{[^}]*outline:2px solid var\(--accent\)/);
 });
