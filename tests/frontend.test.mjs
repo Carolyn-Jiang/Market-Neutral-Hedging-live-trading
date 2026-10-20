@@ -414,8 +414,7 @@ test('baseline citations display every supplied author and publication field wit
   assert.match(entries[1],/<cite>FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design<\/cite>/);
   assert.match(entries[1],/2025 · IEEE Transactions on Big Data, 11\(6\), 3443–3459\. DOI: 10\.1109\/TBDATA\.2025\.3593370/);
   assert.equal((references.match(/<details class="reference-bibtex">/g)||[]).length,2);
-  assert.match(entries[0],/<summary>Show MOIRA BibTeX<\/summary>/);
-  assert.match(entries[1],/<summary>Show FinMem BibTeX<\/summary>/);
+  for(const entry of entries)assert.match(entry,/<summary>Show BibTeX<\/summary>/);
   const bibtex=entries.map(entry=>entry.match(/<pre><code>([\s\S]*?)<\/code><\/pre>/)?.[1]);
   assert.equal(bibtex[0],`@misc{giannouris2026moira,
  title={MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading},
@@ -428,6 +427,29 @@ test('baseline citations display every supplied author and publication field wit
  year={2025}, volume={11}, number={6}, pages={3443-3459},
  keywords={Decision making;Investment;Memory modules;Large language models;Data mining;Training;Real-time systems;Tuning;Reflection;Prediction algorithms;Financial AI;large language models;trading algorithms;deep learning;financial technology},
  doi={10.1109/TBDATA.2025.3593370}}`);
+});
+
+test('each reference card uses its complete paper title as the only heading without repeating the framework name',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(references);
+  const entries=[...references.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
+  const titles=['MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading','FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design'];
+  assert.equal(entries.length,titles.length);
+  entries.forEach((entry,index)=>{
+    const headings=[...entry.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
+    assert.equal(headings.length,1);
+    assert.equal(headings[0][1],'3');
+    assert.match(headings[0][0],/^<h3 class="reference-title">/);
+    assert.equal(headings[0][2],`<cite>${titles[index]}</cite>`);
+    assert.ok(!/<h[1-6]\b[^>]*>\s*(?:Moira|FinMem)\s*<\/h[1-6]>/i.test(entry));
+    const visibleCard=entry.replace(/<details\b[\s\S]*?<\/details>/g,'');
+    assert.equal(visibleCard.split(titles[index]).length-1,1);
+    const ordered=[headings[0][0],'<p class="reference-authors">','<p class="reference-publication">','<div class="reference-links">','<details class="reference-bibtex">'];
+    const positions=ordered.map(fragment=>entry.indexOf(fragment));
+    assert.ok(positions.every((position,i)=>position>=0&&(i===0||position>positions[i-1])));
+    assert.equal((entry.match(/<summary>Show BibTeX<\/summary>/g)||[]).length,1);
+  });
 });
 
 test('reference cards and raw BibTeX wrap long content and provide a visible keyboard focus',()=>{
