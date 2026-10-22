@@ -416,17 +416,32 @@ test('baseline citations display every supplied author and publication field wit
   assert.equal((references.match(/<details class="reference-bibtex">/g)||[]).length,2);
   for(const entry of entries)assert.match(entry,/<summary>Show BibTeX<\/summary>/);
   const bibtex=entries.map(entry=>entry.match(/<pre><code>([\s\S]*?)<\/code><\/pre>/)?.[1]);
-  assert.equal(bibtex[0],`@misc{giannouris2026moira,
- title={MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading},
- author={Polydoros Giannouris and Yuechen Jiang and Lingfei Qian and Yuyan Wang and Xueqing Peng and Jimin Huang and Guojun Xiong and Sophia Ananiadou},
- year={2026}, eprint={2605.01954}, archivePrefix={arXiv}, primaryClass={cs.AI}, url={https://arxiv.org/abs/2605.01954},
-}`);
-  assert.equal(bibtex[1],`@ARTICLE{FinMem,
- author={Yu, Yangyang and Li, Haohang and Chen, Zhi and Jiang, Yuechen and Li, Yang and Suchow, Jordan W. and Zhang, Denghui and Khashanah, Khaldoun},
- journal={IEEE Transactions on Big Data}, title={FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design},
- year={2025}, volume={11}, number={6}, pages={3443-3459},
- keywords={Decision making;Investment;Memory modules;Large language models;Data mining;Training;Real-time systems;Tuning;Reflection;Prediction algorithms;Financial AI;large language models;trading algorithms;deep learning;financial technology},
- doi={10.1109/TBDATA.2025.3593370}}`);
+  const parseBibtex=source=>{
+    const entry=source.match(/^@([A-Za-z]+)\{([^,\n]+),\n([\s\S]*)\n\}$/);
+    assert.ok(entry,'BibTeX entry header and closing brace must be intact');
+    const fields=[];
+    const unmatched=entry[3].replace(/\s*([A-Za-z]+)\s*=\s*\{([^{}]*)\}\s*,?/g,(_,name,value)=>{
+      fields.push([name,value.replace(/\s+/g,' ').replace(/\s*;\s*/g,';').trim()]);
+      return '';
+    });
+    assert.equal(unmatched.trim(),'','every BibTeX field must be parsed');
+    return {type:entry[1],key:entry[2],fields};
+  };
+  assert.deepEqual(bibtex.map(parseBibtex),[
+    {type:'misc',key:'giannouris2026moira',fields:[
+      ['title','MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading'],
+      ['author','Polydoros Giannouris and Yuechen Jiang and Lingfei Qian and Yuyan Wang and Xueqing Peng and Jimin Huang and Guojun Xiong and Sophia Ananiadou'],
+      ['year','2026'],['eprint','2605.01954'],['archivePrefix','arXiv'],['primaryClass','cs.AI'],['url','https://arxiv.org/abs/2605.01954']
+    ]},
+    {type:'ARTICLE',key:'FinMem',fields:[
+      ['author','Yu, Yangyang and Li, Haohang and Chen, Zhi and Jiang, Yuechen and Li, Yang and Suchow, Jordan W. and Zhang, Denghui and Khashanah, Khaldoun'],
+      ['journal','IEEE Transactions on Big Data'],
+      ['title','FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design'],
+      ['year','2025'],['volume','11'],['number','6'],['pages','3443-3459'],
+      ['keywords','Decision making;Investment;Memory modules;Large language models;Data mining;Training;Real-time systems;Tuning;Reflection;Prediction algorithms;Financial AI;large language models;trading algorithms;deep learning;financial technology'],
+      ['doi','10.1109/TBDATA.2025.3593370']
+    ]}
+  ]);
 });
 
 test('each reference card uses its complete paper title as the only heading without repeating the framework name',()=>{
@@ -450,6 +465,34 @@ test('each reference card uses its complete paper title as the only heading with
     assert.ok(positions.every((position,i)=>position>=0&&(i===0||position>positions[i-1])));
     assert.equal((entry.match(/<summary>Show BibTeX<\/summary>/g)||[]).length,1);
   });
+});
+
+test('BibTeX fields start on aligned two-space lines with consistently indented continuations and separate closing braces',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(references);
+  const bibtex=[...references.matchAll(/<pre><code>([\s\S]*?)<\/code><\/pre>/g)].map(match=>match[1]);
+  assert.equal(bibtex.length,2);
+  bibtex.forEach((source,index)=>{
+    const lines=source.split('\n');
+    assert.match(lines[0],/^@[A-Za-z]+\{[^,]+,$/);
+    assert.equal(lines.at(-1),'}');
+    assert.ok(!source.includes('\t'));
+    const fieldLines=lines.slice(1,-1).filter(line=>/^ {2}[A-Za-z]+ += \{/.test(line));
+    assert.equal(fieldLines.length,[7,9][index]);
+    assert.equal((source.match(/[A-Za-z]+\s*=\s*\{/g)||[]).length,fieldLines.length);
+    for(const line of lines.slice(1,-1)){
+      if(fieldLines.includes(line))assert.equal(line.indexOf('='),16);
+      else assert.match(line,/^ {19}\S/);
+    }
+    const author=source.match(/^ {2}author += \{([\s\S]*?)\},?$/m)?.[1];
+    assert.ok(author);
+    const authorLines=author.split(/\n {19}/);
+    assert.equal(authorLines.length,8);
+    authorLines.forEach((line,i)=>assert.equal(line.endsWith(' and'),i<authorLines.length-1));
+    assert.match(source,/^ {2}title += \{[^\n]+\n {19}\S/m);
+  });
+  assert.match(bibtex[1],/^ {2}keywords += \{[^\n]+\n {19}\S/m);
 });
 
 test('reference cards and raw BibTeX wrap long content and provide a visible keyboard focus',()=>{
