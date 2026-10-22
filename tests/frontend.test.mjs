@@ -378,18 +378,39 @@ test('public descriptions consistently use the exact Phrase I and Phrase II name
   assert.equal((page.match(/class="chart-panel"/g)||[]).length,1);
 });
 
-test('bottom baseline references preserve the requested repositories and add the supplied paper links',()=>{
+const parseReferenceBibtex=source=>{
+  const entry=source.match(/^@([A-Za-z]+)\{([^,\n]+),\n([\s\S]*)\n\}$/);
+  assert.ok(entry,'BibTeX entry header and closing brace must be intact');
+  const fields=[];
+  const unmatched=entry[3].replace(/\s*([A-Za-z]+)\s*=\s*\{([^{}]*)\}\s*,?/g,(_,name,value)=>{
+    fields.push([name,value.replace(/\s+/g,' ').replace(/\s*;\s*/g,';').trim()]);
+    return '';
+  });
+  assert.equal(unmatched.trim(),'','every BibTeX field must be parsed');
+  return {type:entry[1],key:entry[2],fields};
+};
+
+test('the fifth Reference section groups the unchanged baseline links and training data beneath accessible subheadings',()=>{
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
   const rules=page.match(/<section id="rules">[\s\S]*?<\/section>/)?.[0];
   assert.ok(references&&rules);
-  assert.match(references,/aria-labelledby="baseline-references-heading"/);
-  assert.match(references,/<h2 id="baseline-references-heading">/);
-  assert.match(references,/<h2(?:\s[^>]*)?>Baseline references<\/h2>/);
+  assert.match(references,/aria-labelledby="references-heading"/);
+  assert.match(references,/<p class="eyebrow">05 \/ REFERENCE<\/p>/);
+  assert.match(references,/<h2 id="references-heading">Reference<\/h2>/);
+  assert.match(references,/<h3 id="baseline-references-heading">Baseline references<\/h3>/);
+  assert.match(references,/<h3 id="training-data-heading">Training data<\/h3>/);
+  assert.ok(references.indexOf('id="references-heading"')<references.indexOf('id="baseline-references-heading"'));
+  assert.ok(references.indexOf('<h3 id="baseline-references-heading"')<references.indexOf('<h3 id="training-data-heading"'));
+  assert.equal((references.match(/<h2\b/g)||[]).length,1);
+  assert.equal((references.match(/<h3\b/g)||[]).length,2);
+  assert.equal((references.match(/<h4 class="reference-title">/g)||[]).length,3);
   assert.ok(page.indexOf(references)>page.indexOf(rules)+rules.length-1);
   assert.ok(page.indexOf(references)+references.length<page.indexOf('<footer>'));
-  assert.match(references,/\bMoira\b/i);assert.match(references,/\bFinMem\b/);
-  const links=[...references.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
+  const baselines=references.match(/<ul class="baseline-references-list">[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(baselines);
+  assert.match(baselines,/\bMoira\b/i);assert.match(baselines,/\bFinMem\b/);
+  const links=[...baselines.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
   const expected=['https://github.com/Carolyn-Jiang/MOIRA','https://github.com/pipiku915/FinMem-LLM-StockTrading','https://arxiv.org/abs/2605.01954','https://doi.org/10.1109/TBDATA.2025.3593370'];
   assert.equal(links.length,4);assert.deepEqual(links.map(match=>match[1]).sort(),[...expected].sort());
   for(const link of links)assert.equal(link[2].replace(/<[^>]*>/g,'').trim(),link[1]);
@@ -404,7 +425,9 @@ test('baseline citations display every supplied author and publication field wit
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
   assert.ok(references);
-  const entries=[...references.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
+  const baselines=references.match(/<ul class="baseline-references-list">[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(baselines);
+  const entries=[...baselines.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
   assert.equal(entries.length,2);
   const authors=entries.map(entry=>entry.match(/<p class="reference-authors">(.*?)<\/p>/)?.[1]);
   for(const author of ['Polydoros Giannouris','Yuechen Jiang','Lingfei Qian','Yuyan Wang','Xueqing Peng','Jimin Huang','Guojun Xiong','Sophia Ananiadou'])assert.ok(authors[0].includes(author));
@@ -413,21 +436,10 @@ test('baseline citations display every supplied author and publication field wit
   assert.match(entries[0],/2026 · arXiv:2605\.01954 \[cs\.AI\]/);
   assert.match(entries[1],/<cite>FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design<\/cite>/);
   assert.match(entries[1],/2025 · IEEE Transactions on Big Data, 11\(6\), 3443–3459\. DOI: 10\.1109\/TBDATA\.2025\.3593370/);
-  assert.equal((references.match(/<details class="reference-bibtex">/g)||[]).length,2);
+  assert.equal((baselines.match(/<details class="reference-bibtex">/g)||[]).length,2);
   for(const entry of entries)assert.match(entry,/<summary>Show BibTeX<\/summary>/);
   const bibtex=entries.map(entry=>entry.match(/<pre><code>([\s\S]*?)<\/code><\/pre>/)?.[1]);
-  const parseBibtex=source=>{
-    const entry=source.match(/^@([A-Za-z]+)\{([^,\n]+),\n([\s\S]*)\n\}$/);
-    assert.ok(entry,'BibTeX entry header and closing brace must be intact');
-    const fields=[];
-    const unmatched=entry[3].replace(/\s*([A-Za-z]+)\s*=\s*\{([^{}]*)\}\s*,?/g,(_,name,value)=>{
-      fields.push([name,value.replace(/\s+/g,' ').replace(/\s*;\s*/g,';').trim()]);
-      return '';
-    });
-    assert.equal(unmatched.trim(),'','every BibTeX field must be parsed');
-    return {type:entry[1],key:entry[2],fields};
-  };
-  assert.deepEqual(bibtex.map(parseBibtex),[
+  assert.deepEqual(bibtex.map(parseReferenceBibtex),[
     {type:'misc',key:'giannouris2026moira',fields:[
       ['title','MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading'],
       ['author','Polydoros Giannouris and Yuechen Jiang and Lingfei Qian and Yuyan Wang and Xueqing Peng and Jimin Huang and Guojun Xiong and Sophia Ananiadou'],
@@ -448,14 +460,16 @@ test('each reference card uses its complete paper title as the only heading with
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
   assert.ok(references);
-  const entries=[...references.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
+  const baselines=references.match(/<ul class="baseline-references-list">[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(baselines);
+  const entries=[...baselines.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
   const titles=['MOIRA: Policy Memory and Belief Revision for Language-Model Agents in Non-Stationary Pair Trading','FinMem: A Performance-Enhanced LLM Trading Agent With Layered Memory and Character Design'];
   assert.equal(entries.length,titles.length);
   entries.forEach((entry,index)=>{
     const headings=[...entry.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
     assert.equal(headings.length,1);
-    assert.equal(headings[0][1],'3');
-    assert.match(headings[0][0],/^<h3 class="reference-title">/);
+    assert.equal(headings[0][1],'4');
+    assert.match(headings[0][0],/^<h4 class="reference-title">/);
     assert.equal(headings[0][2],`<cite>${titles[index]}</cite>`);
     assert.ok(!/<h[1-6]\b[^>]*>\s*(?:Moira|FinMem)\s*<\/h[1-6]>/i.test(entry));
     const visibleCard=entry.replace(/<details\b[\s\S]*?<\/details>/g,'');
@@ -471,7 +485,9 @@ test('BibTeX fields start on aligned two-space lines with consistently indented 
   const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
   assert.ok(references);
-  const bibtex=[...references.matchAll(/<pre><code>([\s\S]*?)<\/code><\/pre>/g)].map(match=>match[1]);
+  const baselines=references.match(/<ul class="baseline-references-list">[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(baselines);
+  const bibtex=[...baselines.matchAll(/<pre><code>([\s\S]*?)<\/code><\/pre>/g)].map(match=>match[1]);
   assert.equal(bibtex.length,2);
   bibtex.forEach((source,index)=>{
     const lines=source.split('\n');
@@ -495,10 +511,50 @@ test('BibTeX fields start on aligned two-space lines with consistently indented 
   assert.match(bibtex[1],/^ {2}keywords += \{[^\n]+\n {19}\S/m);
 });
 
+test('Training data cites only the final Herculean dataset with its single author and four original BibTeX fields',()=>{
+  const page=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const references=page.match(/<section id="baseline-references"[^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(references);
+  assert.match(references,/<div\b[^>]*id="training-data"[^>]*aria-labelledby="training-data-heading"[^>]*>/);
+  const training=references.match(/<ul class="training-data-list">[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(training);
+  const entries=[...training.matchAll(/<li class="reference-entry panel">([\s\S]*?)<\/li>/g)].map(match=>match[1]);
+  assert.equal(entries.length,1);
+  const entry=entries[0];
+  const title='Herculean: An Offline Multi-Skill Evaluation Benchmark for LLM Agents in Finance';
+  const url='https://huggingface.co/datasets/TheFinAI/Herculean';
+  const headings=[...entry.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
+  assert.equal(headings.length,1);
+  assert.equal(headings[0][0],`<h4 class="reference-title"><cite>${title}</cite></h4>`);
+  assert.equal((entry.match(/<p class="reference-authors">/g)||[]).length,1);
+  assert.match(entry,/<p class="reference-authors">Xueqing Peng\.<\/p>/);
+  assert.match(entry,/<p class="reference-publication">2026 · Hugging Face Dataset<\/p>/);
+  const links=[...entry.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)];
+  assert.deepEqual(links.map(match=>[match[1],match[2]]),[[url,url]]);
+  assert.equal((entry.match(/<summary>Show BibTeX<\/summary>/g)||[]).length,1);
+  const source=entry.match(/<pre><code>([\s\S]*?)<\/code><\/pre>/)?.[1];
+  assert.ok(source);
+  assert.deepEqual(parseReferenceBibtex(source),{type:'misc',key:'herculean_2026',fields:[
+    ['title',title],['author','Peng, Xueqing'],['year','2026'],['url',url]
+  ]});
+  const lines=source.split('\n');
+  assert.equal(lines.at(-1),'}');
+  assert.ok(!source.includes('\t'));
+  const fieldLines=lines.slice(1,-1).filter(line=>/^ {2}[A-Za-z]+ += \{/.test(line));
+  assert.equal(fieldLines.length,4);
+  for(const line of lines.slice(1,-1)){
+    if(fieldLines.includes(line))assert.equal(line.indexOf('='),9);
+    else assert.match(line,/^ {12}\S/);
+  }
+  assert.match(source,/^ {2}title += \{[^\n]+\n {12}\S/m);
+  assert.ok(!/2605\.14355/.test(page));
+  assert.ok(!/arxiv\.org|archivePrefix|primaryClass|eprint|author\s*=\s*\{[^}]*\band\b/i.test(training));
+});
+
 test('reference cards and raw BibTeX wrap long content and provide a visible keyboard focus',()=>{
   const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
   assert.match(css,/\.reference-entry\{[^}]*min-width:0;[^}]*overflow-wrap:anywhere/);
-  assert.match(css,/\.baseline-references-list a\{[^}]*overflow-wrap:anywhere/);
+  assert.match(css,/\.baseline-references-list a,\.training-data-list a\{[^}]*overflow-wrap:anywhere/);
   assert.match(css,/\.reference-bibtex pre\{[^}]*max-width:100%;[^}]*white-space:pre-wrap;[^}]*overflow-wrap:anywhere/);
   assert.match(css,/\.reference-bibtex summary:focus-visible\{[^}]*outline:2px solid var\(--accent\)/);
 });
