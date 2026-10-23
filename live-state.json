@@ -2,7 +2,7 @@
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
   "event": 45,
-  "updated_at": "2026-10-23T16:38:18.122240-04:00",
+  "updated_at": "2026-10-23T16:40:55.074437-04:00",
   "total_rounds": 41,
   "completed_rounds": 41,
   "data_status": "41 of 41 data batches published; future batches remain scheduled.",
@@ -12,7 +12,7 @@
   "final": true,
   "terminal_settlement_complete": true,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-23T16:38:18.122240-04:00",
+  "curve_version": "2026-10-23T16:40:55.074437-04:00",
   "release_schedule": [
     {
       "round": 1,
