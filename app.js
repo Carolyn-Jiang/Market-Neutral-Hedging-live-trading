@@ -61,16 +61,18 @@ export function validateFinalPeriods(periods,overallRows){
   periods.forEach((period,i)=>{
     const [id,title,start,end,count]=expected[i];
     if(!period||Object.keys(period).sort().join(',')!==keys.join(',')||period.id!==id||period.title!==title||period.round_start!==start||period.round_end!==end||period.completed_rounds!==count||period.chart!==`/Market-Neutral-Hedging-live-trading/return-paths-${id}.svg`||period.training_note!==finalTrainingNotes[i])throw Error('Invalid final period');
-    validateBoard({schema:'finreason.task2.public-returns/1',final:true,rows:period.rows},{aggregateOnly:true});
+    validateBoard({schema:'finreason.task2.public-returns/1',final:true,rows:period.rows},{aggregateOnly:true,allowSteps:true,stepStart:start,stepEnd:end});
     const rowKeys='cumulative_return,is_baseline,max_drawdown,sharpe_ratio,team_name';
-    if(period.rows.some(row=>Object.keys(row).sort().join(',')!==rowKeys))throw Error('Complete aggregate period metrics required');
-    const identities=rows=>rows.map(row=>`${row.is_baseline}:${row.team_name}`).sort();
-    if(JSON.stringify(identities(period.rows))!==JSON.stringify(identities(overallRows)))throw Error('Final period teams differ from overall');
+    if(period.rows.some(row=>Object.keys(row).filter(key=>key!=='steps').sort().join(',')!==rowKeys))throw Error('Complete period metrics required');
+    if(period.rows.some(row=>!overallRows.some(overall=>overall.team_name===row.team_name&&overall.is_baseline===row.is_baseline))||period.rows.filter(row=>row.is_baseline).length!==3)throw Error('Final period requires an overall-team subset and all three baselines');
   });
   return periods;
 }
+export function finalHistoryReady(state,now=Date.now()){
+  return isContinuation(state)&&state.final===true&&state.event===45&&state.terminal_settlement_complete===true&&state.completed_rounds===41&&Number.isFinite(now)&&now>=continuationFinalResults;
+}
 export function finalPeriodViews(state,now=Date.now()){
-  if(!isContinuation(state)||state.final!==true||state.event!==45||state.terminal_settlement_complete!==true||state.completed_rounds!==41||!Number.isFinite(now)||now<continuationFinalResults||!state.final_periods)return [];
+  if(!finalHistoryReady(state,now)||!state.final_periods)return [];
   const version=state.curve_version||state.updated_at;
   if(typeof version!=='string'||!Number.isFinite(Date.parse(version)))return [];
   return validateFinalPeriods(state.final_periods,state.rows).map(period=>{
@@ -90,12 +92,12 @@ export function validateReleaseSchedule(schedule){
 export function validateAction(payload){
   return typeof payload.team_name==='string' && payload.team_name.trim().length>0 && payload.team_name.trim().length<=80 && tickers.includes(payload.stock1) && tickers.includes(payload.stock2) && payload.stock1!==payload.stock2 && ['LS','SL','F'].includes(payload.action);
 }
-export function validateBoard(board,{aggregateOnly=false}={}){
+export function validateBoard(board,{aggregateOnly=false,allowSteps=false,stepStart=1,stepEnd=12}={}){
   const top=['schema','final','updated_at','terminal_settlement_complete','rows'];
   if(!board || board.schema!=='finreason.task2.public-returns/1' || Object.keys(board).some(k=>!top.includes(k)) || typeof board.final!=='boolean' || !Array.isArray(board.rows)) throw Error('Invalid public returns feed');
   const names=new Set();
   for(const row of board.rows){
-    const keys=['team_name','cumulative_return','is_baseline','sharpe_ratio','max_drawdown',...(aggregateOnly?[]:['history','steps'])];
+    const keys=['team_name','cumulative_return','is_baseline','sharpe_ratio','max_drawdown',...(aggregateOnly?[]:['history']),...(!aggregateOnly||allowSteps?['steps']:[])];
     if(Object.keys(row).some(k=>!keys.includes(k)) || typeof row.team_name!=='string' || !row.team_name.trim() || names.has(row.team_name) || !Number.isFinite(row.cumulative_return) || typeof row.is_baseline!=='boolean') throw Error('Invalid public row');
     names.add(row.team_name);
     if(row.is_baseline!==baselineNames.has(row.team_name)) throw Error('Unknown or mislabeled baseline');
@@ -103,10 +105,10 @@ export function validateBoard(board,{aggregateOnly=false}={}){
     if('max_drawdown' in row&&(!Number.isFinite(row.max_drawdown)||row.max_drawdown<0))throw Error('Invalid maximum drawdown');
     if(row.history && (!Array.isArray(row.history)||row.history.length>13||row.history.some(p=>Object.keys(p).some(k=>!['round','cumulative_return'].includes(k))||!Number.isInteger(p.round)||p.round<0||p.round>12||!Number.isFinite(p.cumulative_return)))) throw Error('Invalid return history');
     if('steps' in row){
-      if(!board.final||!Array.isArray(row.steps)||row.steps.length!==12)throw Error('Step history is final-only and requires twelve steps');
+      if(!board.final||(aggregateOnly&&!allowSteps)||!Number.isInteger(stepStart)||!Number.isInteger(stepEnd)||stepStart<1||stepEnd>41||stepStart>stepEnd||!Array.isArray(row.steps)||row.steps.length!==stepEnd-stepStart+1)throw Error('Step history requires the complete final period');
       for(const[i,step]of row.steps.entries()){
-        if(!step||Object.keys(step).sort().join(',')!=='action,step,stock1,stock2'||step.step!==i+1||!['LS','SL','F'].includes(step.action))throw Error('Invalid public step');
-        const missing=step.stock1===null&&step.stock2===null&&step.action==='F';
+        if(!step||Object.keys(step).sort().join(',')!=='action,step,stock1,stock2'||step.step!==stepStart+i||!['LS','SL','F'].includes(step.action))throw Error('Invalid public step');
+        const missing=!row.is_baseline&&step.stock1===null&&step.stock2===null&&step.action==='F';
         if(!missing&&(!tickers.includes(step.stock1)||!tickers.includes(step.stock2)||step.stock1===step.stock2))throw Error('Invalid public pair');
       }
     }
@@ -128,7 +130,7 @@ export function validateSnapshot(state){
     if(!release||!rounds.some(r=>r.id===release.round_id)||ids.has(release.round_id)||!releaseFolderUrl(release.folder_url))throw Error('Invalid published release');
     ids.add(release.round_id);
   }
-  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:continuation});
+  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:continuation,allowSteps:continuation&&state.final===true,stepEnd:continuation?41:12});
   if(state.final&&(state.event!==(continuation?45:14)||state.terminal_settlement_complete!==true||(continuation&&state.completed_rounds!==totalRounds)))throw Error('Final results require verified terminal settlement');
   if('final_periods' in state){if(!continuation||!state.final)throw Error('Period results are final-only');validateFinalPeriods(state.final_periods,state.rows)}
   return state;
@@ -140,12 +142,26 @@ async function init(){
  const format=value=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(value));
  const mainFeed=publicSnapshotUrl;
  const manifest='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/releases.json';
+ const openHistories=new Map();
  async function get(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error();return r.json()}
  function cell(tr,value){const td=document.createElement('td');td.textContent=value;tr.append(td);return td}
- function renderRows(body,rows){
+ function renderRows(body,rows,showHistory=false,scope='overall'){
   body.replaceChildren();
   for(const {rank,row} of rankRows(rows)){
-   const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(row));
+   const tr=document.createElement('tr');cell(tr,String(rank));const name=cell(tr,displayTeamName(row));
+   if(showHistory&&Array.isArray(row.steps)){
+    name.textContent='';const details=document.createElement('details');details.className='action-history';
+    const disclosureKey=JSON.stringify([scope,row.team_name]);details.open=openHistories.get(disclosureKey)===true;
+    details.addEventListener?.('toggle',()=>openHistories.set(disclosureKey,details.open));
+    const summary=document.createElement('summary');summary.textContent=displayTeamName(row);details.append(summary);
+    const scroll=document.createElement('div');scroll.className='history-scroll';const table=document.createElement('table');
+    const caption=document.createElement('caption');caption.textContent='Historical pair/action steps';table.append(caption);
+    const head=document.createElement('thead');const labels=document.createElement('tr');
+    for(const label of ['Step','Pair','Action']){const th=document.createElement('th');th.scope='col';th.textContent=label;labels.append(th)}
+    head.append(labels);table.append(head);const history=document.createElement('tbody');
+    for(const step of row.steps){const item=document.createElement('tr');cell(item,String(step.step));cell(item,step.stock1===null?'—':step.stock1+' / '+step.stock2);cell(item,step.action);history.append(item)}
+    table.append(history);scroll.append(table);details.append(scroll);name.append(details);
+   }
    for(const value of [(row.cumulative_return*100).toFixed(2)+'%',formatSharpe(row.sharpe_ratio),formatMaxDrawdown(row.max_drawdown)])cell(tr,value).className='metric-number';
    body.append(tr);
   }
@@ -164,7 +180,7 @@ async function init(){
    const caption=document.createElement('caption');caption.textContent=period.title+' final performance';table.append(caption);
    const head=document.createElement('thead');const tr=document.createElement('tr');
    for(const label of ['CR rank','Team / reference','Cumulative return','Sharpe ratio','Max drawdown']){const th=document.createElement('th');th.scope='col';th.textContent=label;tr.append(th)}
-   head.append(tr);table.append(head);const body=document.createElement('tbody');renderRows(body,period.rows);table.append(body);wrap.append(table);article.append(wrap);
+   head.append(tr);table.append(head);const body=document.createElement('tbody');renderRows(body,period.rows,true,period.id);table.append(body);wrap.append(table);article.append(wrap);
    const image=document.createElement('img');image.src=period.chart_url;image.alt=period.title+' verified cumulative-return paths from 0%, including all three baselines';image.className='period-curve';article.append(image);host.append(article);
   }
  }
@@ -185,9 +201,10 @@ async function init(){
   }
   try{
    if(!state)throw Error('Verified publication snapshot unavailable');
-   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:isContinuation(state)});
+   const continuation=isContinuation(state);
+   const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:continuation,allowSteps:continuation&&state.final===true,stepEnd:continuation?41:12});
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
-   renderRows($('leaderboard'),board.rows);renderPeriods(state);
+   renderRows($('leaderboard'),board.rows,finalHistoryReady(state));renderPeriods(state);
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);

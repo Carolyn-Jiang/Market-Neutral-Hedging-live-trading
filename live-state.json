@@ -2,7 +2,7 @@
   "schema": "finreason.task2.website/1",
   "phase": "continuation",
   "event": 45,
-  "updated_at": "2026-10-23T16:07:57.611581-04:00",
+  "updated_at": "2026-10-23T16:38:18.122240-04:00",
   "total_rounds": 41,
   "completed_rounds": 41,
   "data_status": "41 of 41 data batches published; future batches remain scheduled.",
@@ -12,7 +12,7 @@
   "final": true,
   "terminal_settlement_complete": true,
   "chart": "/Market-Neutral-Hedging-live-trading/return-paths.svg",
-  "curve_version": "2026-10-23T16:07:57.611581-04:00",
+  "curve_version": "2026-10-23T16:38:18.122240-04:00",
   "release_schedule": [
     {
       "round": 1,
@@ -1043,70 +1043,2550 @@
       "cumulative_return": 0.06755421034339348,
       "is_baseline": true,
       "sharpe_ratio": 0.3338397444067231,
-      "max_drawdown": 0.019299067051261165
+      "max_drawdown": 0.019299067051261165,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 2,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 3,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 4,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 5,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 6,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 7,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 8,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 9,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 10,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 11,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 12,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 13,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 14,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 16,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 17,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 18,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 19,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 20,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 21,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 22,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 23,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 24,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 25,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 26,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 27,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 28,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 29,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 30,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 31,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 32,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 33,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 34,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 35,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 36,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 37,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 38,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 39,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 40,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 41,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        }
+      ]
     },
     {
       "team_name": "abbo",
       "cumulative_return": 0.02024055460252261,
       "is_baseline": false,
       "sharpe_ratio": 0.09911649626395423,
-      "max_drawdown": 0.017709144165505286
+      "max_drawdown": 0.017709144165505286,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": "WMT",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 7,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": "AMD",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 13,
+          "stock1": "AMZN",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 14,
+          "stock1": "AMZN",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 15,
+          "stock1": "META",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 16,
+          "stock1": "GOOG",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 17,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 18,
+          "stock1": "AMD",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 19,
+          "stock1": "META",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 20,
+          "stock1": "WMT",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 21,
+          "stock1": "JPM",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 22,
+          "stock1": "META",
+          "stock2": "MSFT",
+          "action": "LS"
+        },
+        {
+          "step": 23,
+          "stock1": "GOOG",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 24,
+          "stock1": "MSFT",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 25,
+          "stock1": "NVDA",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 26,
+          "stock1": "GOOG",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 27,
+          "stock1": "JPM",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 28,
+          "stock1": "AAPL",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 29,
+          "stock1": "AMZN",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 30,
+          "stock1": "AMZN",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 31,
+          "stock1": "NVDA",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 32,
+          "stock1": "MSFT",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 33,
+          "stock1": "JPM",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 34,
+          "stock1": "NVDA",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 35,
+          "stock1": "AMZN",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 36,
+          "stock1": "MSFT",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 37,
+          "stock1": "NVDA",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 38,
+          "stock1": "AAPL",
+          "stock2": "MSFT",
+          "action": "LS"
+        },
+        {
+          "step": 39,
+          "stock1": "NVDA",
+          "stock2": "AMZN",
+          "action": "LS"
+        },
+        {
+          "step": 40,
+          "stock1": "TSLA",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 41,
+          "stock1": "AMZN",
+          "stock2": "NVDA",
+          "action": "LS"
+        }
+      ]
     },
     {
       "team_name": "Moira baseline",
       "cumulative_return": 0.019707372641412313,
       "is_baseline": true,
       "sharpe_ratio": 0.09868594773315749,
-      "max_drawdown": 0.027297033794628556
+      "max_drawdown": 0.027297033794628556,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 3,
+          "stock1": "NVDA",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 5,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 6,
+          "stock1": "GOOG",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 7,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 8,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 9,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 10,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 11,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 12,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 15,
+          "stock1": "GOOG",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 16,
+          "stock1": "NVDA",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 17,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 18,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 19,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 21,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 22,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 23,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 25,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 26,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 27,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 28,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 29,
+          "stock1": "NVDA",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 30,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 32,
+          "stock1": "GOOG",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 33,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 34,
+          "stock1": "GOOG",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 35,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": "GOOG",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "SL"
+        },
+        {
+          "step": 38,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 39,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 40,
+          "stock1": "GOOG",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 41,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "SL"
+        }
+      ]
     },
     {
       "team_name": "ah",
       "cumulative_return": 0.009776463269146829,
       "is_baseline": false,
       "sharpe_ratio": 0.22362354920032662,
-      "max_drawdown": 0.0
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": "NVDA",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 7,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": "NVDA",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "ji",
       "cumulative_return": 0.007201483270333764,
       "is_baseline": false,
       "sharpe_ratio": 0.15617376188860607,
-      "max_drawdown": 0.0
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 7,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": "META",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "test_2",
       "cumulative_return": 0.0070036671748197055,
       "is_baseline": false,
       "sharpe_ratio": 0.15617376188860607,
-      "max_drawdown": 0.0
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 7,
+          "stock1": "NVDA",
+          "stock2": "TSLA",
+          "action": "SL"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "test_3",
       "cumulative_return": 0.0070036671748197055,
       "is_baseline": false,
       "sharpe_ratio": 0.15617376188860607,
-      "max_drawdown": 0.0
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 7,
+          "stock1": "NVDA",
+          "stock2": "TSLA",
+          "action": "SL"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "test_4",
       "cumulative_return": 0.0,
       "is_baseline": false,
       "sharpe_ratio": null,
-      "max_drawdown": 0.0
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 7,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": "META",
+          "stock2": "AMZN",
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "Codex baseline",
       "cumulative_return": -0.0014572908906229642,
       "is_baseline": true,
       "sharpe_ratio": 0.0008839334833086814,
-      "max_drawdown": 0.06999204757005428
+      "max_drawdown": 0.06999204757005428,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "GOOG",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 2,
+          "stock1": "AMZN",
+          "stock2": "MSFT",
+          "action": "LS"
+        },
+        {
+          "step": 3,
+          "stock1": "META",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "NVDA",
+          "stock2": "MSFT",
+          "action": "LS"
+        },
+        {
+          "step": 5,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 6,
+          "stock1": "AAPL",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 7,
+          "stock1": "AAPL",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 8,
+          "stock1": "WMT",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 9,
+          "stock1": "MSFT",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 10,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 11,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 12,
+          "stock1": "MSFT",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 13,
+          "stock1": "NVDA",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 14,
+          "stock1": "AMZN",
+          "stock2": "MSFT",
+          "action": "LS"
+        },
+        {
+          "step": 15,
+          "stock1": "NVDA",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 16,
+          "stock1": "AMZN",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 17,
+          "stock1": "AMZN",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 18,
+          "stock1": "NVDA",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 19,
+          "stock1": "AMZN",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 20,
+          "stock1": "GOOG",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 21,
+          "stock1": "NVDA",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 22,
+          "stock1": "META",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 23,
+          "stock1": "GOOG",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 24,
+          "stock1": "AMZN",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 25,
+          "stock1": "NVDA",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 26,
+          "stock1": "TSLA",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 27,
+          "stock1": "AMD",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 28,
+          "stock1": "AMZN",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 29,
+          "stock1": "AMD",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 30,
+          "stock1": "NVDA",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 31,
+          "stock1": "AMZN",
+          "stock2": "TSLA",
+          "action": "LS"
+        },
+        {
+          "step": 32,
+          "stock1": "GOOG",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 33,
+          "stock1": "GOOG",
+          "stock2": "NVDA",
+          "action": "LS"
+        },
+        {
+          "step": 34,
+          "stock1": "WMT",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 35,
+          "stock1": "AAPL",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 36,
+          "stock1": "AAPL",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 37,
+          "stock1": "GOOG",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 38,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 39,
+          "stock1": "TSLA",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 40,
+          "stock1": "MSFT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 41,
+          "stock1": "GOOG",
+          "stock2": "NVDA",
+          "action": "LS"
+        }
+      ]
     },
     {
       "team_name": "test",
       "cumulative_return": -0.013680496783689544,
       "is_baseline": false,
       "sharpe_ratio": -0.15617376188860607,
-      "max_drawdown": 0.013680496783689544
+      "max_drawdown": 0.013680496783689544,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 4,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 6,
+          "stock1": "JPM",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 7,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 8,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 9,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 10,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 11,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 12,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 13,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 14,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 15,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 16,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 17,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 18,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 19,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 20,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 21,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 22,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 23,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 24,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 25,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 26,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 27,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 28,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 29,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 30,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 31,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 32,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 33,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 34,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 35,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 36,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 37,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 38,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 39,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 40,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        },
+        {
+          "step": 41,
+          "stock1": null,
+          "stock2": null,
+          "action": "F"
+        }
+      ]
     }
   ],
   "final_periods": [
@@ -1124,70 +3604,729 @@
           "cumulative_return": 0.027146917787936653,
           "is_baseline": true,
           "sharpe_ratio": 0.4004677247262917,
-          "max_drawdown": 0.005184919286778333
+          "max_drawdown": 0.005184919286778333,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 3,
+              "stock1": "NVDA",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 4,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 5,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 6,
+              "stock1": "GOOG",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 7,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 8,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 9,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 10,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 11,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 12,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "F"
+            }
+          ]
         },
         {
           "team_name": "Codex baseline",
           "cumulative_return": 0.025184152250283365,
           "is_baseline": true,
           "sharpe_ratio": 0.1398236572908193,
-          "max_drawdown": 0.029643326725180663
+          "max_drawdown": 0.029643326725180663,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": "GOOG",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 2,
+              "stock1": "AMZN",
+              "stock2": "MSFT",
+              "action": "LS"
+            },
+            {
+              "step": 3,
+              "stock1": "META",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 4,
+              "stock1": "NVDA",
+              "stock2": "MSFT",
+              "action": "LS"
+            },
+            {
+              "step": 5,
+              "stock1": "WMT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 6,
+              "stock1": "AAPL",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 7,
+              "stock1": "AAPL",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 8,
+              "stock1": "WMT",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 9,
+              "stock1": "MSFT",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 10,
+              "stock1": "WMT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 11,
+              "stock1": "WMT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 12,
+              "stock1": "MSFT",
+              "stock2": "NVDA",
+              "action": "LS"
+            }
+          ]
         },
         {
           "team_name": "ah",
           "cumulative_return": 0.009776463269146829,
           "is_baseline": false,
           "sharpe_ratio": 0.42805827113019845,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": "NVDA",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 7,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": "NVDA",
+              "stock2": "AAPL",
+              "action": "LS"
+            }
+          ]
         },
         {
           "team_name": "test_2",
           "cumulative_return": 0.0070036671748197055,
           "is_baseline": false,
           "sharpe_ratio": 0.28867513459481287,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 7,
+              "stock1": "NVDA",
+              "stock2": "TSLA",
+              "action": "SL"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            }
+          ]
         },
         {
           "team_name": "test_3",
           "cumulative_return": 0.0070036671748197055,
           "is_baseline": false,
           "sharpe_ratio": 0.28867513459481287,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 7,
+              "stock1": "NVDA",
+              "stock2": "TSLA",
+              "action": "SL"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            }
+          ]
         },
         {
           "team_name": "FinMem baseline",
           "cumulative_return": 0.006046946956708821,
           "is_baseline": true,
           "sharpe_ratio": 0.08786703385014175,
-          "max_drawdown": 0.019299067051261165
+          "max_drawdown": 0.019299067051261165,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 2,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 3,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 4,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 5,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 6,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 7,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 8,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 9,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 10,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 11,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 12,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            }
+          ]
         },
         {
           "team_name": "abbo",
           "cumulative_return": 0.0059942881585364205,
           "is_baseline": false,
           "sharpe_ratio": 0.2931088758660997,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "ji",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": "WMT",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 7,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": "AMD",
+              "stock2": "META",
+              "action": "LS"
+            }
+          ]
         },
         {
           "team_name": "test_4",
           "cumulative_return": 0.0,
           "is_baseline": false,
           "sharpe_ratio": null,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 7,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": "META",
+              "stock2": "AMZN",
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            }
+          ]
         },
         {
           "team_name": "test",
           "cumulative_return": -0.013680496783689544,
           "is_baseline": false,
           "sharpe_ratio": -0.28867513459481287,
-          "max_drawdown": 0.013680496783689544
+          "max_drawdown": 0.013680496783689544,
+          "steps": [
+            {
+              "step": 1,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 2,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 3,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 4,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 5,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 6,
+              "stock1": "JPM",
+              "stock2": "GOOG",
+              "action": "LS"
+            },
+            {
+              "step": 7,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 8,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 9,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 10,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 11,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 12,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            }
+          ]
         }
       ]
     },
@@ -1205,70 +4344,915 @@
           "cumulative_return": 0.06113756775739354,
           "is_baseline": true,
           "sharpe_ratio": 0.47566841012581684,
-          "max_drawdown": 0.00749341693888983
+          "max_drawdown": 0.00749341693888983,
+          "steps": [
+            {
+              "step": 13,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 14,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "F"
+            },
+            {
+              "step": 15,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 16,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 17,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 18,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 19,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 20,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 21,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 22,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 23,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 24,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 25,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 26,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 27,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 28,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 29,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 30,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 31,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 32,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 33,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 34,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 35,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 36,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 37,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 38,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 39,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 40,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 41,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            }
+          ]
         },
         {
           "team_name": "abbo",
           "cumulative_return": 0.014161379057195056,
           "is_baseline": false,
           "sharpe_ratio": 0.08438118755760378,
-          "max_drawdown": 0.017709144165505286
+          "max_drawdown": 0.017709144165505286,
+          "steps": [
+            {
+              "step": 13,
+              "stock1": "AMZN",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 14,
+              "stock1": "AMZN",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 15,
+              "stock1": "META",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 16,
+              "stock1": "GOOG",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 17,
+              "stock1": "WMT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 18,
+              "stock1": "AMD",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 19,
+              "stock1": "META",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 20,
+              "stock1": "WMT",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 21,
+              "stock1": "JPM",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 22,
+              "stock1": "META",
+              "stock2": "MSFT",
+              "action": "LS"
+            },
+            {
+              "step": 23,
+              "stock1": "GOOG",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 24,
+              "stock1": "MSFT",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 25,
+              "stock1": "NVDA",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 26,
+              "stock1": "GOOG",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 27,
+              "stock1": "JPM",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 28,
+              "stock1": "AAPL",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 29,
+              "stock1": "AMZN",
+              "stock2": "GOOG",
+              "action": "LS"
+            },
+            {
+              "step": 30,
+              "stock1": "AMZN",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 31,
+              "stock1": "NVDA",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 32,
+              "stock1": "MSFT",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 33,
+              "stock1": "JPM",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 34,
+              "stock1": "NVDA",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 35,
+              "stock1": "AMZN",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 36,
+              "stock1": "MSFT",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 37,
+              "stock1": "NVDA",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 38,
+              "stock1": "AAPL",
+              "stock2": "MSFT",
+              "action": "LS"
+            },
+            {
+              "step": 39,
+              "stock1": "NVDA",
+              "stock2": "AMZN",
+              "action": "LS"
+            },
+            {
+              "step": 40,
+              "stock1": "TSLA",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 41,
+              "stock1": "AMZN",
+              "stock2": "NVDA",
+              "action": "LS"
+            }
+          ]
         },
         {
           "team_name": "ji",
           "cumulative_return": 0.007201483270333764,
           "is_baseline": false,
           "sharpe_ratio": 0.18569533817705186,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "ah",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "test",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "test_2",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "test_3",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
-        },
-        {
-          "team_name": "test_4",
-          "cumulative_return": 0.0,
-          "is_baseline": false,
-          "sharpe_ratio": null,
-          "max_drawdown": 0.0
+          "max_drawdown": 0.0,
+          "steps": [
+            {
+              "step": 13,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 14,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 15,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 16,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 17,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 18,
+              "stock1": "META",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 19,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 20,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 21,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 22,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 23,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 24,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 25,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 26,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 27,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 28,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 29,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 30,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 31,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 32,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 33,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 34,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 35,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 36,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 37,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 38,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 39,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 40,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            },
+            {
+              "step": 41,
+              "stock1": null,
+              "stock2": null,
+              "action": "F"
+            }
+          ]
         },
         {
           "team_name": "Moira baseline",
           "cumulative_return": -0.007242922134786833,
           "is_baseline": true,
           "sharpe_ratio": -0.05292056805071517,
-          "max_drawdown": 0.027297033794628556
+          "max_drawdown": 0.027297033794628556,
+          "steps": [
+            {
+              "step": 13,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "F"
+            },
+            {
+              "step": 14,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 15,
+              "stock1": "GOOG",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 16,
+              "stock1": "NVDA",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 17,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 18,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 19,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "F"
+            },
+            {
+              "step": 20,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 21,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 22,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 23,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "F"
+            },
+            {
+              "step": 24,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 25,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 26,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 27,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 28,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 29,
+              "stock1": "NVDA",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 30,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "F"
+            },
+            {
+              "step": 31,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 32,
+              "stock1": "GOOG",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 33,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 34,
+              "stock1": "GOOG",
+              "stock2": "JPM",
+              "action": "LS"
+            },
+            {
+              "step": 35,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "F"
+            },
+            {
+              "step": 36,
+              "stock1": "GOOG",
+              "stock2": "WMT",
+              "action": "F"
+            },
+            {
+              "step": 37,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "SL"
+            },
+            {
+              "step": 38,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "SL"
+            },
+            {
+              "step": 39,
+              "stock1": "JPM",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 40,
+              "stock1": "GOOG",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 41,
+              "stock1": "META",
+              "stock2": "JPM",
+              "action": "SL"
+            }
+          ]
         },
         {
           "team_name": "Codex baseline",
           "cumulative_return": -0.025986983004398057,
           "is_baseline": true,
           "sharpe_ratio": -0.15640026506274984,
-          "max_drawdown": 0.05327680968548576
+          "max_drawdown": 0.05327680968548576,
+          "steps": [
+            {
+              "step": 13,
+              "stock1": "NVDA",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 14,
+              "stock1": "AMZN",
+              "stock2": "MSFT",
+              "action": "LS"
+            },
+            {
+              "step": 15,
+              "stock1": "NVDA",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 16,
+              "stock1": "AMZN",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 17,
+              "stock1": "AMZN",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 18,
+              "stock1": "NVDA",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 19,
+              "stock1": "AMZN",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 20,
+              "stock1": "GOOG",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 21,
+              "stock1": "NVDA",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 22,
+              "stock1": "META",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 23,
+              "stock1": "GOOG",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 24,
+              "stock1": "AMZN",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 25,
+              "stock1": "NVDA",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 26,
+              "stock1": "TSLA",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 27,
+              "stock1": "AMD",
+              "stock2": "GOOG",
+              "action": "LS"
+            },
+            {
+              "step": 28,
+              "stock1": "AMZN",
+              "stock2": "GOOG",
+              "action": "LS"
+            },
+            {
+              "step": 29,
+              "stock1": "AMD",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 30,
+              "stock1": "NVDA",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 31,
+              "stock1": "AMZN",
+              "stock2": "TSLA",
+              "action": "LS"
+            },
+            {
+              "step": 32,
+              "stock1": "GOOG",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 33,
+              "stock1": "GOOG",
+              "stock2": "NVDA",
+              "action": "LS"
+            },
+            {
+              "step": 34,
+              "stock1": "WMT",
+              "stock2": "AAPL",
+              "action": "LS"
+            },
+            {
+              "step": 35,
+              "stock1": "AAPL",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 36,
+              "stock1": "AAPL",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 37,
+              "stock1": "GOOG",
+              "stock2": "META",
+              "action": "LS"
+            },
+            {
+              "step": 38,
+              "stock1": "WMT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 39,
+              "stock1": "TSLA",
+              "stock2": "WMT",
+              "action": "LS"
+            },
+            {
+              "step": 40,
+              "stock1": "MSFT",
+              "stock2": "AMD",
+              "action": "LS"
+            },
+            {
+              "step": 41,
+              "stock1": "GOOG",
+              "stock2": "NVDA",
+              "action": "LS"
+            }
+          ]
         }
       ]
     }
