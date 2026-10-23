@@ -46,6 +46,38 @@ export const rounds=[
 ];
 export const releaseSchedule=rounds.map((r,i)=>({round:i+1,round_id:r.id,timestamp:r.release,window_start:r.window_start,window_end:r.release,action_due:r.deadline,entry_at:r.entry_at,exit_at:r.exit_at}));
 export function isContinuation(state){return ['continuation','preparing'].includes(state?.phase)&&state.total_rounds===totalRounds}
+export function rankRows(rows){
+  let rank=0,last=null;
+  return [...rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name)).map((row,i)=>{if(last!==row.cumulative_return)rank=i+1;last=row.cumulative_return;return {rank,row}});
+}
+export const finalTrainingNotes=Object.freeze([
+  'FinMem and Moira: no training.',
+  'Trained using Phrase I historical observations — FinMem memory warm-up; Moira framework training. Preparation used cached October 13–15 data, including October 13 historical warm-up.',
+]);
+export function validateFinalPeriods(periods,overallRows){
+  if(!Array.isArray(periods)||periods.length!==2)throw Error('Two final periods required');
+  const keys=['chart','completed_rounds','id','round_end','round_start','rows','title','training_note'];
+  const expected=[['phrase-i','Phrase I',1,12,12],['phrase-ii','Phrase II',13,41,29]];
+  periods.forEach((period,i)=>{
+    const [id,title,start,end,count]=expected[i];
+    if(!period||Object.keys(period).sort().join(',')!==keys.join(',')||period.id!==id||period.title!==title||period.round_start!==start||period.round_end!==end||period.completed_rounds!==count||period.chart!==`/Market-Neutral-Hedging-live-trading/return-paths-${id}.svg`||period.training_note!==finalTrainingNotes[i])throw Error('Invalid final period');
+    validateBoard({schema:'finreason.task2.public-returns/1',final:true,rows:period.rows},{aggregateOnly:true});
+    const rowKeys='cumulative_return,is_baseline,max_drawdown,sharpe_ratio,team_name';
+    if(period.rows.some(row=>Object.keys(row).sort().join(',')!==rowKeys))throw Error('Complete aggregate period metrics required');
+    const identities=rows=>rows.map(row=>`${row.is_baseline}:${row.team_name}`).sort();
+    if(JSON.stringify(identities(period.rows))!==JSON.stringify(identities(overallRows)))throw Error('Final period teams differ from overall');
+  });
+  return periods;
+}
+export function finalPeriodViews(state,now=Date.now()){
+  if(!isContinuation(state)||state.final!==true||state.event!==45||state.terminal_settlement_complete!==true||state.completed_rounds!==41||!Number.isFinite(now)||now<continuationFinalResults||!state.final_periods)return [];
+  const version=state.curve_version||state.updated_at;
+  if(typeof version!=='string'||!Number.isFinite(Date.parse(version)))return [];
+  return validateFinalPeriods(state.final_periods,state.rows).map(period=>{
+    const url=new URL(period.chart.split('/').at(-1),import.meta.url);url.searchParams.set('v',version);
+    return {...period,chart_url:url.href};
+  });
+}
 export function validateReleaseSchedule(schedule){
   if(!Array.isArray(schedule)||schedule.length!==totalRounds)throw Error('Invalid release schedule');
   const timeKeys=['timestamp','window_start','window_end','action_due','entry_at','exit_at'];
@@ -98,6 +130,7 @@ export function validateSnapshot(state){
   }
   validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:continuation});
   if(state.final&&(state.event!==(continuation?45:14)||state.terminal_settlement_complete!==true||(continuation&&state.completed_rounds!==totalRounds)))throw Error('Final results require verified terminal settlement');
+  if('final_periods' in state){if(!continuation||!state.final)throw Error('Period results are final-only');validateFinalPeriods(state.final_periods,state.rows)}
   return state;
 }
 
@@ -109,6 +142,32 @@ async function init(){
  const manifest='https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/releases.json';
  async function get(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error();return r.json()}
  function cell(tr,value){const td=document.createElement('td');td.textContent=value;tr.append(td);return td}
+ function renderRows(body,rows){
+  body.replaceChildren();
+  for(const {rank,row} of rankRows(rows)){
+   const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(row));
+   for(const value of [(row.cumulative_return*100).toFixed(2)+'%',formatSharpe(row.sharpe_ratio),formatMaxDrawdown(row.max_drawdown)])cell(tr,value).className='metric-number';
+   body.append(tr);
+  }
+  if(!rows.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=5;body.append(tr)}
+ }
+ function renderPeriods(state){
+  const host=$('final-periods');if(!host)return;
+  const views=finalPeriodViews(state);host.replaceChildren();host.hidden=!views.length;
+  const overall=$('overall-title');if(overall)overall.hidden=!views.length;
+  for(const period of views){
+   const article=document.createElement('article');article.className='final-period';
+   const heading=document.createElement('h3');heading.textContent=period.title;article.append(heading);
+   const note=document.createElement('p');note.className='muted';note.textContent=period.training_note;article.append(note);
+   const method=document.createElement('p');method.className='metrics-note';method.textContent=`Rounds ${period.round_start}–${period.round_end}: each path starts at 0%. Sharpe ratio and maximum drawdown are calculated within this period only, from starting equity 1 and settlement endpoints.`;article.append(method);
+   const wrap=document.createElement('div');wrap.className='table-wrap';const table=document.createElement('table');
+   const caption=document.createElement('caption');caption.textContent=period.title+' final performance';table.append(caption);
+   const head=document.createElement('thead');const tr=document.createElement('tr');
+   for(const label of ['CR rank','Team / reference','Cumulative return','Sharpe ratio','Max drawdown']){const th=document.createElement('th');th.scope='col';th.textContent=label;tr.append(th)}
+   head.append(tr);table.append(head);const body=document.createElement('tbody');renderRows(body,period.rows);table.append(body);wrap.append(table);article.append(wrap);
+   const image=document.createElement('img');image.src=period.chart_url;image.alt=period.title+' verified cumulative-return paths from 0%, including all three baselines';image.className='period-curve';article.append(image);host.append(article);
+  }
+ }
  async function refresh(){
   $('clock').textContent='New York now: '+format(new Date());
   const stamp=Date.now();
@@ -128,12 +187,7 @@ async function init(){
    if(!state)throw Error('Verified publication snapshot unavailable');
    const board=validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,updated_at:state.updated_at,terminal_settlement_complete:state.terminal_settlement_complete===true,rows:state.rows},{aggregateOnly:isContinuation(state)});
    $('rank-heading').hidden=false;$('rank-heading').textContent=board.final?'Final rank':'CR rank';$('leaderboard').replaceChildren();
-   const sorted=[...board.rows].sort((a,b)=>b.cumulative_return-a.cumulative_return||a.team_name.localeCompare(b.team_name));let rank=0,last=null;
-   for(const[i,r]of sorted.entries()){
-    if(last!==r.cumulative_return)rank=i+1;last=r.cumulative_return;
-    const tr=document.createElement('tr');cell(tr,String(rank));cell(tr,displayTeamName(r));for(const value of [(r.cumulative_return*100).toFixed(2)+'%',formatSharpe(r.sharpe_ratio),formatMaxDrawdown(r.max_drawdown)])cell(tr,value).className='metric-number';$('leaderboard').append(tr);
-   }
-   if(!sorted.length){const tr=document.createElement('tr');cell(tr,'No verified cumulative returns have been published.').colSpan=5;$('leaderboard').append(tr)}
+   renderRows($('leaderboard'),board.rows);renderPeriods(state);
    $('chart').hidden=true;
    const previous=document.getElementById('final-image');
    const chartUrl=finalChartUrl(state);
