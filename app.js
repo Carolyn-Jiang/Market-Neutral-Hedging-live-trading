@@ -15,6 +15,45 @@ export function displayTeamName(row){return row.is_baseline?baselineDisplayLabel
 export function formatSharpe(value){return Number.isFinite(value)?value.toFixed(2):'N/A'}
 export function formatMaxDrawdown(value){return value===0?'0%':Number.isFinite(value)&&value>0?(value*100).toFixed(2)+'%':'Updating…'}
 export const publicSnapshotUrl = new URL('live-state.json', import.meta.url).href;
+export const phrase3SnapshotUrl = new URL('phrase3-live-state.json', import.meta.url).href;
+export const phrase3FinalResults = Date.parse('2026-11-02T16:00:00-05:00');
+const phrase3Nodes=['09:30','10:30','11:30','12:30','13:30','14:30','15:30','16:00'].map(time=>`2026-11-02T${time}:00-05:00`);
+export const phrase3ReleaseSchedule=phrase3Nodes.slice(0,6).map((timestamp,i)=>({round:i+1,round_id:'2026-11-02_'+timestamp.slice(11,16),timestamp,window_start:i===0?'2026-10-30T16:00:00-04:00':phrase3Nodes[i-1],window_end:timestamp,action_due:new Date(Date.parse(phrase3Nodes[i+1])-300000).toISOString(),entry_at:phrase3Nodes[i+1],exit_at:phrase3Nodes[i+2]}));
+export function validatePhrase3Schedule(schedule){
+  const timeKeys=['timestamp','window_start','window_end','action_due','entry_at','exit_at'];
+  if(!Array.isArray(schedule)||schedule.length!==6)throw Error('Six Phrase III releases required');
+  schedule.forEach((item,i)=>{const expected=phrase3ReleaseSchedule[i];if(!item||Object.keys(item).sort().join(',')!==Object.keys(expected).sort().join(',')||item.round!==expected.round||item.round_id!==expected.round_id||timeKeys.some(key=>Date.parse(item[key])!==Date.parse(expected[key])))throw Error('Invalid Phrase III New York schedule')});
+  return schedule;
+}
+export function validatePhrase3Snapshot(state){
+  const keys=['schema','phase_id','event','total_rounds','completed_rounds','final','phase_status','updated_at','ranking_status','releases','release_schedule','rows','chart','curve_version'];
+  if(!state||Object.keys(state).some(key=>!keys.includes(key))||state.schema!=='finreason.task2.phrase3-website/1'||state.phase_id!=='phrase-iii-2026-11-02'||!Number.isInteger(state.event)||state.event<0||state.event>8||state.total_rounds!==6||!Number.isInteger(state.completed_rounds)||state.completed_rounds<0||state.completed_rounds>6||state.completed_rounds>Math.max(0,state.event-2)||typeof state.final!=='boolean'||!['scheduled','live','pending','finished'].includes(state.phase_status)||typeof state.ranking_status!=='string'||!Number.isFinite(Date.parse(state.updated_at))||!Array.isArray(state.releases))throw Error('Invalid independent Phrase III feed');
+  validatePhrase3Schedule(state.release_schedule);
+  validateBoard({schema:'finreason.task2.public-returns/1',final:state.final,rows:state.rows},{aggregateOnly:true,allowSteps:state.final,stepEnd:6});
+  if(state.rows.some(row=>Object.keys(row).filter(key=>key!=='steps').sort().join(',')!=='cumulative_return,is_baseline,max_drawdown,sharpe_ratio,team_name')||(state.completed_rounds===0&&state.rows.length)||(state.rows.length&&state.rows.filter(row=>row.is_baseline).length!==3))throw Error('Only verified Phrase III participants and all baselines may be ranked');
+  if(state.final&&(state.event!==8||state.completed_rounds!==6||state.phase_status!=='finished'||Date.parse(state.updated_at)<phrase3FinalResults)||state.phase_status==='finished'&&!state.final)throw Error('Phrase III final close is not verified');
+  if(state.chart!==null&&state.chart!=='/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg')throw Error('Invalid Phrase III curve path');
+  if(state.completed_rounds>0&&(!Number.isFinite(Date.parse(state.curve_version))||!state.rows.length))throw Error('Verified Phrase III curve version and rows required');
+  const ids=new Set();
+  for(const release of state.releases){
+    const allowed=['round_id','published_at','folder_url','price_url','news_url','file_sha256'];
+    const spec=phrase3ReleaseSchedule.find(row=>row.round_id===release?.round_id);
+    const folder=releaseFolderUrl(release?.folder_url);
+    const expectedFolder=spec&&`https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-11-02_${spec.timestamp.slice(11,16).replace(':','-')}_NY`;
+    if(!release||Object.keys(release).some(key=>!allowed.includes(key))||!spec||spec.round>state.event||ids.has(release.round_id)||folder!==expectedFolder||!Number.isFinite(Date.parse(release.published_at))||Date.parse(release.published_at)<Date.parse(spec.timestamp)||Date.parse(release.published_at)>Date.parse(spec.action_due)||Date.parse(release.published_at)>Date.parse(state.updated_at))throw Error('Unconfirmed Phrase III publication');
+    for(const kind of ['price','news'])if(release[kind+'_url']!==undefined){const url=new URL(release[kind+'_url']);if(url.origin!=='https://huggingface.co'||url.username||url.password||url.pathname!==expectedFolder.replace('https://huggingface.co','').replace('/tree/main/','/resolve/main/')+'/'+kind+'.parquet')throw Error('Invalid Phrase III file link')}
+    if('file_sha256' in release&&(!release.file_sha256||Object.keys(release.file_sha256).sort().join(',')!=='news,price'||Object.values(release.file_sha256).some(value=>typeof value!=='string'||!/^[a-f0-9]{64}$/.test(value))))throw Error('Invalid public file hashes');
+    ids.add(release.round_id);
+  }
+  return state;
+}
+export function phrase3HistoryReady(state,now=Date.now()){
+  return state?.schema==='finreason.task2.phrase3-website/1'&&state.phase_id==='phrase-iii-2026-11-02'&&state.final===true&&state.phase_status==='finished'&&state.event===8&&state.completed_rounds===6&&Number.isFinite(now)&&now>=phrase3FinalResults;
+}
+export function phrase3ChartUrl(state){
+  if(!state||state.completed_rounds<1||state.chart!=='/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg'||!Number.isFinite(Date.parse(state.curve_version)))return null;
+  const url=new URL('phrase3-return-paths.svg',import.meta.url);url.searchParams.set('v',state.curve_version);return url.href;
+}
 export function releaseFolderUrl(value){
   try{
     const url=new URL(value);
@@ -184,10 +223,24 @@ async function init(){
    const image=document.createElement('img');image.src=period.chart_url;image.alt=period.title+' verified cumulative-return paths from 0%, including all three baselines';image.className='period-curve';article.append(image);host.append(article);
   }
  }
+ function renderPhrase3(state){
+  if(!$('phase3-performance'))return;
+  if(!state){$('phase3-status').textContent='Phrase III publication status is unavailable. Earlier results above are unchanged.';return}
+  const labels={scheduled:'Scheduled',live:'Live',pending:'Pending verification',finished:'Finished'};
+  $('phase3-status-badge').textContent=labels[state.phase_status];$('phase3-status-card').className=state.phase_status==='finished'?'stats stats-finished':'stats';
+  $('phase3-status').textContent=state.ranking_status;
+  $('phase3-rank-heading').textContent=state.final?'Final rank':'CR rank';
+  renderRows($('phase3-leaderboard'),state.rows,phrase3HistoryReady(state),'phrase-iii');
+  if(!state.rows.length){const tr=document.createElement('tr');cell(tr,'No verified Phrase III settlements yet; no initial returns are assumed.').colSpan=5;$('phase3-leaderboard').replaceChildren(tr)}
+  const chart=phrase3ChartUrl(state),host=$('phase3-chart');
+  if(chart){if(host.children[0]?.src!==chart){const image=document.createElement('img');image.src=chart;image.alt='Independent Phrase III cumulative returns from 0%, including all three baselines';image.className='period-curve';host.replaceChildren(image)}$('phase3-chart-status').textContent=`${state.completed_rounds} of 6 Phrase III rounds verified locally; all paths start at 0%.`}
+  else{host.replaceChildren();$('phase3-chart-status').textContent='The independent return curve will appear after the first verified Phrase III settlement.'}
+ }
  async function refresh(){
   $('clock').textContent='New York now: '+format(new Date());
   const stamp=Date.now();
-  const [data,state]=await Promise.all([get(manifest+'?snapshot='+stamp).catch(()=>null),get(mainFeed+'?snapshot='+stamp).then(validateSnapshot).catch(()=>null)]);
+  const phrase3Enabled=!!$('phase3-performance');
+  const [data,state,phrase3]=await Promise.all([get(manifest+'?snapshot='+stamp).catch(()=>null),get(mainFeed+'?snapshot='+stamp).then(validateSnapshot).catch(()=>null),phrase3Enabled?get(phrase3SnapshotUrl+'?snapshot='+stamp).then(validatePhrase3Snapshot).catch(()=>null):Promise.resolve(null)]);
   const published=new Map((Array.isArray(data?.published_rounds)?data.published_rounds:[]).map(r=>[r.round_id,r]));
   for(const release of state?.releases||[])published.set(release.round_id,release);
   $('rounds').replaceChildren();
@@ -198,6 +251,12 @@ async function init(){
    const folder=releaseFolderUrl(p?.folder_url);
    if(folder){td.replaceChildren();const a=document.createElement('a');a.href=folder;a.textContent='Open release folder ↗';td.append(a)}
    $('rounds').append(tr);
+  }
+  if(phrase3Enabled){
+   const separator=document.createElement('tr');separator.className='phase-separator';cell(separator,'Phrase III · 2 November 2026 · Independent rounds 1–6').colSpan=5;$('rounds').append(separator);
+   const confirmed=new Map((phrase3?.releases||[]).map(release=>[release.round_id,release]));
+   for(const row of phrase3ReleaseSchedule){const tr=document.createElement('tr');cell(tr,'III · '+row.round);cell(tr,format(row.timestamp));cell(tr,format(row.window_start)+' → '+format(row.window_end));cell(tr,format(row.action_due));const files=cell(tr,phrase3?'Not published':'Publication status unavailable');const folder=releaseFolderUrl(confirmed.get(row.round_id)?.folder_url);if(folder){files.replaceChildren();const link=document.createElement('a');link.href=folder;link.textContent='Open release folder ↗';files.append(link)}$('rounds').append(tr)}
+   try{renderPhrase3(phrase3)}catch{$('phase3-status').textContent='Phrase III results are unavailable; no estimated returns are displayed.'}
   }
   try{
    if(!state)throw Error('Verified publication snapshot unavailable');
