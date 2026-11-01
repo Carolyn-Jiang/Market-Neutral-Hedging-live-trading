@@ -6,7 +6,7 @@
   "completed_rounds": 0,
   "final": false,
   "phase_status": "scheduled",
-  "updated_at": "2026-11-01T12:00:21.755599-05:00",
+  "updated_at": "2026-11-01T12:07:31.895185-05:00",
   "ranking_status": "0 of 6 independent rounds verified.",
   "releases": [],
   "release_schedule": [
@@ -73,5 +73,5 @@
   ],
   "rows": [],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-01T12:00:21.755599-05:00"
+  "curve_version": "2026-11-01T12:07:31.895185-05:00"
 }
