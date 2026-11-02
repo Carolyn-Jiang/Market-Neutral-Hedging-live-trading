@@ -5,9 +5,9 @@
   "total_rounds": 6,
   "completed_rounds": 0,
   "final": false,
-  "phase_status": "pending",
-  "updated_at": "2026-11-02T09:32:49.569141-05:00",
-  "ranking_status": "0 of 6 independent rounds verified. Genuine baseline seal pending: FirstRoundBaselinesPending First-round baseline decisions await the newly continued Moira checkpoint; no parent baseline is used.",
+  "phase_status": "live",
+  "updated_at": "2026-11-02T09:38:33.229847-05:00",
+  "ranking_status": "0 of 6 independent rounds verified.",
   "releases": [
     {
       "round_id": "2026-11-02_09:30",
@@ -85,5 +85,5 @@
   ],
   "rows": [],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T09:32:49.569141-05:00"
+  "curve_version": "2026-11-02T09:38:33.229847-05:00"
 }
