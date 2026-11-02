@@ -1,13 +1,13 @@
 {
   "schema": "finreason.task2.phrase3-website/1",
   "phase_id": "phrase-iii-2026-11-02",
-  "event": 7,
+  "event": 8,
   "total_rounds": 6,
-  "completed_rounds": 5,
-  "final": false,
-  "phase_status": "live",
-  "updated_at": "2026-11-02T15:30:42.885528-05:00",
-  "ranking_status": "5 of 6 independent rounds verified.",
+  "completed_rounds": 6,
+  "final": true,
+  "phase_status": "finished",
+  "updated_at": "2026-11-02T16:03:14.229451-05:00",
+  "ranking_status": "All six independent rounds verified.",
   "releases": [
     {
       "round_id": "2026-11-02_09:30",
@@ -141,40 +141,230 @@
   "rows": [
     {
       "team_name": "FinProbeBench",
-      "cumulative_return": 0.017990092977388183,
+      "cumulative_return": 0.023309142548537,
       "is_baseline": false,
-      "sharpe_ratio": 1.1178176076751807,
-      "max_drawdown": 0.0
+      "sharpe_ratio": 1.3100289562653975,
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "NVDA",
+          "stock2": "TSLA",
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": "NVDA",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 3,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "WMT",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 5,
+          "stock1": "GOOG",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 6,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        }
+      ]
     },
     {
       "team_name": "TEMPO",
-      "cumulative_return": 0.017431381738222118,
+      "cumulative_return": 0.022747512014971383,
       "is_baseline": false,
-      "sharpe_ratio": 1.1015525426097124,
-      "max_drawdown": 0.0
+      "sharpe_ratio": 1.2942713252495788,
+      "max_drawdown": 0.0,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "NVDA",
+          "stock2": "GOOG",
+          "action": "F"
+        },
+        {
+          "step": 2,
+          "stock1": "AMZN",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 3,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "WMT",
+          "stock2": "AAPL",
+          "action": "LS"
+        },
+        {
+          "step": 5,
+          "stock1": "GOOG",
+          "stock2": "AMD",
+          "action": "LS"
+        },
+        {
+          "step": 6,
+          "stock1": "WMT",
+          "stock2": "AMD",
+          "action": "LS"
+        }
+      ]
     },
     {
       "team_name": "Moira baseline",
       "cumulative_return": 0.010629747197467676,
       "is_baseline": true,
-      "sharpe_ratio": 0.5045000355364327,
-      "max_drawdown": 0.000942496138297999
+      "sharpe_ratio": 0.4580528697275142,
+      "max_drawdown": 0.000942496138297999,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "NVDA",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 2,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 3,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        },
+        {
+          "step": 5,
+          "stock1": "META",
+          "stock2": "JPM",
+          "action": "LS"
+        },
+        {
+          "step": 6,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "F"
+        }
+      ]
     },
     {
       "team_name": "FinMem baseline",
-      "cumulative_return": 0.00479772474473017,
+      "cumulative_return": 0.006689320689338141,
       "is_baseline": true,
-      "sharpe_ratio": 0.5678164164948667,
-      "max_drawdown": 0.0016598500989194465
+      "sharpe_ratio": 0.7148240282229561,
+      "max_drawdown": 0.0016598500989194465,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 2,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 3,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 4,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "LS"
+        },
+        {
+          "step": 5,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        },
+        {
+          "step": 6,
+          "stock1": "JPM",
+          "stock2": "WMT",
+          "action": "SL"
+        }
+      ]
     },
     {
       "team_name": "Codex baseline",
-      "cumulative_return": -0.017067057857591994,
+      "cumulative_return": -0.01516646875815586,
       "is_baseline": true,
-      "sharpe_ratio": -0.9885648752553997,
-      "max_drawdown": 0.017067057857591994
+      "sharpe_ratio": -0.6678205553231625,
+      "max_drawdown": 0.017067057857591994,
+      "steps": [
+        {
+          "step": 1,
+          "stock1": "MSFT",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 2,
+          "stock1": "TSLA",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 3,
+          "stock1": "AMD",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 4,
+          "stock1": "AMZN",
+          "stock2": "META",
+          "action": "LS"
+        },
+        {
+          "step": 5,
+          "stock1": "MSFT",
+          "stock2": "GOOG",
+          "action": "LS"
+        },
+        {
+          "step": 6,
+          "stock1": "NVDA",
+          "stock2": "GOOG",
+          "action": "LS"
+        }
+      ]
     }
   ],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T15:30:42.885528-05:00"
+  "curve_version": "2026-11-02T16:03:14.229451-05:00"
 }
