@@ -1,13 +1,13 @@
 {
   "schema": "finreason.task2.phrase3-website/1",
   "phase_id": "phrase-iii-2026-11-02",
-  "event": 2,
+  "event": 3,
   "total_rounds": 6,
-  "completed_rounds": 0,
+  "completed_rounds": 1,
   "final": false,
   "phase_status": "live",
-  "updated_at": "2026-11-02T10:31:32.783919-05:00",
-  "ranking_status": "0 of 6 independent rounds verified.",
+  "updated_at": "2026-11-02T11:31:21.858970-05:00",
+  "ranking_status": "1 of 6 independent rounds verified.",
   "releases": [
     {
       "round_id": "2026-11-02_09:30",
@@ -29,6 +29,17 @@
       "file_sha256": {
         "price": "695fd4a2bfc941cc0370bbf495b436f2bc745738797283a0547bce54fe466631",
         "news": "715a69655d2e15ed3ef17e95ee0019e13a7aea82515574ffc85b6e3eec5a742c"
+      }
+    },
+    {
+      "round_id": "2026-11-02_11:30",
+      "published_at": "2026-11-02T11:30:44.468920-05:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-11-02_11-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_11-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_11-30_NY/news.parquet?download=true",
+      "file_sha256": {
+        "price": "8c8a76ed9f02d9e7e5fd5fd7b3ebfa5dae98485c1cc177c0424e316ea71bc11a",
+        "news": "6c452ffa106c3bf1eae12777d798a8061c8e6fde121817f3b3c851282f2f703b"
       }
     }
   ],
@@ -94,7 +105,43 @@
       "exit_at": "2026-11-02T16:00:00-05:00"
     }
   ],
-  "rows": [],
+  "rows": [
+    {
+      "team_name": "Moira baseline",
+      "cumulative_return": 0.009367634869440922,
+      "is_baseline": true,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "FinMem baseline",
+      "cumulative_return": 0.0027186869251321077,
+      "is_baseline": true,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "FinProbeBench",
+      "cumulative_return": 0.0,
+      "is_baseline": false,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "TEMPO",
+      "cumulative_return": 0.0,
+      "is_baseline": false,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0
+    },
+    {
+      "team_name": "Codex baseline",
+      "cumulative_return": -0.0012215638074881685,
+      "is_baseline": true,
+      "sharpe_ratio": null,
+      "max_drawdown": 0.0012215638074881685
+    }
+  ],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T10:31:32.783919-05:00"
+  "curve_version": "2026-11-02T11:31:21.858970-05:00"
 }
