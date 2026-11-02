@@ -1,12 +1,12 @@
 {
   "schema": "finreason.task2.phrase3-website/1",
   "phase_id": "phrase-iii-2026-11-02",
-  "event": 1,
+  "event": 2,
   "total_rounds": 6,
   "completed_rounds": 0,
   "final": false,
   "phase_status": "live",
-  "updated_at": "2026-11-02T09:49:39.917339-05:00",
+  "updated_at": "2026-11-02T10:31:32.783919-05:00",
   "ranking_status": "0 of 6 independent rounds verified.",
   "releases": [
     {
@@ -18,6 +18,17 @@
       "file_sha256": {
         "price": "6224b2ac6e9895aae0fee9eeb32d8be269e65bd2efaedc40977bfc4d19e5f446",
         "news": "c3126c787ea97e23cb6cc06fab366975d9416321163591fa0c7af1fbca186771"
+      }
+    },
+    {
+      "round_id": "2026-11-02_10:30",
+      "published_at": "2026-11-02T10:30:58.872496-05:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-11-02_10-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_10-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_10-30_NY/news.parquet?download=true",
+      "file_sha256": {
+        "price": "695fd4a2bfc941cc0370bbf495b436f2bc745738797283a0547bce54fe466631",
+        "news": "715a69655d2e15ed3ef17e95ee0019e13a7aea82515574ffc85b6e3eec5a742c"
       }
     }
   ],
@@ -85,5 +96,5 @@
   ],
   "rows": [],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T09:49:39.917339-05:00"
+  "curve_version": "2026-11-02T10:31:32.783919-05:00"
 }
