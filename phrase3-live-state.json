@@ -1,13 +1,13 @@
 {
   "schema": "finreason.task2.phrase3-website/1",
   "phase_id": "phrase-iii-2026-11-02",
-  "event": 6,
+  "event": 7,
   "total_rounds": 6,
-  "completed_rounds": 4,
+  "completed_rounds": 5,
   "final": false,
   "phase_status": "live",
-  "updated_at": "2026-11-02T14:31:29.441145-05:00",
-  "ranking_status": "4 of 6 independent rounds verified.",
+  "updated_at": "2026-11-02T15:30:42.885528-05:00",
+  "ranking_status": "5 of 6 independent rounds verified.",
   "releases": [
     {
       "round_id": "2026-11-02_09:30",
@@ -141,40 +141,40 @@
   "rows": [
     {
       "team_name": "FinProbeBench",
-      "cumulative_return": 0.014956902998687127,
+      "cumulative_return": 0.017990092977388183,
       "is_baseline": false,
-      "sharpe_ratio": 1.013207563535433,
+      "sharpe_ratio": 1.1178176076751807,
       "max_drawdown": 0.0
     },
     {
       "team_name": "TEMPO",
-      "cumulative_return": 0.01439985648822839,
+      "cumulative_return": 0.017431381738222118,
       "is_baseline": false,
-      "sharpe_ratio": 0.9904117780059822,
+      "sharpe_ratio": 1.1015525426097124,
       "max_drawdown": 0.0
     },
     {
       "team_name": "Moira baseline",
-      "cumulative_return": 0.01158316041973051,
+      "cumulative_return": 0.010629747197467676,
       "is_baseline": true,
-      "sharpe_ratio": 0.6510129579062107,
-      "max_drawdown": 0.0
+      "sharpe_ratio": 0.5045000355364327,
+      "max_drawdown": 0.000942496138297999
     },
     {
       "team_name": "FinMem baseline",
-      "cumulative_return": 0.004438544031459601,
+      "cumulative_return": 0.00479772474473017,
       "is_baseline": true,
-      "sharpe_ratio": 0.580445560301085,
+      "sharpe_ratio": 0.5678164164948667,
       "max_drawdown": 0.0016598500989194465
     },
     {
       "team_name": "Codex baseline",
-      "cumulative_return": -0.012748902917300131,
+      "cumulative_return": -0.017067057857591994,
       "is_baseline": true,
-      "sharpe_ratio": -0.8067197177177273,
-      "max_drawdown": 0.012748902917300131
+      "sharpe_ratio": -0.9885648752553997,
+      "max_drawdown": 0.017067057857591994
     }
   ],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T14:31:29.441145-05:00"
+  "curve_version": "2026-11-02T15:30:42.885528-05:00"
 }
