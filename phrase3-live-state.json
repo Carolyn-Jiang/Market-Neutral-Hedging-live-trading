@@ -6,9 +6,21 @@
   "completed_rounds": 0,
   "final": false,
   "phase_status": "pending",
-  "updated_at": "2026-11-02T09:31:12.538839-05:00",
-  "ranking_status": "0 of 6 independent rounds verified. Data or receipt opening pending: ValueError First-round baseline decisions await the newly continued Moira checkpoint; no parent baseline is used.",
-  "releases": [],
+  "updated_at": "2026-11-02T09:32:49.569141-05:00",
+  "ranking_status": "0 of 6 independent rounds verified. Genuine baseline seal pending: FirstRoundBaselinesPending First-round baseline decisions await the newly continued Moira checkpoint; no parent baseline is used.",
+  "releases": [
+    {
+      "round_id": "2026-11-02_09:30",
+      "published_at": "2026-11-02T09:32:40.008448-05:00",
+      "folder_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/tree/main/data/2026-11-02_09-30_NY",
+      "price_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_09-30_NY/price.parquet?download=true",
+      "news_url": "https://huggingface.co/datasets/CarolynJiang/Market-Neutral-Hedging-live-trading/resolve/main/data/2026-11-02_09-30_NY/news.parquet?download=true",
+      "file_sha256": {
+        "price": "6224b2ac6e9895aae0fee9eeb32d8be269e65bd2efaedc40977bfc4d19e5f446",
+        "news": "c3126c787ea97e23cb6cc06fab366975d9416321163591fa0c7af1fbca186771"
+      }
+    }
+  ],
   "release_schedule": [
     {
       "round": 1,
@@ -73,5 +85,5 @@
   ],
   "rows": [],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-02T09:31:12.538839-05:00"
+  "curve_version": "2026-11-02T09:32:49.569141-05:00"
 }
