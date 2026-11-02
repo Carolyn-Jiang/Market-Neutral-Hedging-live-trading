@@ -1,13 +1,13 @@
 {
   "schema": "finreason.task2.phrase3-website/1",
   "phase_id": "phrase-iii-2026-11-02",
-  "event": 0,
+  "event": 1,
   "total_rounds": 6,
   "completed_rounds": 0,
   "final": false,
-  "phase_status": "scheduled",
-  "updated_at": "2026-11-01T12:07:31.895185-05:00",
-  "ranking_status": "0 of 6 independent rounds verified.",
+  "phase_status": "pending",
+  "updated_at": "2026-11-02T09:31:12.538839-05:00",
+  "ranking_status": "0 of 6 independent rounds verified. Data or receipt opening pending: ValueError First-round baseline decisions await the newly continued Moira checkpoint; no parent baseline is used.",
   "releases": [],
   "release_schedule": [
     {
@@ -73,5 +73,5 @@
   ],
   "rows": [],
   "chart": "/Market-Neutral-Hedging-live-trading/phrase3-return-paths.svg",
-  "curve_version": "2026-11-01T12:07:31.895185-05:00"
+  "curve_version": "2026-11-02T09:31:12.538839-05:00"
 }
